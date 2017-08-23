@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>货物轨迹</string>
+		<key>imageName</key>
+		<string>ic_track_press</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>最新资讯</string>
+		<key>imageName</key>
+		<string>ic_information</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>热销产品</string>
+		<key>imageName</key>
+		<string>ic_hot_press</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>查看报表</string>
+		<key>imageName</key>
+		<string>chat_table</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>查看订单</string>
+		<key>imageName</key>
+		<string>ic_complete_order</string>
+	</dict>
+</array>
+</plist>

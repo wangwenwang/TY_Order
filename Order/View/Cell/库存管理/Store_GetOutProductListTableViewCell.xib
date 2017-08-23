@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="Store_GetOutProductListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="320" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1v-K4-XWs">
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RjK-uz-0wd">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="产品名称: " textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ma3-5I-pdD">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RjK-uz-0wd" firstAttribute="leading" secondItem="t1v-K4-XWs" secondAttribute="leading" constant="8" id="GEt-7M-JTj"/>
+                            <constraint firstItem="ma3-5I-pdD" firstAttribute="top" secondItem="RjK-uz-0wd" secondAttribute="top" id="R1X-U6-RjH"/>
+                            <constraint firstItem="ma3-5I-pdD" firstAttribute="leading" secondItem="RjK-uz-0wd" secondAttribute="trailing" id="dc8-Bg-bGc"/>
+                            <constraint firstItem="RjK-uz-0wd" firstAttribute="top" secondItem="t1v-K4-XWs" secondAttribute="top" constant="12" id="xJX-SJ-buD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="t1v-K4-XWs" secondAttribute="trailing" id="CfZ-Cj-b4u"/>
+                    <constraint firstItem="t1v-K4-XWs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Fbg-mk-DSu"/>
+                    <constraint firstAttribute="bottom" secondItem="t1v-K4-XWs" secondAttribute="bottom" constant="1" id="IjN-ms-438"/>
+                    <constraint firstItem="t1v-K4-XWs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="omb-rY-WJ2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <connections>
+                <outlet property="PRODUCT_NAME" destination="ma3-5I-pdD" id="H4R-bX-L5B"/>
+            </connections>
+            <point key="canvasLocation" x="-85" y="83"/>
+        </tableViewCell>
+    </objects>
+</document>

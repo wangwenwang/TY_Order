@@ -1,0 +1,272 @@
+//
+//  Order-Prefix.pch
+//  Order
+//
+//  Created by 凯东源 on 16/9/26.
+//  Copyright © 2016年 凯东源. All rights reserved.
+//
+
+#ifndef Order_Prefix_pch
+#define Order_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Order_Prefix_pch */
+
+/*--------- import ---------*/
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
+#import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>//引入云检索功能所有的头文件
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>//引入定位功能所有的头文件
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>//引入计算工具所有的头文件
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>//引入周边雷达功能所有的头文件
+#import <BaiduMapAPI_Map/BMKMapView.h>//只引入所需的单个头文件
+
+
+
+
+#import "NSString+Trim.h"
+#import "UITextField+Extension.h"
+
+
+/*--------- 主题色 ---------*/
+#define YTColor [UIColor colorWithRed:0 / 255.0 green:104 / 255.0 blue:184 / 255.0 alpha:1]
+
+
+/*--------- 颜色RGB ---------*/
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+#define RGB(r,g,b) RGBA(r,g,b,1.0f)
+
+
+/*--------- 最短定位距离(米) ---------*/
+#define CMLocationDistance 500
+
+
+/*--------- NSUserDefaults ---------*/
+// 服务器地址用户名
+#define udUserName @"userName"
+// 服务器地址用户密码
+#define udPassWord @"passWord"
+
+
+
+/*--------- 无数据提示图片 ---------*/
+#define LM_NoResult_noOrder @"noOrder"
+#define LM_NoResult_noResult @"lm_no_result"
+
+
+/*--------- 全局变量 ---------*/
+
+//记住上次选择了哪个项目，例如：前海、怡宝。设置启动页图片用，默认怡宝
+#define kWelcomeImageName @"ListTimeSelectProduct"
+
+//
+#define CheckOrderViewControllerMenuHeight 44
+
+#define mTagGetCustomerChartDataList @"mTagGetCustomerChartDataList"
+
+#define mTagGetProductChartDataList @"mTagGetProductChartDataList"
+
+/// 固定值
+#define kENT_IDX 9008
+
+/// 商品为正常商品类型
+#define kPRODUCT_TYPE_NORMAL @"NR"
+
+
+/*--------- 通知 ---------*/
+#define kConfirmOrderViewControllerRefreshGifts @"ConfirmOrderViewControllerRefreshGifts"
+
+// MainViewController 控制器接收消息并显示
+#define kMainViewController_receiveMsg @"MainViewController_receiveMsg"
+
+// GetStockListViewController 控制器接收消息并显示
+#define kGetStockListViewController_receiveMsg @"GetStockListViewController_receiveMsg"
+
+// OrderingViewController 控制器接收消息并显示
+#define kOrderingViewController_receiveMsg @"OrderingViewController_receiveMsg"
+
+// 选择地区成功后，通知刷新数据
+#define kAreaCity_reloadData_Notification @"AreaCity_reloadData_Notification"
+
+// AddressListViewController 控制器接收消息并显示
+#define kAddressListViewController_receiveMsg @"AddressListViewController_receiveMsg"
+
+// LoginViewController 控制器接收消息并显示
+#define kLoginViewController_receiveMsg @"LoginViewController_receiveMsg"
+
+// GetPartyListViewController 客户列表收消息并显示
+#define kGetPartyListViewController_receiveMsg @"GetPartyListViewController_receiveMsg"
+
+// Add_AddressViewController 接收地址
+#define kAdd_AddressViewController_receiveMsg @"Add_AddressViewController_receiveMsg"
+
+// StockOutViewController 接收地址
+#define kStockOutViewController_receiveMsg @"StockOutViewController_receiveMsg"
+
+
+
+
+/*--------- API ---------*/
+
+/// 服务器地址
+#define API_ServerAddress @"http://oms.kaidongyuan.com:8088"
+
+/// 登陆接口
+#define API_LOGIN @"http://oms.kaidongyuan.com:8088/api/Login"
+
+/// 获取在途订单列表
+#define API_GET_ORDER_LIST @"http://oms.kaidongyuan.com:8088/api/GetOrderList"
+
+/// 获取用户业务类型
+#define API_GET_BUISNESS_LIST @"http://oms.kaidongyuan.com:8088/api/GetBuisnessList"
+
+/// 获取用户业务类型
+#define API_UPDATA_PASSWORD @"http://oms.kaidongyuan.com:8088/api/modifyPassword"
+
+/// 获取订单详情
+#define API_GET_ORDER_DETAIL @"http://oms.kaidongyuan.com:8088/api/GetOrderDetail"
+
+/// 获取热销产品
+#define API_GET_HOT_SELL_PRODUCT @"http://oms.kaidongyuan.com:8088/api/GetProductList"
+
+/// 获取订单物流信息
+#define API_GET_ORDER_TMSLIST @"http://oms.kaidongyuan.com:8088/api/GetOrderTmsList"
+
+/// 获取物流信息详情  GetOrderTmsOrderNoInfo   GetOrderTmsInfo
+#define API_GET_ORDER_TMS_INFORMATION @"http://oms.kaidongyuan.com:8088/api/GetOrderTmsOrderNoInfo"
+
+/// 获取客户列表
+#define API_GET_PARTY_LIST @"http://oms.kaidongyuan.com:8088/api/GetPartyList"
+
+/// 获取地址列表
+#define API_GET_ADDRESS @"http://oms.kaidongyuan.com:8088/api/GetAddress"
+
+/// 获取付款方式 post strLicense  过来就行了
+#define API_GET_PAYMENT_TYPE @"http://oms.kaidongyuan.com:8088/api/GetPaymentType"
+
+/// 获取产品品牌和分类列表
+#define API_GET_PRODUCT_TYPE @"http://oms.kaidongyuan.com:8088/api/GetProductType"
+
+/// 根据品牌分类信息获取产品列表
+#define API_GET_PRDUCT_LIST_TYPE @"http://oms.kaidongyuan.com:8088/api/GetProductListType"
+
+/// 获取电子签名和交货现场图片
+#define API_GETAUTOGRAPH @"http://oms.kaidongyuan.com:8088/api/GetAutograph"
+
+/// 服务端存放电子签名的图片文件夹
+#define API_SERVER_AUTOGRAPH_AND_PICTURE_FILE @"http://oms.kaidongyuan.com:8088/Uploadfile"
+
+/// 获取订单位置信息
+#define API_GET_LOCATION @"http://oms.kaidongyuan.com:8088/api/GetLocaltion"
+
+/// 获取客户报表
+#define API_GET_CUSTOMER_CHART_DATA @"http://oms.kaidongyuan.com:8088/api/CustomerCount"
+
+/// 获取产品报表
+#define API_GET_PRODUCT_CHART_DATA @"http://oms.kaidongyuan.com:8088/api/ProductCount"
+
+/// 请求产品策略
+#define API_GET_SUBMIT_ORDER @"http://oms.kaidongyuan.com:8088/api/SubmitOrder1"
+
+/// 获取赠品品类详细信息
+#define API_GET_COMMODITY_DATA @"http://oms.kaidongyuan.com:8088/api/GetProductListType"
+
+/// 最终提交订单
+#define API_CONFIRM_ORDER @"http://oms.kaidongyuan.com:8088/api/ConfirmOrder"
+
+/// 添加客户库存
+#define API_AddStock @"http://oms.kaidongyuan.com:8088/api/AddStock"
+
+/// 展示客户库存登记表
+#define API_GetStockList @"http://oms.kaidongyuan.com:8088/api/GetStockList1"
+
+/// 展示客户库存详细登记
+#define API_GetAppStockList @"http://oms.kaidongyuan.com:8088/api/GetAppStockList"
+
+/// 取消客户库存
+#define API_CancelStock @"http://oms.kaidongyuan.com:8088/api/CancelStock"
+
+/// 展示客户费用
+#define API_GetFeeList @"http://oms.kaidongyuan.com:8088/api/GetFeeList"
+
+/// 订单取消流程
+#define API_OrderCancel @"http://oms.kaidongyuan.com:8088/api/OrderCancel"
+
+/// 账单列表
+#define API_GetAppBillFeeList @"http://oms.kaidongyuan.com:8088/api/GetAppBillFeeList"
+
+/// 费用列表
+#define API_GetAppBusinessFeeList @"http://oms.kaidongyuan.com:8088/api/GetAppBusinessFeeList"
+
+/// 注册
+#define API_register @"http://oms.kaidongyuan.com:8088/api/register"
+
+/// 加入客户资料
+#define API_AddParty @"http://oms.kaidongyuan.com:8088/api/AddParty"
+
+/// 解绑客户资料
+#define API_DeleteAppUserParty @"http://oms.kaidongyuan.com:8088/api/DeleteAppUserParty"
+
+/// 增加地址
+#define API_AddAddress @"http://oms.kaidongyuan.com:8088/api/AddAddress"
+
+/// 修改地址
+#define API_UpdateAddress @"http://oms.kaidongyuan.com:8088/api/UpdateAddress"
+
+/// 删除地址
+#define API_DeleteAddress @"http://oms.kaidongyuan.com:8088/api/DeleteAddress"
+
+/// 获取地址省
+#define API_NormalAdressList @"http://oms.kaidongyuan.com:8088/api/NormalAdressList"
+
+/// 出库的收货人
+#define API_GetToAddressList @"http://oms.kaidongyuan.com:8088/api/GetToAddressList"
+
+/// 获取产品列表
+#define API_GetOutProductList @"http://oms.kaidongyuan.com:8088/api/GetOutProductList"
+
+/// 保存出库单
+#define API_SaveOutput @"http://oms.kaidongyuan.com:8088/api/SaveOutput"
+
+/// 确认出库单
+#define API_OutPutWorkflow @"http://oms.kaidongyuan.com:8088/api/OutPutWorkflow"
+
+/// 取消出库单
+#define API_OutPutCancel @"http://oms.kaidongyuan.com:8088/api/OutPutCancel"
+
+/// 获取出库列表
+#define API_GetOupputList @"http://oms.kaidongyuan.com:8088/api/GetOupputList"
+
+/// 获取出库详情
+#define API_GetOupputInfo @"http://oms.kaidongyuan.com:8088/api/GetOupputInfo"
+
+
+
+/*--------- 判断iOS版本 ---------*/
+#define SystemVersion [[UIDevice currentDevice] systemVersion].floatValue
+
+/*--------- 屏幕尺寸 ---------*/
+#define ScreenHeight [UIScreen mainScreen] .bounds.size.height
+#define ScreenWidth [UIScreen mainScreen] .bounds.size.width
+
+
+
+
+
+#ifdef DEBUG
+#define LMLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define LMLog( s, ... )
+#endif
+

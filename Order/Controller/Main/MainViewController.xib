@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+            <connections>
+                <outlet property="cycleScrollView" destination="q0c-Th-qbD" id="Jv7-sB-BeZ"/>
+                <outlet property="myCollectionView" destination="ahn-mq-hGj" id="eKA-8j-MF6"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0c-Th-qbD" userLabel="广告轮播" customClass="SDCycleScrollView">
+                    <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="q0c-Th-qbD" secondAttribute="height" multiplier="2:1" id="dyt-Tb-x5i"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ahn-mq-hGj">
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5mU-Pa-Xd9">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Gf2-hc-Ey9"/>
+                        <outlet property="delegate" destination="-1" id="47P-rF-GMl"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ahn-mq-hGj" firstAttribute="top" secondItem="q0c-Th-qbD" secondAttribute="bottom" constant="2" id="6t9-q6-9VE"/>
+                <constraint firstAttribute="trailing" secondItem="q0c-Th-qbD" secondAttribute="trailing" id="B3p-sF-gr4"/>
+                <constraint firstAttribute="bottom" secondItem="ahn-mq-hGj" secondAttribute="bottom" constant="49" id="JkC-IV-wQm"/>
+                <constraint firstAttribute="trailing" secondItem="ahn-mq-hGj" secondAttribute="trailing" id="ZKU-0d-jl9"/>
+                <constraint firstItem="q0c-Th-qbD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="awq-CF-Nj0"/>
+                <constraint firstItem="ahn-mq-hGj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bcK-As-j8h"/>
+                <constraint firstItem="q0c-Th-qbD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kNr-ew-bbk"/>
+            </constraints>
+            <point key="canvasLocation" x="313" y="252"/>
+        </view>
+    </objects>
+</document>

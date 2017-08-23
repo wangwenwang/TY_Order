@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchOrderPathViewController">
+            <connections>
+                <outlet property="baiduMapView" destination="rIc-5A-HQe" id="YRj-au-ZJv"/>
+                <outlet property="searchDisplayController" destination="c4z-uK-QoZ" id="geB-1a-mNG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="1T4-cJ-2eN">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="QAH-Wp-o77"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIc-5A-HQe" customClass="BMKMapView">
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="rIc-5A-HQe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5d2-FD-TbX"/>
+                <constraint firstAttribute="bottom" secondItem="rIc-5A-HQe" secondAttribute="bottom" id="7g5-26-4Nt"/>
+                <constraint firstItem="rIc-5A-HQe" firstAttribute="top" secondItem="1T4-cJ-2eN" secondAttribute="bottom" id="CDe-hN-qjt"/>
+                <constraint firstAttribute="trailing" secondItem="rIc-5A-HQe" secondAttribute="trailing" id="CFo-Mj-H0L"/>
+                <constraint firstItem="1T4-cJ-2eN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Iyc-Ta-JHk"/>
+                <constraint firstAttribute="trailing" secondItem="1T4-cJ-2eN" secondAttribute="trailing" id="YyW-bg-oyb"/>
+                <constraint firstItem="1T4-cJ-2eN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aFy-H1-fJr"/>
+            </constraints>
+        </view>
+        <searchDisplayController id="c4z-uK-QoZ">
+            <connections>
+                <outlet property="delegate" destination="-1" id="TYm-Nc-WfU"/>
+                <outlet property="searchContentsController" destination="-1" id="5vD-If-IWd"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="8BU-Ba-ix6"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="Bsc-N7-jEj"/>
+            </connections>
+        </searchDisplayController>
+    </objects>
+</document>

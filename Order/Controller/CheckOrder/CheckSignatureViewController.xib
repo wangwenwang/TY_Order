@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckSignatureViewController">
+            <connections>
+                <outlet property="button1" destination="f7w-0U-SAk" id="5fP-JW-uHx"/>
+                <outlet property="button2" destination="ecC-uh-ZJJ" id="McF-fy-uEw"/>
+                <outlet property="button3" destination="dV8-S0-6Px" id="Jls-Aa-DMe"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mK4-eR-7aF" userLabel="照片 View1">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单签收：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Eg-rL-C7B">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7w-0U-SAk">
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="f7w-0U-SAk" secondAttribute="height" multiplier="2:1" id="E8H-Uw-9N5"/>
+                            </constraints>
+                            <state key="normal" image="ic_imageview_default_bg"/>
+                            <connections>
+                                <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="LDN-sv-EEb"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstItem="f7w-0U-SAk" firstAttribute="top" secondItem="mK4-eR-7aF" secondAttribute="top" constant="50" id="7Zi-eE-1x6"/>
+                        <constraint firstItem="f7w-0U-SAk" firstAttribute="centerX" secondItem="mK4-eR-7aF" secondAttribute="centerX" id="AbK-fM-geP"/>
+                        <constraint firstItem="1Eg-rL-C7B" firstAttribute="leading" secondItem="mK4-eR-7aF" secondAttribute="leading" constant="10" id="Abw-MT-fAN"/>
+                        <constraint firstItem="1Eg-rL-C7B" firstAttribute="top" secondItem="mK4-eR-7aF" secondAttribute="top" constant="15" id="Ds1-B0-geT"/>
+                        <constraint firstAttribute="bottom" secondItem="f7w-0U-SAk" secondAttribute="bottom" constant="15" id="xkQ-Ym-JBj"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3Z-dG-CoI" userLabel="照片 View2">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交货现场图：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5P-QF-hYc">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecC-uh-ZJJ">
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ecC-uh-ZJJ" secondAttribute="height" multiplier="2:1" id="Gkh-n8-trf"/>
+                            </constraints>
+                            <state key="normal" image="ic_imageview_default_bg"/>
+                            <connections>
+                                <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="yaz-Ow-Gnl"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="y5P-QF-hYc" firstAttribute="top" secondItem="M3Z-dG-CoI" secondAttribute="top" constant="15" id="28c-tF-FjP"/>
+                        <constraint firstItem="ecC-uh-ZJJ" firstAttribute="top" secondItem="M3Z-dG-CoI" secondAttribute="top" constant="50" id="BDn-2C-njq"/>
+                        <constraint firstAttribute="bottom" secondItem="ecC-uh-ZJJ" secondAttribute="bottom" constant="15" id="P4g-9l-YcM"/>
+                        <constraint firstItem="y5P-QF-hYc" firstAttribute="leading" secondItem="M3Z-dG-CoI" secondAttribute="leading" constant="10" id="WCW-Wu-1Og"/>
+                        <constraint firstItem="ecC-uh-ZJJ" firstAttribute="centerX" secondItem="M3Z-dG-CoI" secondAttribute="centerX" id="mG8-rF-LZM"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PEW-uU-wWV" userLabel="照片 View3">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交货现场图：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGT-lM-Fjh">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dV8-S0-6Px">
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="dV8-S0-6Px" secondAttribute="height" multiplier="2:1" id="ZRF-3I-6jz"/>
+                            </constraints>
+                            <state key="normal" image="ic_imageview_default_bg"/>
+                            <connections>
+                                <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="f5m-ID-LPB"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="dV8-S0-6Px" firstAttribute="top" secondItem="PEW-uU-wWV" secondAttribute="top" constant="50" id="BXH-GL-Ycc"/>
+                        <constraint firstItem="fGT-lM-Fjh" firstAttribute="top" secondItem="PEW-uU-wWV" secondAttribute="top" constant="15" id="CjQ-jk-f7Y"/>
+                        <constraint firstItem="dV8-S0-6Px" firstAttribute="centerX" secondItem="PEW-uU-wWV" secondAttribute="centerX" id="NXr-mH-OiW"/>
+                        <constraint firstItem="fGT-lM-Fjh" firstAttribute="leading" secondItem="PEW-uU-wWV" secondAttribute="leading" constant="10" id="Rip-SL-OfY"/>
+                        <constraint firstAttribute="bottom" secondItem="dV8-S0-6Px" secondAttribute="bottom" constant="15" id="aXK-p9-s4J"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="PEW-uU-wWV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7tE-Oy-0d3"/>
+                <constraint firstItem="M3Z-dG-CoI" firstAttribute="height" secondItem="mK4-eR-7aF" secondAttribute="height" id="CW9-Bq-lkM"/>
+                <constraint firstItem="M3Z-dG-CoI" firstAttribute="top" secondItem="mK4-eR-7aF" secondAttribute="bottom" id="DRr-7N-mQu"/>
+                <constraint firstAttribute="bottom" secondItem="PEW-uU-wWV" secondAttribute="bottom" id="EPf-ld-Xw2"/>
+                <constraint firstItem="PEW-uU-wWV" firstAttribute="top" secondItem="M3Z-dG-CoI" secondAttribute="bottom" id="Fei-7V-HdT"/>
+                <constraint firstItem="M3Z-dG-CoI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Jic-q1-moR"/>
+                <constraint firstAttribute="trailing" secondItem="M3Z-dG-CoI" secondAttribute="trailing" id="KQd-hp-dUb"/>
+                <constraint firstItem="PEW-uU-wWV" firstAttribute="top" secondItem="M3Z-dG-CoI" secondAttribute="bottom" id="L1j-Jz-ED9"/>
+                <constraint firstItem="M3Z-dG-CoI" firstAttribute="top" secondItem="mK4-eR-7aF" secondAttribute="bottom" id="OGU-cV-Sy0"/>
+                <constraint firstAttribute="trailing" secondItem="PEW-uU-wWV" secondAttribute="trailing" id="P8f-67-gA9"/>
+                <constraint firstItem="mK4-eR-7aF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RXK-pi-tHA"/>
+                <constraint firstItem="PEW-uU-wWV" firstAttribute="height" secondItem="mK4-eR-7aF" secondAttribute="height" id="ct6-RT-6Ku"/>
+                <constraint firstItem="mK4-eR-7aF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hjS-y0-ija"/>
+                <constraint firstAttribute="trailing" secondItem="mK4-eR-7aF" secondAttribute="trailing" id="yhN-uC-KwD"/>
+            </constraints>
+            <point key="canvasLocation" x="6" y="204"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_imageview_default_bg" width="153" height="153"/>
+    </resources>
+</document>

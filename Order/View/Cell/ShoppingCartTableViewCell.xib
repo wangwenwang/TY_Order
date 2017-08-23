@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="KGk-i7-Jjw" customClass="ShoppingCartTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="444" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <frame key="frameInset" width="444" height="71"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAv-KV-Fy2" userLabel="ButtonContent View">
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dd-N6-8gV" userLabel="Del Button">
+                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="ic_del"/>
+                                <connections>
+                                    <action selector="delOnlick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZYt-W9-fM6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R22-su-lAC" userLabel="Add Button">
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                                <state key="normal" image="ic_add"/>
+                                <connections>
+                                    <action selector="addOnclick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="c7v-hQ-Ysv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1V-UQ-YB5">
+                                <state key="normal" title="0">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Y1V-UQ-YB5" firstAttribute="leading" secondItem="4dd-N6-8gV" secondAttribute="trailing" id="0nm-aL-vHb"/>
+                            <constraint firstItem="R22-su-lAC" firstAttribute="leading" secondItem="Y1V-UQ-YB5" secondAttribute="trailing" id="2A4-fh-1iT"/>
+                            <constraint firstItem="4dd-N6-8gV" firstAttribute="top" secondItem="gAv-KV-Fy2" secondAttribute="top" id="95x-Vd-rPx"/>
+                            <constraint firstItem="4dd-N6-8gV" firstAttribute="centerY" secondItem="gAv-KV-Fy2" secondAttribute="centerY" id="9n1-Cc-hGL"/>
+                            <constraint firstAttribute="width" constant="105" id="I0x-Z6-61U"/>
+                            <constraint firstItem="R22-su-lAC" firstAttribute="top" secondItem="gAv-KV-Fy2" secondAttribute="top" id="gb1-wY-79K"/>
+                            <constraint firstItem="Y1V-UQ-YB5" firstAttribute="centerY" secondItem="4dd-N6-8gV" secondAttribute="centerY" id="rXt-Rj-2im"/>
+                            <constraint firstAttribute="trailing" secondItem="R22-su-lAC" secondAttribute="trailing" id="sIr-ZT-CQb"/>
+                            <constraint firstItem="R22-su-lAC" firstAttribute="centerY" secondItem="4dd-N6-8gV" secondAttribute="centerY" id="tcx-op-xNL"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="tiq-Wc-Hkx"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="产品名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCt-DH-ceS">
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="QCt-DH-ceS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="IVY-5V-Go9"/>
+                    <constraint firstItem="gAv-KV-Fy2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QCt-DH-ceS" secondAttribute="trailing" id="RJl-rD-xmV"/>
+                    <constraint firstItem="gAv-KV-Fy2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bDe-Md-Y1u"/>
+                    <constraint firstItem="QCt-DH-ceS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e88-Of-nc4"/>
+                    <constraint firstAttribute="trailing" secondItem="gAv-KV-Fy2" secondAttribute="trailing" id="gaP-0z-Vom"/>
+                    <constraint firstAttribute="bottom" secondItem="gAv-KV-Fy2" secondAttribute="bottom" id="tO7-Tp-2b0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="productNameLabel" destination="QCt-DH-ceS" id="ass-dr-s2p"/>
+                <outlet property="productNumberButton" destination="Y1V-UQ-YB5" id="3O2-uA-hdL"/>
+            </connections>
+            <point key="canvasLocation" x="287" y="234"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_add" width="25" height="25"/>
+        <image name="ic_del" width="25" height="25"/>
+    </resources>
+</document>

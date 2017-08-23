@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MakeOrderViewController">
+            <connections>
+                <outlet property="addressTableView" destination="XA4-tD-4cK" id="uZ1-Dv-IK6"/>
+                <outlet property="addressView" destination="fUb-y8-bU7" id="ELd-jm-FqA"/>
+                <outlet property="coverView" destination="gZ7-bg-KPt" id="QMk-QI-mxi"/>
+                <outlet property="myTableView" destination="qMd-5T-O65" id="hS7-KE-nR5"/>
+                <outlet property="searchBar" destination="301-1i-Nrl" id="rvm-Uv-DfG"/>
+                <outlet property="searchBar_Top" destination="uHz-xl-YAG" id="a0a-Fh-Q9p"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" tag="1001" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qMd-5T-O65">
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Ted-xE-12f"/>
+                        <outlet property="delegate" destination="-1" id="mDk-VW-QhH"/>
+                    </connections>
+                </tableView>
+                <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZ7-bg-KPt" userLabel="Cover View">
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUb-y8-bU7" userLabel="Address View">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择下单客户地址：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j7o-Fy-12K">
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" tag="1002" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XA4-tD-4cK" userLabel="Address Table View">
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="DFd-Dy-amz"/>
+                                <outlet property="delegate" destination="-1" id="9XL-hs-NYa"/>
+                            </connections>
+                        </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vh9-8a-9eh">
+                            <color key="backgroundColor" red="0.92549019610000005" green="0.45882352939999999" blue="0.14901960780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancelSelectAddressOnclick:" destination="-1" eventType="touchUpInside" id="IYZ-V6-xX2"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="j7o-Fy-12K" firstAttribute="leading" secondItem="fUb-y8-bU7" secondAttribute="leading" constant="5" id="AcZ-qf-DA9"/>
+                        <constraint firstAttribute="bottom" secondItem="vh9-8a-9eh" secondAttribute="bottom" constant="20" id="BLT-RF-bn1"/>
+                        <constraint firstItem="XA4-tD-4cK" firstAttribute="leading" secondItem="j7o-Fy-12K" secondAttribute="leading" id="MqD-ma-zdm"/>
+                        <constraint firstItem="j7o-Fy-12K" firstAttribute="top" secondItem="fUb-y8-bU7" secondAttribute="top" constant="5" id="fj7-vR-bc0"/>
+                        <constraint firstItem="XA4-tD-4cK" firstAttribute="top" secondItem="j7o-Fy-12K" secondAttribute="bottom" constant="15" id="tYt-mo-z91"/>
+                        <constraint firstItem="vh9-8a-9eh" firstAttribute="leading" secondItem="fUb-y8-bU7" secondAttribute="leading" constant="30" id="vet-6r-tM4"/>
+                        <constraint firstAttribute="trailing" secondItem="XA4-tD-4cK" secondAttribute="trailing" constant="5" id="xTK-FM-C3o"/>
+                        <constraint firstItem="vh9-8a-9eh" firstAttribute="top" secondItem="XA4-tD-4cK" secondAttribute="bottom" constant="20" id="y1Q-S8-v8q"/>
+                        <constraint firstAttribute="height" constant="300" id="z9o-0S-LUd"/>
+                        <constraint firstAttribute="trailing" secondItem="vh9-8a-9eh" secondAttribute="trailing" constant="30" id="zgn-uA-F3U"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KiY-aL-Jb7">
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="fiu-n6-4q9"/>
+                    </constraints>
+                </view>
+                <searchBar contentMode="redraw" placeholder="按客户名称搜索" translatesAutoresizingMaskIntoConstraints="NO" id="301-1i-Nrl">
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="CX9-0r-Yr5"/>
+                    </constraints>
+                    <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="7pk-Pm-rDc"/>
+                    </connections>
+                </searchBar>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="qMd-5T-O65" secondAttribute="trailing" id="0N1-Cg-sJ6"/>
+                <constraint firstItem="gZ7-bg-KPt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4AN-gk-Ve6"/>
+                <constraint firstItem="qMd-5T-O65" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4Ja-9o-5sj"/>
+                <constraint firstAttribute="trailing" secondItem="gZ7-bg-KPt" secondAttribute="trailing" id="7j7-tp-Xlf"/>
+                <constraint firstItem="KiY-aL-Jb7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BMV-mD-Q32"/>
+                <constraint firstItem="301-1i-Nrl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DnF-rp-e3c"/>
+                <constraint firstItem="fUb-y8-bU7" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="HVd-9C-HYg"/>
+                <constraint firstAttribute="bottom" secondItem="gZ7-bg-KPt" secondAttribute="bottom" id="Svg-yn-er6"/>
+                <constraint firstAttribute="trailing" secondItem="301-1i-Nrl" secondAttribute="trailing" id="acv-T1-RTy"/>
+                <constraint firstAttribute="trailing" secondItem="KiY-aL-Jb7" secondAttribute="trailing" id="bYe-Ne-aTH"/>
+                <constraint firstItem="KiY-aL-Jb7" firstAttribute="top" secondItem="qMd-5T-O65" secondAttribute="bottom" id="jKu-x3-g06"/>
+                <constraint firstItem="fUb-y8-bU7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="oiv-8E-M0l"/>
+                <constraint firstItem="qMd-5T-O65" firstAttribute="top" secondItem="301-1i-Nrl" secondAttribute="bottom" id="rTk-fd-pg1"/>
+                <constraint firstItem="301-1i-Nrl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uHz-xl-YAG"/>
+                <constraint firstItem="gZ7-bg-KPt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vEr-Qz-hX1"/>
+                <constraint firstAttribute="bottom" secondItem="KiY-aL-Jb7" secondAttribute="bottom" id="y89-X2-Znm"/>
+                <constraint firstAttribute="trailing" secondItem="fUb-y8-bU7" secondAttribute="trailing" constant="30" id="zJx-78-1lM"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="fUb-y8-bU7"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

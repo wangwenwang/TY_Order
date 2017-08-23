@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>用户姓名：</string>
+		<key>imageName</key>
+		<string>ic_minefragment_username</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>用户角色：</string>
+		<key>imageName</key>
+		<string>ic_minefragment_business</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>业务类型：</string>
+		<key>imageName</key>
+		<string>ic_minefragment_businesstype</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>修改密码</string>
+		<key>imageName</key>
+		<string>ic_minefragment_updatapassword</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>版本号：     </string>
+		<key>imageName</key>
+		<string>ic_minefragment_updataversion</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>关于</string>
+		<key>imageName</key>
+		<string>ic_minefragment_about</string>
+	</dict>
+</array>
+</plist>
