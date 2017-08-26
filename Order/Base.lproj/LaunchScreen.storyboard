@@ -22,9 +22,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7CS-sh-vQc" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="Vul-St-1Tm"/>
+                            <constraint firstAttribute="bottom" secondItem="7CS-sh-vQc" secondAttribute="bottom" id="38m-3o-k74"/>
                             <constraint firstAttribute="trailing" secondItem="7CS-sh-vQc" secondAttribute="trailing" id="Wqh-Zi-12I"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="7CS-sh-vQc" secondAttribute="bottom" id="pFE-h5-TMz"/>
+                            <constraint firstItem="7CS-sh-vQc" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="cgL-mA-RDh"/>
                             <constraint firstItem="7CS-sh-vQc" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="yZX-TC-Zf7"/>
                         </constraints>
                     </view>
@@ -35,6 +35,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="login_background" width="480" height="371"/>
+        <image name="login_background" width="320" height="568"/>
     </resources>
 </document>
