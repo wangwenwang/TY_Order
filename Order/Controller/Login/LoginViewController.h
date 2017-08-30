@@ -10,4 +10,8 @@
 
 @interface LoginViewController : UIViewController
 
+
+/// 是否清除密码
+@property (assign, nonatomic) BOOL clearPwd;
+
 @end

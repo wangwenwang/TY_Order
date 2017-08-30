@@ -12,6 +12,7 @@
 #import "ChangePasswordService.h"
 #import <MBProgressHUD.h>
 #import "UIViewController+BackButtonHandler.h"
+#import "LoginViewController.h"
 
 @interface ChangePasswordViewController ()<ChangePasswordServiceDelatate>
 
@@ -93,11 +94,16 @@
 
 - (void)successOfChangePassword {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [Tools showAlert:self.view andTitle:@"修改成功"];
+    [Tools showAlert:self.view andTitle:@"修改成功" andTime:2];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
         sleep(2);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+            LoginViewController *vc = [[LoginViewController alloc] init];
+            vc.clearPwd = YES;
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+            [Tools setRootViewControllerWithCrossDissolve:self.view.window andViewController:nav];
         });
     });
 }

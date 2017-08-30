@@ -775,7 +775,7 @@ typedef enum : NSInteger {
         // 填充基本数据
         [cell.productImageView sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:[UIImage imageNamed:@"ic_information_picture"] options:SDWebImageRefreshCached];
         cell.productNameLabel.text = [self getProductName:m.PRODUCT_NAME];
-        cell.productFormatLabel.text = [self getProductFormat:m.PRODUCT_NAME];
+        cell.productFormatLabel.text = m.PRODUCT_DESC;
         cell.productPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", m.PRODUCT_PRICE];
         [cell.productNumberButton setTitle:[NSString stringWithFormat:@"%lld", m.CHOICED_SIZE] forState:UIControlStateNormal];
         

@@ -174,7 +174,7 @@
     if(a && b) {
         
         _userNameT.text = a;
-        _pswT.text = b;
+        if(!_clearPwd) _pswT.text = b;
     }
 }
 
