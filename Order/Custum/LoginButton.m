@@ -22,7 +22,7 @@
     if(self = [super initWithCoder:aDecoder]) {
         
         self.layer.cornerRadius = 3.0f;
-        self.backgroundColor = YTColor;
+        self.backgroundColor = TYColor;
         [self setTitleColor:[UIColor colorWithRed:0 / 255.0 green:90 / 255.0 blue:55 / 255.0 alpha:1.0] forState:UIControlStateNormal];
     }
     return self;

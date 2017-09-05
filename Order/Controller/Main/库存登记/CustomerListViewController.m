@@ -455,7 +455,7 @@
         [btn setTitle:@"取消" forState:UIControlStateNormal];
         btn.layer.cornerRadius = 2.0f;
         [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        btn.backgroundColor = YTColor;
+        btn.backgroundColor = TYColor;
         [btn addTarget:self action:@selector(cancelAddressOnclick) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -28,7 +28,7 @@
     _mapManager = [[BMKMapManager alloc] init];
     
     // 如果要关注网络及授权验证事件，请设定generalDelegate参数
-    BOOL ret = [_mapManager start:@"dpekkrgejAC0vIdyFZG6ZIMpPwrGgHtW"  generalDelegate:self];
+    BOOL ret = [_mapManager start:@"HhuRNW1RoFjYQx7O07m2murvNM9Zcj1O"  generalDelegate:self];
     if (!ret) {
         NSLog(@"百度地图加载失败！");
     }else {
@@ -38,7 +38,7 @@
     
     [UINavigationBar appearance].translucent = NO;
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
-    [[UINavigationBar appearance] setBarTintColor:YTColor];
+    [[UINavigationBar appearance] setBarTintColor:TYColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 //    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     

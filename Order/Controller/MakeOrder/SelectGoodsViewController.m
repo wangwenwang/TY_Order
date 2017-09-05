@@ -1686,7 +1686,7 @@ typedef enum : NSInteger {
     
     // 确定
     UIButton *btnComplete = [[UIButton alloc] init];
-    btnComplete.backgroundColor = YTColor;
+    btnComplete.backgroundColor = TYColor;
     [btnComplete addTarget:self action:@selector(CompleteCustomsizeProductNumOnclick) forControlEvents:UIControlEventTouchUpInside];
     btnComplete.layer.cornerRadius = 2.0f;
     [btnComplete setTitle:@"确定" forState:UIControlStateNormal];
@@ -1700,7 +1700,7 @@ typedef enum : NSInteger {
     }];
     
     // 取消
-    btnCancel.backgroundColor = YTColor;
+    btnCancel.backgroundColor = TYColor;
     [btnCancel addTarget:self action:@selector(CancelCustomsizeProductNumOnclick) forControlEvents:UIControlEventTouchUpInside];
     [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
     btnCancel.layer.cornerRadius = btnComplete.layer.cornerRadius;

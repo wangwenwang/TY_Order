@@ -25,16 +25,16 @@
 
 @interface LoginViewController ()<LoginServiceDelegate, UIAlertViewDelegate>
 
-//帐号
+// 帐号
 @property (weak, nonatomic) IBOutlet UITextField *userNameT;
 
-//密码
+// 密码
 @property (weak, nonatomic) IBOutlet UITextField *pswT;
 
-/// 网络操作层
+// 网络操作层
 @property (strong, nonatomic) LoginService *service;
 
-/// 全局变量
+// 全局变量
 @property (strong, nonatomic) AppDelegate *app;
 
 @property (strong, nonatomic) NSMutableArray *business;
@@ -238,7 +238,7 @@
     
     //
     UITabBarController *tbc = [[UITabBarController alloc] init];
-    tbc.tabBar.tintColor = YTColor;
+    tbc.tabBar.tintColor = TYColor;
 //    tbc.viewControllers = @[mainVC_nav, makeVC_nav, pageController_nav, mineVC_nav];
     tbc.viewControllers = @[mainVC, makeVC, pageController, mineVC];
     
