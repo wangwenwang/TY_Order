@@ -42,6 +42,8 @@
                       @"20", @"strPageCount",
                       @"", @"strLicense",
                       nil];
+        
+        NSLog(@"订单列表参数:%@", parameters);
     }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

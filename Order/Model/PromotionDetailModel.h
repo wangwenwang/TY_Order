@@ -28,7 +28,7 @@
 
 @property(assign, nonatomic)long long LINE_NO;
 
-@property(assign, nonatomic)long long PO_QTY;
+@property(assign, nonatomic)CGFloat PO_QTY;
 
 @property(copy, nonatomic)NSString *PO_UOM;
 

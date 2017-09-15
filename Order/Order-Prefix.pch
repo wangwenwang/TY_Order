@@ -38,6 +38,17 @@
 #import "NSString+Trim.h"
 #import "UITextField+Extension.h"
 
+/*--------- 角色划分 ---------*/
+#define kPARTY      @"PARTY"        // 客户　　　　   　下单权限        13800138000
+#define kBUSINESS   @"BUSINESS"     // 业务　　　　   　下单权限        13800138001
+#define kMANAGER    @"MANAGER"      // 经理　　　　   　审核权限        13800138002
+#define kADMIN      @"ADMIN"        // 管理员　　　　   APP管理员     　138001380004
+
+
+
+/// WMPageController由滑动停留在VC，由点击标题停留在VC不通知
+#define kWMPageController_ScrollViewDidEndDecelerating @"WMPageController_ScrollViewDidEndDecelerating"
+
 
 /*--------- 主题色 ---------*/
 #define TYColor [UIColor colorWithRed:0 / 255.0 green:104 / 255.0 blue:184 / 255.0 alpha:1]
@@ -250,6 +261,12 @@
 
 /// 获取出库详情
 #define API_GetOupputInfo @"http://119.29.148.189:8888/api/GetOupputInfo"
+
+/// 审核通过
+#define API_UpdateAudit @"http://119.29.148.189:8888/api/UpdateAudit"
+
+/// 审核不通过
+#define API_RuturnAudit @"http://119.29.148.189:8888/api/RuturnAudit"
 
 
 

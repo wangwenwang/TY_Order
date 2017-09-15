@@ -74,6 +74,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"我的";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 
 

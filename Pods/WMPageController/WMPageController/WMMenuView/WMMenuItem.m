@@ -48,7 +48,7 @@
     _step = _gap / self.speedFactor;
     if (_link) {
         [_link invalidate];
-        [_link removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+//        [_link removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     }
     CADisplayLink *link = [CADisplayLink displayLinkWithTarget:self selector:@selector(rateChange)];
     [link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -56,7 +56,6 @@
 }
 
 - (void)rateChange {
-    
     if (_gap > 0.000001) {
         _gap -= _step;
         if (_gap < 0.0) {
@@ -69,11 +68,11 @@
         [_link invalidate];
         _link = nil;
     }
-    
 }
 
 // 设置rate,并刷新标题状态
 - (void)setRate:(CGFloat)rate {
+    if (rate < 0.0 || rate > 1.0) { return; }
     _rate = rate;
     CGFloat r = _normalRed + (_selectedRed - _normalRed) * rate;
     CGFloat g = _normalGreen + (_selectedGreen - _normalGreen) * rate;
@@ -85,12 +84,12 @@
     self.transform = CGAffineTransformMakeScale(trueScale, trueScale);
 }
 
-- (void)selectedItemWithoutAnimation {
+- (void)selectedWithoutAnimation {
     self.rate = 1.0;
     _selected = YES;
 }
 
-- (void)deselectedItemWithoutAnimation {
+- (void)deselectedWithoutAnimation {
     self.rate = 0;
     _selected = NO;
 }

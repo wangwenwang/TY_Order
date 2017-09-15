@@ -81,6 +81,32 @@
 }
 
 
+/*--------------   我们是一个组合   --------------*/
+// 框架有bug，viewDidAppear 在 viewWillAppear时执行了
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    [self viewDidAppear];
+}
+
+
+// 框架有bug，viewDidAppear 在 viewWillAppear时执行了
+- (void)scrollViewDidEndDeceleratingMethod {
+    
+    [self viewDidAppear];
+}
+
+
+// 框架有bug，viewDidAppear 在 viewWillAppear时执行了
+- (void)viewDidAppear {
+    
+    //    _app.currCheckOrderClass = [self class];
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
+}
+/*--------------   我们是一个组合   --------------*/
+
+
 #pragma mark - 控件GET方法
 
 - (UITableView *)myTableView {
@@ -162,12 +188,15 @@
     static NSString *cellID = @"CheckOrderTableViewCell";
     CheckOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     OrderModel *order = _orders[indexPath.row];
+    cell.tableClass = [self class];
     cell.order = order;
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     OrderModel *order = _orders[indexPath.row];

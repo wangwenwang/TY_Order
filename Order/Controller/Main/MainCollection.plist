@@ -4,12 +4,6 @@
 <array>
 	<dict>
 		<key>title</key>
-		<string>货物轨迹</string>
-		<key>imageName</key>
-		<string>ic_track_press</string>
-	</dict>
-	<dict>
-		<key>title</key>
 		<string>最新资讯</string>
 		<key>imageName</key>
 		<string>ic_information</string>

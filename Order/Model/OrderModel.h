@@ -83,4 +83,7 @@
 
 - (void)setDict:(NSDictionary *)dict;
 
+// 9
+@property (assign, nonatomic) NSUInteger cellHeight;
+
 @end

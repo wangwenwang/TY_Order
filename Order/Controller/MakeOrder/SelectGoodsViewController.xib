@@ -38,6 +38,7 @@
                 <outlet property="shoppingCarTableView" destination="Igj-he-Vtb" id="dDt-I3-o0f"/>
                 <outlet property="shoppingCarView" destination="hDH-Wu-xma" id="fY1-2v-aJS"/>
                 <outlet property="topView" destination="AgL-j6-tV2" id="z6G-qX-bGT"/>
+                <outlet property="topViewHeight" destination="KQH-oi-U50" id="rSt-s8-f8N"/>
                 <outlet property="typeLabel" destination="4it-dA-080" id="Cma-26-fN7"/>
                 <outlet property="typeViewWidth" destination="4Go-d9-zLo" id="3nv-xk-OcX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

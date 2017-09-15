@@ -64,7 +64,7 @@
         _PRODUCT_NO = dict[@"PRODUCT_NO"] ? dict[@"PRODUCT_NO"] : _PRODUCT_NO;
         _PRODUCT_NAME = dict[@"PRODUCT_NAME"] ? dict[@"PRODUCT_NAME"] : _PRODUCT_NAME;
         _LINE_NO = dict[@"LINE_NO"] ? [dict[@"LINE_NO"] longLongValue] : _LINE_NO;
-        _PO_QTY = dict[@"PO_QTY"] ? [dict[@"PO_QTY"] longLongValue] : _PO_QTY;
+        _PO_QTY = dict[@"PO_QTY"] ? [dict[@"PO_QTY"] floatValue] : _PO_QTY;
         _PO_UOM = dict[@"PO_UOM"] ? dict[@"PO_UOM"] : _PO_UOM;
         _PO_WEIGHT = dict[@"PO_WEIGHT"] ? [dict[@"PO_WEIGHT"] doubleValue] : _PO_WEIGHT;
         _PO_VOLUME = dict[@"PO_VOLUME"] ? [dict[@"PO_VOLUME"] doubleValue] : _PO_VOLUME;

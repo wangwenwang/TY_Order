@@ -30,8 +30,11 @@
 - (void)getChartDataList:(NSString *)url andTag:(NSString *)tag {
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 _app.user.IDX, @"strUserId",
+                                _app.business.BUSINESS_IDX, @"strBusinessIdx",
                                 @"", @"strLicense",
                                 nil];
+    
+    NSLog(@"%@", parameters);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];

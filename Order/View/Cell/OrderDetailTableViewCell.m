@@ -8,6 +8,7 @@
 
 #import "OrderDetailTableViewCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Tools.h"
 
 @interface OrderDetailTableViewCell ()
 
@@ -70,7 +71,7 @@
     
     _orderNoLabel.text = m.PRODUCT_NO;
     _goodsNameLabel.text = m.PRODUCT_NAME;
-    _quantityLabel.text = m.ISSUE_QTY ? [NSString stringWithFormat:@"%.1f箱", m.ISSUE_QTY] : @"";
+    _quantityLabel.text = m.ISSUE_QTY ? [NSString stringWithFormat:@"%@箱", [Tools formatFloat:m.ISSUE_QTY]] : @"";
     _weightLabel.text = [NSString stringWithFormat:@"%@吨", m.ORDER_WEIGHT];
     _volumeLabel.text = [NSString stringWithFormat:@"%@m³", m.ORDER_VOLUME];
     _originalPriceLabel.text = m.ORG_PRICE ? [NSString stringWithFormat:@"￥%.1f", m.ORG_PRICE] : @"￥0.0";

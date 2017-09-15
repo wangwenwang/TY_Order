@@ -49,7 +49,7 @@
 @property(assign, nonatomic)double PRODUCT_CURRENT_PRICE;
 
 /// 用户下单时选择的数量
-@property(assign, nonatomic)long long CHOICED_SIZE;
+@property(assign, nonatomic)CGFloat CHOICED_SIZE;
 
 
 /************    后期添加，UI操作时使用    ************/

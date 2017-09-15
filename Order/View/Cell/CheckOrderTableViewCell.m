@@ -8,6 +8,12 @@
 
 #import "CheckOrderTableViewCell.h"
 #import "Tools.h"
+#import "UnAuditedViewController.h"
+#import "OrderOneAuditViewController.h"
+#import "OrderTwoAuditViewController.h"
+#import "OrderingViewController.h"
+#import "OrderFinishViewController.h"
+#import "OrderCancelViewController.h"
 
 @interface CheckOrderTableViewCell ()
 
@@ -20,8 +26,6 @@
 /// 订单流程
 @property (weak, nonatomic) IBOutlet UILabel *workFlowLabel;
 
-//来计算Label走马灯
-@property (weak, nonatomic) IBOutlet UILabel *customerLabel;
 //订单号与左边的距离
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *orderleadX;
 
@@ -35,7 +39,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+//    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -51,35 +55,22 @@
     _orderNOLabel.text = order.ORD_NO;
     _createTimeLabel.text = order.ORD_DATE_ADD;
     _locationLabel.text = order.ORD_TO_NAME;
-    _workFlowLabel.text = [Tools getOrderStatus:order.ORD_STATE];
     
-    
-    [_customerLabel sizeToFit];
-    [_locationLabel sizeToFit];
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    //溢出宽度
-    CGFloat overflowWidth = CGRectGetWidth(_locationLabel.frame) - (screenWidth - _orderleadX.constant - CGRectGetWidth(_customerLabel.frame) - 5);
-    
-    
-    if(overflowWidth > 0) {
-        CGFloat cent = CGRectGetMidX(_locationLabel.frame);
-        //如果将12设置成CGRectGetMidY(_locationLabel.frame)有bug，先是8.5，重用之后才12
-        CGPoint from = CGPointMake(cent + 2, 12);
-        CGPoint to = CGPointMake(cent - overflowWidth, 12);
+    // 读取工作流程
+    if(_tableClass == [UnAuditedViewController class] || _tableClass == [OrderOneAuditViewController class] || _tableClass == [OrderTwoAuditViewController class]) {
         
-        CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-        moveAnimation.fromValue = [NSValue valueWithCGPoint:from];
-        moveAnimation.toValue = [NSValue valueWithCGPoint:to];
-        moveAnimation.autoreverses = YES;
-        moveAnimation.repeatCount = MAXFLOAT;
-        //低于两秒的设置成两秒
-        moveAnimation.duration = ((overflowWidth / 8) > 2) ? overflowWidth / 8 : 2;
+            _workFlowLabel.text = [Tools getOrderStatus:order.ORD_WORKFLOW];
+    }
+    
+    // 读取工作状态
+    else if(_tableClass == [OrderingViewController class] || _tableClass == [OrderFinishViewController class] || _tableClass == [OrderCancelViewController class]) {
         
-        //开演
-        [_locationLabel.layer addAnimation:moveAnimation forKey:@"action"];
+        _workFlowLabel.text = [Tools getOrderStatus:order.ORD_STATE];
+    }
+    
+    else {
         
-    } else {
-        [_locationLabel.layer removeAllAnimations];
+        _workFlowLabel.text = @"未知列表";
     }
 }
 

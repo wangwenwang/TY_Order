@@ -83,6 +83,9 @@
         [[NSUserDefaults standardUserDefaults] setValue:userName forKey:udUserName];
         [[NSUserDefaults standardUserDefaults] setValue:pwd forKey:udPassWord];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+        NSLog(@"fds:%@", dict);
     });
     
 //    dispatch_async(dispatch_get_global_queue(0, 0), ^{

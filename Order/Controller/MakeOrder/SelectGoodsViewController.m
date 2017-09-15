@@ -64,7 +64,7 @@ typedef enum : NSInteger {
 } CameraMoveDirection;
 
 
-@interface SelectGoodsViewController () <UITableViewDelegate, UITableViewDataSource, SelectGoodsTableViewCellDelegate, ShoppingCartTableViewCellDelegate, SelectGoodsServiceDelegate, OrderConfirmServiceDelegate, LMBlurredViewDelegate> {
+@interface SelectGoodsViewController () <UITableViewDelegate, UITableViewDataSource, SelectGoodsTableViewCellDelegate, ShoppingCartTableViewCellDelegate, SelectGoodsServiceDelegate, OrderConfirmServiceDelegate, LMBlurredViewDelegate, UISearchBarDelegate> {
     
     CameraMoveDirection direction;
     BOOL aniFlg;
@@ -102,7 +102,7 @@ typedef enum : NSInteger {
 @property (weak, nonatomic) IBOutlet UILabel *makeOrderTotalPriceLabel;
 
 // 当前的下单总数量
-@property (assign, nonatomic) long currentMakeOrderTotalCount;
+@property (assign, nonatomic) CGFloat currentMakeOrderTotalCount;
 
 // 当前的下单总价
 @property (assign, nonatomic) double currentMakeOrderTotalPrice;
@@ -237,7 +237,7 @@ typedef enum : NSInteger {
 @property (assign, nonatomic) double customsizeProductNumberPrice;
 
 // 在自定义下单数据之前，已选择的下单数量
-@property (assign, nonatomic) long long selectedProductNumber;
+@property (assign, nonatomic) CGFloat selectedProductNumber;
 
 // 订单确认服务
 @property (strong, nonatomic) OrderConfirmService *orderConfirmService;
@@ -286,6 +286,22 @@ typedef enum : NSInteger {
 @property (weak, nonatomic) IBOutlet UIView *topView;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
+
+// 产品信息列表数据(搜索过滤后的)
+@property (strong, nonatomic)NSMutableDictionary *productsFilter;
+
+// 遮罩上部分 有添加手势
+@property (strong, nonatomic) UIView *searchCoverTopView;
+
+// 遮罩下部分 有添加手势
+@property (strong, nonatomic) UIView *searchCoverBottomView;
+
+// 遮罩视觉部分 没手势
+@property (strong, nonatomic) CAShapeLayer *searchCoverCALayer;
+@property (strong, nonatomic) UIView *searchCoverView;
+
+// 顶部筛选View 高度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 
 @end
 
@@ -353,6 +369,8 @@ typedef enum : NSInteger {
     [self.view layoutIfNeeded];
     
     _otherMsg_top.constant = ScreenHeight / 2 - CGRectGetHeight(_otherMsgView.frame) / 2 - 64 - 20;
+    
+    [self addTableViewSearch];
 }
 
 
@@ -431,7 +449,54 @@ typedef enum : NSInteger {
 }
 
 
+#pragma mark - GET方法
+
+- (CALayer *)searchCoverCALayer {
+    
+    if(!_searchCoverCALayer) {
+        
+        _searchCoverCALayer = [CAShapeLayer layer];
+        _searchCoverCALayer.fillColor = [UIColor blackColor].CGColor;
+        _searchCoverCALayer.opacity = 0.2;
+        [self.view.window.layer addSublayer:_searchCoverCALayer];
+        
+        // 镂空
+        UIBezierPath *pPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(8, 64 + _topViewHeight.constant + 8, ScreenWidth - 16, 44 - 16) cornerRadius:5.0f];
+        _searchCoverCALayer.path = pPath.CGPath;
+        
+        // 底部
+        UIBezierPath *pOtherPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        _searchCoverCALayer.path = pOtherPath.CGPath;
+        
+        // 底部 添加 镂空
+        [pOtherPath appendPath:pPath];
+        _searchCoverCALayer.path = pOtherPath.CGPath;
+        
+        // 重点
+        _searchCoverCALayer.fillRule = kCAFillRuleEvenOdd;
+        
+        // 添加手势 View
+        [self addSearchCoverBgView];
+    }
+    return _searchCoverCALayer;
+}
+
+
 #pragma mark - 功能函数
+
+- (void)addTableViewSearch {
+    
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
+    searchBar.backgroundImage = [[UIImage alloc] init];
+    searchBar.barTintColor = [UIColor clearColor];
+    
+    UITextField *searchField = [searchBar valueForKey:@"_searchField"];
+    searchField.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    
+    _myTableView.tableHeaderView = searchBar;
+    [searchBar setPlaceholder:@"按名称搜索"];
+    searchBar.delegate = self;
+}
 
 // 初始化其它信息视图
 - (void)initOtherMsgView:(BOOL)first {
@@ -550,20 +615,6 @@ typedef enum : NSInteger {
 }
 
 
-// 获取产品规格，传入参数：ProductModel模型，PRODUCT_NAME变量
-- (NSString *)getProductFormat:(NSString *)str {
-    NSArray *array = [str componentsSeparatedByString:@","];
-    
-    if(array.count > 1) {
-        
-        return array[1];
-    } else {
-        
-        return @"";
-    }
-}
-
-
 // This method will determine whether the direction of the user's swipe
 - ( CameraMoveDirection )determineCameraDirectionIfNeeded:( CGPoint )translation {
     
@@ -616,6 +667,64 @@ typedef enum : NSInteger {
 }
 
 
+// 添加遮罩 View，当用户搜索的时候弹出
+- (void)addSearchCoverBgView {
+    
+    // 上部分 手势
+    UITapGestureRecognizer *TopTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchCoverViewOnclick)];
+    TopTap.numberOfTapsRequired = 1;
+    
+    // 下部分 手势
+    UITapGestureRecognizer *BottomTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchCoverViewOnclick)];
+    BottomTap.numberOfTapsRequired = 1;
+    
+    // 上部分
+    _searchCoverTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 64 + _topViewHeight.constant)];
+    [_searchCoverTopView addGestureRecognizer:TopTap];
+    [self.view.window addSubview:_searchCoverTopView];
+    
+    // 下部分
+    _searchCoverBottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchCoverTopView.frame) + 44, ScreenWidth, ScreenHeight - CGRectGetMaxY(_searchCoverTopView.frame) - 44)];
+    [_searchCoverBottomView addGestureRecognizer:BottomTap];
+    [self.view.window addSubview:_searchCoverBottomView];
+}
+
+- (UIView *)searchCoverView {
+    
+    if(!_searchCoverView) {
+        
+        _searchCoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        _searchCoverView.userInteractionEnabled = NO;
+        [self.view.window addSubview:_searchCoverView];
+        
+        
+        CAShapeLayer *pShapeLayer = [CAShapeLayer layer];
+        pShapeLayer.fillColor = [UIColor blackColor].CGColor;
+        pShapeLayer.opacity = 0.2;
+        [_searchCoverView.layer addSublayer:pShapeLayer];
+        
+        // 镂空
+        UIBezierPath *pPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(8, 64 + _topViewHeight.constant + 8, ScreenWidth - 16, 44 - 16) cornerRadius:5.0f];
+        pShapeLayer.path = pPath.CGPath;
+        
+        // 底部
+        UIBezierPath *pOtherPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        pShapeLayer.path = pOtherPath.CGPath;
+        
+        // 底部 添加 镂空
+        [pOtherPath appendPath:pPath];
+        pShapeLayer.path = pOtherPath.CGPath;
+        
+        // 重点
+        pShapeLayer.fillRule = kCAFillRuleEvenOdd;
+        
+        // 添加手势 View
+        [self addSearchCoverBgView];
+    }
+    return _searchCoverView;
+}
+
+
 #pragma mark - 点击事件
 
 // 提交
@@ -644,10 +753,10 @@ typedef enum : NSInteger {
 
 - (void)CompleteCustomsizeProductNumOnclick {
     
-    long long number = [_customsizeProductNumberF.text longLongValue];
+    CGFloat number = [_customsizeProductNumberF.text floatValue] ;
     
     // 改变的单一产品下单数量，有可能是负数
-    long long modifyNumber = number - _selectedProductNumber;
+    CGFloat modifyNumber = number - _selectedProductNumber;
     
     // 如果填写后的数量与填写前的一样，则不操作
     if(modifyNumber == 0) {
@@ -658,17 +767,17 @@ typedef enum : NSInteger {
         // 下单总数量
         _currentMakeOrderTotalCount += modifyNumber;
         
-        ProductModel *m = _dictProducts[@(_brandRow)][@(_currentSection)][_customsizeProductNumberIndexRow];
+        ProductModel *m = _productsFilter[@(_brandRow)][@(_currentSection)][_customsizeProductNumberIndexRow];
         m.CHOICED_SIZE = number;
         
         _currentMakeOrderTotalPrice += _customsizeProductNumberPrice * modifyNumber;
         
-        _makeOrderTotalNumber.text = [NSString stringWithFormat:@"%ld", _currentMakeOrderTotalCount];
+        _makeOrderTotalNumber.text = [self formatFloat:_currentMakeOrderTotalCount];
         
         _makeOrderTotalPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", _currentMakeOrderTotalPrice];
         
         // 保存已选的产品
-        if([_selectedProducts indexOfObject:_dictProducts[@(_brandRow)][@(_currentSection)][_customsizeProductNumberIndexRow]] == NSNotFound) {
+        if([_selectedProducts indexOfObject:_productsFilter[@(_brandRow)][@(_currentSection)][_customsizeProductNumberIndexRow]] == NSNotFound) {
             
             [_selectedProducts addObject:m];
         }
@@ -685,6 +794,8 @@ typedef enum : NSInteger {
         [self LMBlurredViewClear];
         
         [_blurredView clear];
+        
+        [_shoppingCarTableView reloadData];
     }
 }
 
@@ -695,7 +806,7 @@ typedef enum : NSInteger {
     
     if(tableView.tag == 1001) {
         
-        NSMutableArray *products = _dictProducts[@(_brandRow)][@(_currentSection)];
+        NSMutableArray *products = _productsFilter[@(_brandRow)][@(_currentSection)];
         return products.count;
     } else if(tableView.tag == 1002) {
         
@@ -719,7 +830,7 @@ typedef enum : NSInteger {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(tableView.tag == 1001) {
-        ProductModel *m = _dictProducts[@(_brandRow)][@(_currentSection)][indexPath.row];
+        ProductModel *m = _productsFilter[@(_brandRow)][@(_currentSection)][indexPath.row];
         
         // 产品基本信息高度69.0， 促销提示30.0， 促销信息44.0*条数
         if(m.PRODUCT_POLICY.count > 0) {
@@ -754,12 +865,30 @@ typedef enum : NSInteger {
 }
 
 
+- (NSString *)formatFloat:(float)f {
+    
+    if (fmodf(f, 1)==0) {
+        return [NSString stringWithFormat:@"%.0f",f];
+    } else if (fmodf(f*10, 1)==0) {//如果有一位小数点
+        return [NSString stringWithFormat:@"%.1f",f];
+    } else if (fmodf(f*100, 1)==0) {//如果有两位小数点
+        return [NSString stringWithFormat:@"%.2f",f];
+    } else if (fmodf(f*1000, 1)==0) {
+        return [NSString stringWithFormat:@"%.3f",f];
+    } else if (fmodf(f*10000, 1)==0) {
+        return [NSString stringWithFormat:@"%.4f",f];
+    } else {
+        return [NSString stringWithFormat:@"%.5f",f];
+    }
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(tableView.tag == 1001) {
         
         // 获取数据
-        ProductModel *m = _dictProducts[@(_brandRow)][@(_currentSection)][indexPath.row];
+        ProductModel *m = _productsFilter[@(_brandRow)][@(_currentSection)][indexPath.row];
         
         // 处理界面
         static NSString *cellId = @"SelectGoodsTableViewCell";
@@ -777,7 +906,7 @@ typedef enum : NSInteger {
         cell.productNameLabel.text = [self getProductName:m.PRODUCT_NAME];
         cell.productFormatLabel.text = m.PRODUCT_DESC;
         cell.productPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", m.PRODUCT_PRICE];
-        [cell.productNumberButton setTitle:[NSString stringWithFormat:@"%lld", m.CHOICED_SIZE] forState:UIControlStateNormal];
+        [cell.productNumberButton setTitle:[self formatFloat:m.CHOICED_SIZE] forState:UIControlStateNormal];
         
         // 促销信息的处理
         cell.policyPromptView.hidden = !m.PRODUCT_POLICY.count;
@@ -817,7 +946,7 @@ typedef enum : NSInteger {
         
         // 填充基本数据
         cell.productNameLabel.text = m.PRODUCT_NAME;
-        [cell.productNumberButton setTitle:[NSString stringWithFormat:@"%lld", m.CHOICED_SIZE] forState:UIControlStateNormal];
+        [cell.productNumberButton setTitle:[self formatFloat:m.CHOICED_SIZE] forState:UIControlStateNormal];
         
         return cell;
         
@@ -1009,7 +1138,7 @@ typedef enum : NSInteger {
     _currentMakeOrderTotalCount -= 1;
     _currentMakeOrderTotalPrice -= price;
     
-    _makeOrderTotalNumber.text = [NSString stringWithFormat:@"%ld", _currentMakeOrderTotalCount];
+    _makeOrderTotalNumber.text = [self formatFloat:_currentMakeOrderTotalCount];
     
     NSString *priceStr = [NSString stringWithFormat:@"￥%.1f", _currentMakeOrderTotalPrice];
     
@@ -1036,20 +1165,20 @@ typedef enum : NSInteger {
     _currentMakeOrderTotalCount += 1;
     _currentMakeOrderTotalPrice += price;
     
-    _makeOrderTotalNumber.text = [NSString stringWithFormat:@"%ld", _currentMakeOrderTotalCount];
+    _makeOrderTotalNumber.text = [self formatFloat:_currentMakeOrderTotalCount];
     
     _makeOrderTotalPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", _currentMakeOrderTotalPrice];
     
     // 保存已选的产品
-    if([_selectedProducts indexOfObject:_dictProducts[@(_brandRow)][@(section)][indexRow]] == NSNotFound) {
-        [_selectedProducts addObject:_dictProducts[@(_brandRow)][@(section)][indexRow]];
+    if([_selectedProducts indexOfObject:_productsFilter[@(_brandRow)][@(section)][indexRow]] == NSNotFound) {
+        [_selectedProducts addObject:_productsFilter[@(_brandRow)][@(section)][indexRow]];
     }
     
     [_shoppingCarTableView reloadData];
 }
 
 
-- (void)productNumberOnclick:(double)price andIndexRow:(int)indexRow andSelectedNumber:(long long)selectedNumber andSection:(NSInteger)section {
+- (void)productNumberOnclick:(double)price andIndexRow:(int)indexRow andSelectedNumber:(CGFloat)selectedNumber andSection:(NSInteger)section {
     
     _customsizeProductNumberIndexRow = indexRow;
     _customsizeProductNumberPrice = price;
@@ -1073,7 +1202,7 @@ typedef enum : NSInteger {
     _currentMakeOrderTotalCount -= 1;
     _currentMakeOrderTotalPrice -= price;
     
-    _makeOrderTotalNumber.text = [NSString stringWithFormat:@"%ld", _currentMakeOrderTotalCount];
+    _makeOrderTotalNumber.text = [self formatFloat:_currentMakeOrderTotalCount];
     
     NSString *priceStr = [NSString stringWithFormat:@"￥%.1f", _currentMakeOrderTotalPrice];
     
@@ -1101,7 +1230,7 @@ typedef enum : NSInteger {
     _currentMakeOrderTotalCount += 1;
     _currentMakeOrderTotalPrice += price;
     
-    _makeOrderTotalNumber.text = [NSString stringWithFormat:@"%ld", _currentMakeOrderTotalCount];
+    _makeOrderTotalNumber.text = [self formatFloat:_currentMakeOrderTotalCount];
     
     _makeOrderTotalPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", _currentMakeOrderTotalPrice];
     
@@ -1314,6 +1443,8 @@ typedef enum : NSInteger {
     
     _dictProducts = dictProducts;
     
+    _productsFilter = [_dictProducts mutableCopy];
+    
     [self fd];
 }
 
@@ -1322,7 +1453,7 @@ typedef enum : NSInteger {
     
     /*************  计算产品名称换行  *************/
     
-    NSMutableArray *array = _dictProducts[@(_brandRow)][@(_currentSection)];
+    NSMutableArray *array = _productsFilter[@(_brandRow)][@(_currentSection)];
     
     for(int j = 0; j < array.count; j++) {
         
@@ -1356,9 +1487,11 @@ typedef enum : NSInteger {
     NSDictionary *dict = [NSDictionary dictionaryWithObject:products forKey:@(_currentSection)];
     [_dictProducts setObject:dict forKey:@(_brandRow)];
     
+    _productsFilter = [_dictProducts mutableCopy];
+    
     for (int i = 0; i < _selectedProducts.count; i++) {
         ProductModel *sm = _selectedProducts[i];
-        NSMutableArray *array = _dictProducts[@(_brandRow)][@(_currentSection)];
+        NSMutableArray *array = _productsFilter[@(_brandRow)][@(_currentSection)];
         for(int j = 0; j < array.count; j++) {
             ProductModel *am = array[j];
             if(sm.IDX == am.IDX) {
@@ -1388,7 +1521,7 @@ typedef enum : NSInteger {
 
 
 // 产品模型转促销详情模型
-- (PromotionDetailModel *)getPromotionDetailByProduct:(ProductModel *)product andProductType:(NSString *)PRODUCT_TYPE andLineNo:(long long)LINE_NO andPoQty:(long long)PO_QTY andOperatorIdx:(long long) OPERATOR_IDX andActPrice:(double)ACT_PRICE {
+- (PromotionDetailModel *)getPromotionDetailByProduct:(ProductModel *)product andProductType:(NSString *)PRODUCT_TYPE andLineNo:(long long)LINE_NO andPoQty:(CGFloat)PO_QTY andOperatorIdx:(long long) OPERATOR_IDX andActPrice:(double)ACT_PRICE {
     
     PromotionDetailModel *p = [[PromotionDetailModel alloc] init];
     if(product) {
@@ -1670,7 +1803,8 @@ typedef enum : NSInteger {
     // 输入框
     UITextField *textF = [[UITextField alloc] init];
     textF.borderStyle = UITextBorderStyleRoundedRect;
-    textF.keyboardType = UIKeyboardTypeNumberPad;
+    textF.keyboardType = UIKeyboardTypeDecimalPad;
+    textF.textAlignment = NSTextAlignmentCenter;
     [_enterNumView addSubview:textF];
     [textF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(label.mas_bottom).offset(15);
@@ -1772,6 +1906,64 @@ typedef enum : NSInteger {
 - (void)keyboardWillHide:(NSNotification *)notification {
     
     _keyboardHeight = 0;
+}
+
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    NSLog(@"textDidChange : %@", searchText);
+    [_productsFilter removeAllObjects];
+    NSMutableArray *products = [[NSMutableArray alloc] init];
+    NSMutableArray *orgProducts = _dictProducts[@(_brandRow)][@(_currentSection)];
+    
+    if([[searchText trim] isEqualToString:@""]) {
+        
+        _productsFilter = [_dictProducts mutableCopy];
+    } else {
+        
+        for (int i = 0; i < orgProducts.count; i++) {
+            
+            ProductModel *m = _dictProducts[@(_brandRow)][@(_currentSection)][i];
+            
+            if([m.PRODUCT_NAME rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0) {
+                
+                [products addObject:m];
+                NSDictionary *dict = [NSDictionary dictionaryWithObject:products forKey:@(_currentSection)];
+                [_productsFilter setObject:dict forKey:@(_brandRow)];
+            } else {
+                
+            }
+        }
+    }
+    
+    [_myTableView reloadData];
+}
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    
+    //    [self.searchCoverView setHidden:NO];
+    [self.view.window.layer addSublayer:self.searchCoverCALayer];
+    [self.searchCoverTopView setHidden:NO];
+    [self.searchCoverBottomView setHidden:NO];
+}
+
+
+- (void)searchCoverViewOnclick {
+    
+    [self.view endEditing:YES];
+    //    [self.searchCoverView setHidden:YES];
+    [_searchCoverCALayer removeFromSuperlayer];
+    [self.searchCoverTopView setHidden:YES];
+    [self.searchCoverBottomView setHidden:YES];
+}
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    [self searchCoverViewOnclick];
 }
 
 @end

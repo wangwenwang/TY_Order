@@ -23,6 +23,10 @@
 #import "ConfirmOrderViewController.h"
 #import "RegisterViewController.h"
 
+#import "UnAuditedViewController.h"
+#import "OrderOneAuditViewController.h"
+#import "OrderTwoAuditViewController.h"
+
 @interface LoginViewController ()<LoginServiceDelegate, UIAlertViewDelegate>
 
 // 帐号
@@ -168,6 +172,9 @@
 // 填充上一次登录成功的帐号密码
 - (void)setUserNameAndPassword {
     
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+                NSLog(@"fds:%@", dict);
+    
     NSString *a = [[NSUserDefaults standardUserDefaults] objectForKey:udUserName];
     NSString *b = [[NSUserDefaults standardUserDefaults] objectForKey:udPassWord];
     
@@ -181,21 +188,31 @@
 - (WMPageController *)p_defaultController {
     NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
     NSMutableArray *titles = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
         Class vcClass;
         NSString *title;
         switch (i) {
             case 0:
+                vcClass = [UnAuditedViewController class];
+                title = @"未审核";
+                break;
+            case 1:
+                vcClass = [OrderOneAuditViewController class];
+                title = @"已审核";
+                break;
+            case 2:
                 vcClass = [OrderingViewController class];
                 title = @"在途";
                 break;
-            case 1:
+            case 3:
                 vcClass = [OrderFinishViewController class];
                 title = @"已完成";
                 break;
-            default:
+            case 4:
                 vcClass = [OrderCancelViewController class];
                 title = @"已取消";
+                break;
+            default:
                 break;
         }
         [viewControllers addObject:vcClass];

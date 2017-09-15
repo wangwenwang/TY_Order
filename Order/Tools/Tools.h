@@ -232,4 +232,15 @@
  */
 + (nullable NSString *)TwoDecimal:(nullable NSString *)str;
 
+
+
+/**
+ 智能保留小数
+
+ @param f 小数
+
+ @return 已去掉小数点后的0
+ */
++ (nullable NSString *)formatFloat:(float)f;
+
 @end

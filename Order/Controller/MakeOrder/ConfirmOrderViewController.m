@@ -21,8 +21,9 @@
 #import "OrderConfirmService.h"
 #import <Masonry.h>
 #import "LMPickerView.h"
+#import "LMBlurredView.h"
 
-@interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate>
+@interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate, LMBlurredViewDelegate>
 
 #define ProductTableViewCellHeight 69
 #define GiftTableViewCellHeight 69
@@ -52,29 +53,11 @@
 //已选择的赠品
 @property (strong, nonatomic) NSMutableArray *selectedGifts;
 
-//自定义价格视图
-@property (weak, nonatomic) IBOutlet UIView *customizePriceView;
-
-//价格上限
-@property (weak, nonatomic) IBOutlet UILabel *upperLimi;
-
-//价格下限
-@property (weak, nonatomic) IBOutlet UILabel *lowerLimi;
-
-//自定义价格输入框
-@property (weak, nonatomic) IBOutlet UITextField *customizePriceF;
-
-//取消自定义价格
-- (IBAction)cancelCustomizePriceOnclick:(UIButton *)sender;
-
-//确定自定义价格
-- (IBAction)confirmCustomizePriceOnclick:(UIButton *)sender;
+// 自定义价格输入框
+@property (strong, nonatomic) UITextField *customizePriceF;
 
 //当前弹出自定义价格框的indexRow
 @property (assign, nonatomic) NSInteger customizePriceIndexRow;
-
-//遮罩视图
-@property (weak, nonatomic) IBOutlet UIView *coverView;
 
 //产品总数
 @property (weak, nonatomic) IBOutlet UILabel *totalCountLabel;
@@ -148,6 +131,18 @@
 // 确认
 @property (weak, nonatomic) IBOutlet UIButton *commitBtn;
 
+// 输入产品现价
+@property (strong, nonatomic) UIView *enterNumView;
+
+// 虚化背景
+@property (strong, nonatomic) LMBlurredView *blurredView;
+
+// 输入产品现价视图 距下
+@property (nonatomic, strong) MASConstraint *enterNumView_bottom;
+
+// 键盘高度
+@property (assign, nonatomic) CGFloat keyboardHeight;
+
 @end
 
 
@@ -207,6 +202,36 @@ typedef enum _CloseDatePicker {
 }
 
 
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
+
 - (void)didReceiveMemoryWarning {
     
     [super didReceiveMemoryWarning];
@@ -221,6 +246,7 @@ typedef enum _CloseDatePicker {
     
     _scrollContentViewHeight.constant = 450 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
 }
+
 
 - (void)dealloc {
     
@@ -239,14 +265,8 @@ typedef enum _CloseDatePicker {
         PromotionDetailModel *m = _promotionDetailsOfServer[i];
         
         // Label 容器宽度
-        CGFloat contentWidth = 0;
-        if([m.LOTTABLE06 isEqualToString:@"Y"]) {
-            
-            contentWidth = ScreenWidth - 17 - 118;
-        } else {
-            
-            contentWidth = ScreenWidth - 17 - 88;
-        }
+        CGFloat contentWidth = ScreenWidth - 17 - 118;
+        
         // Label 单行高度
         CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:13 andWidth:999.9];
         
@@ -293,9 +313,6 @@ typedef enum _CloseDatePicker {
     
     _giftTableView.hidden = !_selectedGifts.count;
     
-    _customizePriceView.hidden = YES;
-    _coverView.hidden = YES;
-    
     //设置添加赠品按钮是否可见
     NSString *bussinessCode = _app.business.BUSINESS_CODE;
     if([bussinessCode rangeOfString:@"QH"].length > 0 && [_promotionOrder.HAVE_GIFT isEqualToString:@"Y"]) {
@@ -316,7 +333,7 @@ typedef enum _CloseDatePicker {
 
 // 结算，汇总信息
 - (void)refreshCollectDada {
-    long long totalCount = 0;
+    CGFloat totalCount = 0;
     double orgPrice = 0;
     double actPrice = 0;
     for(int i = 0; i < _promotionDetailsOfServer.count; i++) {
@@ -333,7 +350,7 @@ typedef enum _CloseDatePicker {
     _promotionOrder.TOTAL_QTY = totalCount;
     
     // 总数
-    _totalCountLabel.text = [NSString stringWithFormat:@"%lld", _promotionOrder.TOTAL_QTY];
+    _totalCountLabel.text = [Tools formatFloat:_promotionOrder.TOTAL_QTY];
     
     // 原价
     _orgPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", orgPrice];
@@ -424,36 +441,27 @@ typedef enum _CloseDatePicker {
 }
 
 
-- (IBAction)confirmCustomizePriceOnclick:(UIButton *)sender {
+- (void)confirmCustomizePriceOnclick {
+    
     [self.view endEditing:YES];
-    _customizePriceView.hidden = YES;
-    _coverView.hidden = YES;
     
     double price = [_customizePriceF.text doubleValue];
     price = [Tools getDouble:price];
     PromotionDetailModel *m = _promotionDetailsOfServer[_customizePriceIndexRow];
     
-    if([Tools getDouble:price] <= [Tools getDouble:m.LOTTABLE12]) {
-        
-        if([Tools getDouble:price] >= [Tools getDouble:m.LOTTABLE13]) {
-            
-            [self setNewPrice:m andPrice:price];
-            [self refreshCollectDada];
-        } else {
-            
-            [Tools showAlert:self.view andTitle:@"价格超出下限"];
-        }
-    } else {
-        
-        [Tools showAlert:self.view andTitle:@"价格超出上限"];
-    }
+    [self setNewPrice:m andPrice:price];
+    [self refreshCollectDada];
+    
+    [self LMBlurredViewClear];
+    
+    [_blurredView clear];
 }
 
-- (IBAction)cancelCustomizePriceOnclick:(UIButton *)sender {
+- (void)cancelCustomizePriceOnclick {
     
-    [self.view endEditing:YES];
-    _customizePriceView.hidden = YES;
-    _coverView.hidden = YES;
+    [self LMBlurredViewClear];
+    
+    [_blurredView clear];
 }
 
 // 选择时间
@@ -737,18 +745,11 @@ typedef enum _CloseDatePicker {
         cell.promotionNameLabel.text = [m.SALE_REMARK isEqualToString:@""] ? nil : m.SALE_REMARK;
         cell.originalPriceLabel.text = [NSString stringWithFormat:@"%.1f", m.ORG_PRICE];
         [cell.nowPriceButton setTitle:[NSString stringWithFormat:@"%.1f", m.ACT_PRICE] forState:UIControlStateNormal];
-        cell.numberLabel.text = [NSString stringWithFormat:@"%lld", m.PO_QTY];
-        if([m.LOTTABLE06 isEqualToString:@"Y"]) {
-            
-            cell.addButtonWidth.constant = 30;
-            cell.delButtonWidth.constant = 30;
-            cell.nowPriceButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        } else {
-            
-            cell.addButtonWidth.constant = 0;
-            cell.delButtonWidth.constant = 0;
-            cell.nowPriceButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        }
+        cell.numberLabel.text = [Tools formatFloat:m.PO_QTY];
+        
+        cell.addButtonWidth.constant = 30;
+        cell.delButtonWidth.constant = 30;
+        cell.nowPriceButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         
         // 返回Cell
         return cell;
@@ -788,13 +789,9 @@ typedef enum _CloseDatePicker {
     
     PromotionDetailModel *m = _promotionDetailsOfServer[indexRow];
     double price = m.ACT_PRICE - 0.1;
-    if([Tools getDouble:price] >= [Tools getDouble:m.LOTTABLE13]) {
-        [self setNewPrice:m andPrice:price];
-        [self refreshCollectDada];
-    } else {
-        
-        [Tools showAlert:self.view andTitle:@"价格超出下限"];
-    }
+    
+    [self setNewPrice:m andPrice:price];
+    [self refreshCollectDada];
 }
 
 - (void)addOnclickOfConfirmOrderTableViewCell:(NSInteger)indexRow {
@@ -802,32 +799,17 @@ typedef enum _CloseDatePicker {
     PromotionDetailModel *m = _promotionDetailsOfServer[indexRow];
     CGFloat price = m.ACT_PRICE + 0.1;
     
-    if([Tools getDouble:price] <= [Tools getDouble:m.LOTTABLE12]) {
-        [self setNewPrice:m andPrice:price];
-        [_orderTableView reloadData];
-        [self refreshCollectDada];
-    } else {
-        
-        [Tools showAlert:self.view andTitle:@"价格超出上限"];
-    }
+    [self setNewPrice:m andPrice:price];
+    [_orderTableView reloadData];
+    [self refreshCollectDada];
 }
 
 - (void)customizePriceOfConfirmOrderTableViewCell:(NSInteger)indexRow {
     
-    PromotionDetailModel *m = _promotionDetailsOfServer[indexRow];
+    [self addEnterNumView];
+    _customizePriceIndexRow = indexRow;
     
-    if([m.LOTTABLE06 isEqualToString:@"Y"]) {
-        
-        _upperLimi.text = [NSString stringWithFormat:@"%.1f", m.LOTTABLE12];
-        _lowerLimi.text = [NSString stringWithFormat:@"%.1f", m.LOTTABLE13];
-        _customizePriceView.hidden = NO;
-        _coverView.hidden = NO;
-        _customizePriceIndexRow = indexRow;
-        
-        [self refreshCollectDada];
-    } else {
-        
-    }
+    [self refreshCollectDada];
 }
 
 
@@ -901,6 +883,145 @@ typedef enum _CloseDatePicker {
     _timeLabel.text = [_formatter stringFromDate:date];
     _isOnclickDateSure = YES;
     _selectedDate = date;
+}
+
+
+#pragma mark - Masny
+
+- (void)addEnterNumView {
+    
+    _blurredView = [[LMBlurredView alloc] init];
+    _blurredView.delegate = self;
+    [_blurredView blurry:5.1];
+    
+    // 输入数量
+    _enterNumView = [[UIView alloc] init];
+    _enterNumView.layer.cornerRadius = 2.0f;
+    _enterNumView.backgroundColor = [UIColor whiteColor];
+    UIView *window = self.view.window;
+    [window addSubview:_enterNumView];
+    [_enterNumView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(250);
+        make.height.mas_equalTo(160);
+        _enterNumView_bottom = make.bottom.mas_equalTo(-((ScreenHeight / 2) - (160 / 2)));
+        make.centerX.offset(0);
+    }];
+    
+    // label
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"请输入产品价格";
+    [_enterNumView addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(8);
+        make.centerX.offset(0);
+    }];
+    
+    // 输入框
+    UITextField *textF = [[UITextField alloc] init];
+    textF.borderStyle = UITextBorderStyleRoundedRect;
+    textF.keyboardType = UIKeyboardTypeDecimalPad;
+    textF.textAlignment = NSTextAlignmentCenter;
+    [_enterNumView addSubview:textF];
+    [textF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(label.mas_bottom).offset(15);
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.height.mas_equalTo(33);
+    }];
+    _customizePriceF = textF;
+    
+    // 声明取消按钮
+    UIButton *btnCancel = [[UIButton alloc] init];
+    [_enterNumView addSubview:btnCancel];
+    
+    // 确定
+    UIButton *btnComplete = [[UIButton alloc] init];
+    btnComplete.backgroundColor = TYColor;
+    [btnComplete addTarget:self action:@selector(confirmCustomizePriceOnclick) forControlEvents:UIControlEventTouchUpInside];
+    btnComplete.layer.cornerRadius = 2.0f;
+    [btnComplete setTitle:@"确定" forState:UIControlStateNormal];
+    [_enterNumView addSubview:btnComplete];
+    [btnComplete mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(textF.mas_bottom).offset(25);
+        make.left.mas_equalTo(btnCancel.mas_right).offset(30);
+        make.right.mas_equalTo(-30);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(btnCancel.mas_width);
+    }];
+    
+    // 取消
+    btnCancel.backgroundColor = TYColor;
+    [btnCancel addTarget:self action:@selector(cancelCustomizePriceOnclick) forControlEvents:UIControlEventTouchUpInside];
+    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    btnCancel.layer.cornerRadius = btnComplete.layer.cornerRadius;
+    [btnCancel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(btnComplete.mas_top);
+        make.left.mas_equalTo(30);
+        make.right.mas_equalTo(btnComplete.mas_left).offset(-30);
+        make.height.mas_equalTo(btnComplete.mas_height);
+        make.width.mas_equalTo(btnComplete.mas_width);
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _enterNumView.alpha = 1.0;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        usleep(100000);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [textF becomeFirstResponder];
+        });
+    });
+}
+
+
+#pragma mark - LMBlurredViewDelegate
+
+- (void)LMBlurredViewClear {
+    
+    [_app.window endEditing:YES];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _enterNumView.alpha = 0;
+    }];
+}
+
+
+#pragma mark - 通知回调
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    _keyboardHeight = keyboardRect.size.height;
+    
+    if(_keyboardHeight == 0) return;
+    
+    [self.enterNumView_bottom uninstall];
+    
+    [_enterNumView mas_updateConstraints:^(MASConstraintMaker *make) {
+        
+        make.bottom.mas_equalTo(-(_keyboardHeight + 20));
+    }];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        [_enterNumView layoutIfNeeded];
+    }];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    _keyboardHeight = 0;
 }
 
 @end

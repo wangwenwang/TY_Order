@@ -78,6 +78,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"首页";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 
 
@@ -190,28 +191,18 @@
     
     NSString *title =  _myCollectionDataArrM[indexPath.row][@"title"];
     
-    if(indexPath.row == 0) {
-        
-        SearchOrderPathViewController *sopVC = [[SearchOrderPathViewController alloc] init];
-        [self.navigationController pushViewController:sopVC animated:YES];
-    } else if(indexPath.row == 1) {
-        //        NewsViewController *newsVC = [[NewsViewController alloc] init];
-        //        [self.navigationController pushViewController:newsVC animated:YES];
+    if([title isEqualToString:@"最新资讯"]) {
         
         [Tools showAlert:self.view andTitle:@"正在维护中..."];
-    } else if(indexPath.row == 2) {
+    } else if([title isEqualToString:@"热销产品"]) {
         
         HotProductViewController *hotVC = [[HotProductViewController alloc] init];
         [self.navigationController pushViewController:hotVC animated:YES];
-    } else if(indexPath.row == 3) {
-        
-        //        //客户报表   ,,  产品报表
-        //        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        [_chartService getChartDataList:API_GET_CUSTOMER_CHART_DATA andTag:mTagGetCustomerChartDataList];
+    } else if([title isEqualToString:@"查看报表"]) {
         
         ChartViewController *vc = [[ChartViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if(indexPath.row == 4) {
+    } else if(indexPath.row == [title isEqualToString:@"查看订单"]) {
         
         self.tabBarController.selectedIndex = 2;
     } else if(indexPath.row == 5) {

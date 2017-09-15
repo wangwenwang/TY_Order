@@ -77,7 +77,7 @@
     
     if(_product.CHOICED_SIZE > 0) {
         _product.CHOICED_SIZE --;
-        NSString *productNumberStr = [NSString stringWithFormat:@"%lld", _product.CHOICED_SIZE];
+        NSString *productNumberStr = [self formatFloat:_product.CHOICED_SIZE];
         
         [_productNumberButton setTitle:productNumberStr forState:UIControlStateNormal];
         if([_delegate respondsToSelector:@selector(delNumberOnclick:andIndexRow:andSection:)]) {
@@ -104,7 +104,7 @@
 
 - (void)add {
     _product.CHOICED_SIZE ++;
-    NSString *productNumberStr = [NSString stringWithFormat:@"%lld", _product.CHOICED_SIZE];
+    NSString *productNumberStr = [self formatFloat:_product.CHOICED_SIZE];
     [_productNumberButton setTitle:productNumberStr forState:UIControlStateNormal];
     if([_delegate respondsToSelector:@selector(addNumberOnclick:andIndexRow:andSection:)]) {
         [_delegate addNumberOnclick:_product.PRODUCT_PRICE andIndexRow:(int)self.tag andSection:self.section];
@@ -119,7 +119,7 @@
 //        [_delegate productNumberOnclick:_product.PRODUCT_PRICE andIndexRow:(int)self.tag andSelectedNumber:selectedNumber];
 //    }
     
-    long long selectedNumber = [[_productNumberButton titleForState:UIControlStateNormal] longLongValue];
+    CGFloat selectedNumber = [[_productNumberButton titleForState:UIControlStateNormal] floatValue];
     if([_product.ISINVENTORY isEqualToString:@"Y"]) {
         
         long long maxSize = _product.PRODUCT_INVENTORY;
@@ -137,9 +137,29 @@
     }
 }
 
-- (void)customize:(long long)selectedNumber {
+
+- (void)customize:(CGFloat)selectedNumber {
     if([_delegate respondsToSelector:@selector(productNumberOnclick:andIndexRow:andSelectedNumber:andSection:)]) {
         [_delegate productNumberOnclick:_product.PRODUCT_PRICE andIndexRow:(int)self.tag andSelectedNumber:selectedNumber andSection:self.section];
+    }
+}
+
+
+
+- (NSString *)formatFloat:(float)f {
+    
+    if (fmodf(f, 1)==0) {
+        return [NSString stringWithFormat:@"%.0f",f];
+    } else if (fmodf(f*10, 1)==0) {//如果有一位小数点
+        return [NSString stringWithFormat:@"%.1f",f];
+    } else if (fmodf(f*100, 1)==0) {//如果有两位小数点
+        return [NSString stringWithFormat:@"%.2f",f];
+    } else if (fmodf(f*1000, 1)==0) {
+        return [NSString stringWithFormat:@"%.3f",f];
+    } else if (fmodf(f*10000, 1)==0) {
+        return [NSString stringWithFormat:@"%.4f",f];
+    } else {
+        return [NSString stringWithFormat:@"%.5f",f];
     }
 }
 

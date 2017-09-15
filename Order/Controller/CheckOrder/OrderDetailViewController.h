@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) OrderModel *order;
 
+@property (strong, nonatomic) Class popClass;
+
 @end

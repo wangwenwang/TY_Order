@@ -144,6 +144,7 @@
     
     [super viewDidAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"下单";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 
 

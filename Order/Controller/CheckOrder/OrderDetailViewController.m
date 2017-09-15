@@ -15,8 +15,11 @@
 #import "OrderCancelService.h"
 #import "AppDelegate.h"
 #import "LM_alert.h"
+#import "UnAuditedViewController.h"
+#import "AuditService.h"
+#import "OrderOneAuditViewController.h"
 
-@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate>
+@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
@@ -120,6 +123,27 @@
 
 @property (strong, nonatomic) AppDelegate *app;
 
+// 提示6
+@property (weak, nonatomic) IBOutlet UIView *promptLabel6View;
+
+// 审核View
+@property (weak, nonatomic) IBOutlet UIView *auditView;
+
+// 提示6，没审核权限不显示
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptLabel6ViewHeight;
+
+// 审核View高度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *auditViewHeight;
+
+// 审核网络层
+@property (strong, nonatomic) AuditService *service_audit;
+
+// 打回原因
+@property (weak, nonatomic) IBOutlet UITextView *refuseReasonTextV;
+
+// 打回原因 提示
+@property (weak, nonatomic) IBOutlet UILabel *refuseReasonPromptLabel;
+
 @end
 
 
@@ -138,6 +162,8 @@
         _service = [[OrderCancelService alloc] init];
         _service.delegate = self;
         _app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _service_audit = [[AuditService alloc] init];
+        _service_audit.delegate = self;
     }
     return self;
 }
@@ -194,8 +220,23 @@
     }
     _orderTableViewHeight.constant = allHeight;
     
+    //
+    
+    // 审核权限 经理或管理员
+    if(((_popClass == [UnAuditedViewController class] || _popClass == [OrderOneAuditViewController class]) && ([_app.user.USER_TYPE isEqualToString:kMANAGER] || [_app.user.USER_TYPE isEqualToString:kADMIN]))) {
+        
+        // 显示审核界面
+    } else {
+        
+        // 不显示审核界面
+        [_promptLabel6View setHidden:YES];
+        [_auditView setHidden:YES];
+        _promptLabel6ViewHeight.constant = 0;
+        _auditViewHeight.constant = 0;
+    }
+    
     // 总高度
-    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant;
+    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant + _promptLabel6ViewHeight.constant + _auditViewHeight.constant;
 }
 
 
@@ -270,7 +311,7 @@
     _customerNameLabel.text = _order.ORD_TO_NAME;
     _customerAddressLabel.text = _order.ORD_TO_ADDRESS;
     _beginAddressLabel.text = _order.ORD_FROM_NAME;
-    _orderNumberLabel.text = [NSString stringWithFormat:@"%.1f箱", _order.ORD_QTY];
+    _orderNumberLabel.text = [NSString stringWithFormat:@"%@箱", [Tools formatFloat:_order.ORD_QTY]];
     _orderTotalWeigthLabel.text = [NSString stringWithFormat:@"%@吨", _order.ORD_WEIGHT];
     _orderVolumeLabel.text = [NSString stringWithFormat:@"%@m³", _order.ORD_VOLUME];
     _orderProcessLabel.text = _order.ORD_WORKFLOW;
@@ -390,13 +431,29 @@
 //            
 //            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //            [_service OrderCancel:_order.IDX andstrUserIdx:_app.user.IDX];
-//        } cancelClickHandle:nil];
+//        } cancelCXlickHandle:nil];
 //        
 //    } else {
     
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [_transortService getTransInformationData:_order.IDX];
 //    }
+}
+
+
+// 审核通过
+- (IBAction)auditPassOnclick:(UIButton *)sender {
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_service_audit UpdateAudit:_order.IDX andstrUserName:_app.user.USER_NAME];
+}
+
+
+// 审核打回
+- (IBAction)auditRefuseOnclick:(UIButton *)sender {
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_service_audit RuturnAudit:_order.IDX andstrUserName:_app.user.USER_NAME andstrReason:_refuseReasonTextV.text];
 }
 
 
@@ -418,21 +475,78 @@
 }
 
 
-#pragma mark - OrderCancelServiceDelegate
+#pragma mark - AuditServiceDelegate
 
-- (void)successOfOrderCancel:(NSString *)msg {
+- (void)successOfAuditPass:(NSString *)msg {
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOrderingViewController_receiveMsg object:nil userInfo:@{@"msg" : msg}];
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    [self successOfAudit:msg];
 }
 
 
-- (void)failureOfOrderCancel:(NSString *)msg {
+- (void)failureOfAuditPass:(NSString *)msg {
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [Tools showAlert:self.view andTitle:msg];
+}
+
+
+- (void)successOfAuditRefuse:(NSString *)msg {
+    
+    [self successOfAudit:msg];
+}
+
+
+- (void)failureOfAuditRefuse:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [Tools showAlert:self.view andTitle:msg];
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text {
+    
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    if (![text isEqualToString:@""]) {
+        
+        _refuseReasonPromptLabel.hidden = YES;
+    }
+    
+    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1) {
+        
+        _refuseReasonPromptLabel.hidden = NO;
+    }
+    
+    return YES;
+}
+
+
+- (void)successOfAudit:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [Tools showAlert:self.view andTitle:msg];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        NSString *Ordering = [NSString stringWithFormat:@"k%@RequestNetwork", [UnAuditedViewController class]];
+        NSString *OrderOneAudit = [NSString stringWithFormat:@"k%@RequestNetwork", [OrderOneAuditViewController class]];
+        
+        // 审核成功后 刷新TableView
+        [[NSNotificationCenter defaultCenter] postNotificationName:Ordering object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OrderOneAudit object:nil];
+        
+        usleep(1700000);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    });
 }
 
 @end

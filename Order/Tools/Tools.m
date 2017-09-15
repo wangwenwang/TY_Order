@@ -655,4 +655,21 @@ typedef void (^Animation)(void);
     return result;
 }
 
++ (nullable NSString *)formatFloat:(float)f {
+    
+    if (fmodf(f, 1)==0) {
+        return [NSString stringWithFormat:@"%.0f",f];
+    } else if (fmodf(f*10, 1)==0) {//如果有一位小数点
+        return [NSString stringWithFormat:@"%.1f",f];
+    } else if (fmodf(f*100, 1)==0) {//如果有两位小数点
+        return [NSString stringWithFormat:@"%.2f",f];
+    } else if (fmodf(f*1000, 1)==0) {
+        return [NSString stringWithFormat:@"%.3f",f];
+    } else if (fmodf(f*10000, 1)==0) {
+        return [NSString stringWithFormat:@"%.4f",f];
+    } else {
+        return [NSString stringWithFormat:@"%.5f",f];
+    }
+}
+
 @end

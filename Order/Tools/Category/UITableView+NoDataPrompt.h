@@ -16,4 +16,7 @@
 /// 移除TableView无数据提示
 - (void)removeNoOrderPrompt;
 
+/// 添加TableView无数据提示
+- (void)noOrder:(NSString *)title;
+
 @end

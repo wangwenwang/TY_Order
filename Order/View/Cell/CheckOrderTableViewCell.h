@@ -16,4 +16,7 @@
 /// 客户名称
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
+/// tableView 类名
+@property (strong, nonatomic) Class tableClass;
+
 @end

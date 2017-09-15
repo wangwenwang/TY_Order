@@ -46,7 +46,7 @@
 
 @property(copy, nonatomic)NSString *MJ_REMARK;
 
-@property(assign, nonatomic)long long TOTAL_QTY;
+@property(assign, nonatomic)CGFloat TOTAL_QTY;
 
 @property(assign, nonatomic)double TOTAL_WEIGHT;
 

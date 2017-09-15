@@ -18,7 +18,7 @@
 - (void)addNumberOnclick:(double)price andIndexRow:(int)indexRow andSection:(NSInteger)section;
 
 @optional
-- (void)productNumberOnclick:(double)price andIndexRow:(int)indexRow andSelectedNumber:(long long)selectedNumber andSection:(NSInteger)section;
+- (void)productNumberOnclick:(double)price andIndexRow:(int)indexRow andSelectedNumber:(CGFloat)selectedNumber andSection:(NSInteger)section;
 
 @optional
 - (void)noStockOfSelectGoodsTableViewCell;

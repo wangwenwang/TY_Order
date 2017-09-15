@@ -107,7 +107,7 @@
         _ACT_PRICE = dict[@"ACT_PRICE"] ? [dict[@"ACT_PRICE"] doubleValue] : _ACT_PRICE;
         _MJ_PRICE = dict[@"MJ_PRICE"] ? [dict[@"MJ_PRICE"] doubleValue] : _MJ_PRICE;
         _MJ_REMARK = dict[@"MJ_REMARK"] ? dict[@"MJ_REMARK"] : _MJ_REMARK;
-        _TOTAL_QTY = dict[@"TOTAL_QTY"] ? [dict[@"TOTAL_QTY"] longLongValue] : _TOTAL_QTY;
+        _TOTAL_QTY = dict[@"TOTAL_QTY"] ? [dict[@"TOTAL_QTY"] floatValue] : _TOTAL_QTY;
         _TOTAL_WEIGHT = dict[@"TOTAL_WEIGHT"] ? [dict[@"TOTAL_WEIGHT"] doubleValue] : _TOTAL_WEIGHT;
         
         _TOTAL_VOLUME = dict[@"TOTAL_VOLUME"] ? [dict[@"TOTAL_VOLUME"] doubleValue] : _TOTAL_VOLUME;

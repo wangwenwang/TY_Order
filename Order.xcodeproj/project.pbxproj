@@ -26,6 +26,7 @@
 		30126A741DB0715E00BABACF /* SelectGoodsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30126A721DB0715E00BABACF /* SelectGoodsViewController.xib */; };
 		30126A781DB0725500BABACF /* SelectGoodsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30126A761DB0725500BABACF /* SelectGoodsTableViewCell.m */; };
 		30126A791DB0725500BABACF /* SelectGoodsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30126A771DB0725500BABACF /* SelectGoodsTableViewCell.xib */; };
+		301AD38C1F69331700CD13D0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301AD38B1F69331700CD13D0 /* LoginViewController.m */; };
 		301AFA771F4AD6BC00E4FDFF /* GetToAddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301AFA751F4AD6BC00E4FDFF /* GetToAddressListViewController.m */; };
 		301AFA781F4AD6BC00E4FDFF /* GetToAddressListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301AFA761F4AD6BC00E4FDFF /* GetToAddressListViewController.xib */; };
 		301AFA7C1F4AD70F00E4FDFF /* Store_GetToAddressListService.m in Sources */ = {isa = PBXBuildFile; fileRef = 301AFA7B1F4AD70F00E4FDFF /* Store_GetToAddressListService.m */; };
@@ -146,8 +147,11 @@
 		3088D31B1F4C1A2D006031D9 /* GetOupputInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3088D3161F4C1A2D006031D9 /* GetOupputInfoTableViewCell.xib */; };
 		3088D31C1F4C1A2D006031D9 /* GetOupputListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3088D3181F4C1A2D006031D9 /* GetOupputListTableViewCell.m */; };
 		3088D31D1F4C1A2D006031D9 /* GetOupputListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3088D3191F4C1A2D006031D9 /* GetOupputListTableViewCell.xib */; };
+		308BDAF31F67E50000D38650 /* OrderOneAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */; };
+		308BDAF61F68C89E00D38650 /* OrderTwoAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */; };
+		3090EE591F67C55D00FF4CE5 /* UnAuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */; };
+		3090EE5C1F67C67200FF4CE5 /* AuditService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090EE5B1F67C67200FF4CE5 /* AuditService.m */; };
 		309877B91DDC3A9B0047135A /* NSDictionary+MyLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 309877B81DDC3A9B0047135A /* NSDictionary+MyLog.m */; };
-		30A3C2ED1D991E1000BBE0DA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A3C2E71D991E1000BBE0DA /* LoginViewController.m */; };
 		30A3C2EE1D991E1000BBE0DA /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30A3C2E81D991E1000BBE0DA /* LoginViewController.xib */; };
 		30A3C2EF1D991E1000BBE0DA /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A3C2EA1D991E1000BBE0DA /* WelcomeViewController.m */; };
 		30A3C2F01D991E1000BBE0DA /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30A3C2EB1D991E1000BBE0DA /* WelcomeViewController.xib */; };
@@ -367,6 +371,7 @@
 		30126A751DB0725500BABACF /* SelectGoodsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGoodsTableViewCell.h; sourceTree = "<group>"; };
 		30126A761DB0725500BABACF /* SelectGoodsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGoodsTableViewCell.m; sourceTree = "<group>"; };
 		30126A771DB0725500BABACF /* SelectGoodsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGoodsTableViewCell.xib; sourceTree = "<group>"; };
+		301AD38B1F69331700CD13D0 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		301AFA741F4AD6BC00E4FDFF /* GetToAddressListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetToAddressListViewController.h; sourceTree = "<group>"; };
 		301AFA751F4AD6BC00E4FDFF /* GetToAddressListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetToAddressListViewController.m; sourceTree = "<group>"; };
 		301AFA761F4AD6BC00E4FDFF /* GetToAddressListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetToAddressListViewController.xib; sourceTree = "<group>"; };
@@ -577,10 +582,17 @@
 		3088D3171F4C1A2D006031D9 /* GetOupputListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetOupputListTableViewCell.h; sourceTree = "<group>"; };
 		3088D3181F4C1A2D006031D9 /* GetOupputListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetOupputListTableViewCell.m; sourceTree = "<group>"; };
 		3088D3191F4C1A2D006031D9 /* GetOupputListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetOupputListTableViewCell.xib; sourceTree = "<group>"; };
+		308BDAF11F67E50000D38650 /* OrderOneAuditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderOneAuditViewController.h; sourceTree = "<group>"; };
+		308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderOneAuditViewController.m; sourceTree = "<group>"; };
+		308BDAF41F68C89E00D38650 /* OrderTwoAuditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTwoAuditViewController.h; sourceTree = "<group>"; };
+		308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTwoAuditViewController.m; sourceTree = "<group>"; };
+		3090EE571F67C55D00FF4CE5 /* UnAuditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnAuditedViewController.h; sourceTree = "<group>"; };
+		3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnAuditedViewController.m; sourceTree = "<group>"; };
+		3090EE5A1F67C67200FF4CE5 /* AuditService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditService.h; sourceTree = "<group>"; };
+		3090EE5B1F67C67200FF4CE5 /* AuditService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditService.m; sourceTree = "<group>"; };
 		309877B71DDC3A9B0047135A /* NSDictionary+MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+MyLog.h"; sourceTree = "<group>"; };
 		309877B81DDC3A9B0047135A /* NSDictionary+MyLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+MyLog.m"; sourceTree = "<group>"; };
 		30A3C2E61D991E1000BBE0DA /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		30A3C2E71D991E1000BBE0DA /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		30A3C2E81D991E1000BBE0DA /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		30A3C2E91D991E1000BBE0DA /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		30A3C2EA1D991E1000BBE0DA /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
@@ -1277,9 +1289,9 @@
 			children = (
 				3021608C1F15BD500049374F /* RegisterViewController.h */,
 				3021608D1F15BD500049374F /* RegisterViewController.m */,
+				301AD38B1F69331700CD13D0 /* LoginViewController.m */,
 				3021608E1F15BD500049374F /* RegisterViewController.xib */,
 				30A3C2E61D991E1000BBE0DA /* LoginViewController.h */,
-				30A3C2E71D991E1000BBE0DA /* LoginViewController.m */,
 				30A3C2E81D991E1000BBE0DA /* LoginViewController.xib */,
 				30A3C2E91D991E1000BBE0DA /* WelcomeViewController.h */,
 				30A3C2EA1D991E1000BBE0DA /* WelcomeViewController.m */,
@@ -1355,6 +1367,8 @@
 				3051DB671F1878570034629B /* 客户管理 */,
 				304FBAB71EF2635700FC3EFC /* OrderCancelService.h */,
 				304FBAB81EF2635700FC3EFC /* OrderCancelService.m */,
+				3090EE5A1F67C67200FF4CE5 /* AuditService.h */,
+				3090EE5B1F67C67200FF4CE5 /* AuditService.m */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1414,6 +1428,12 @@
 		30A3C3021D9A0F2900BBE0DA /* CheckOrder */ = {
 			isa = PBXGroup;
 			children = (
+				3090EE571F67C55D00FF4CE5 /* UnAuditedViewController.h */,
+				3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */,
+				308BDAF11F67E50000D38650 /* OrderOneAuditViewController.h */,
+				308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */,
+				308BDAF41F68C89E00D38650 /* OrderTwoAuditViewController.h */,
+				308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */,
 				30E5A03C1D9B64BF00D94F77 /* OrderingViewController.h */,
 				30E5A03D1D9B64BF00D94F77 /* OrderingViewController.m */,
 				30E5A0451D9B654F00D94F77 /* OrderFinishViewController.h */,
@@ -2410,7 +2430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2424,6 +2444,7 @@
 				3051DB591F176B900034629B /* GetPartyListTableViewCell.m in Sources */,
 				304A7AE01DB91C2B0039B0B2 /* CustomerChartModel.m in Sources */,
 				30201F201F1083970055BA6A /* GetFeeListService.m in Sources */,
+				308BDAF61F68C89E00D38650 /* OrderTwoAuditViewController.m in Sources */,
 				304A7ABB1DB716780039B0B2 /* payTypeTableViewCell.m in Sources */,
 				30CD6D871EE7AA13004F904C /* NSDictionary+Extension.m in Sources */,
 				30CDC6391D9907CD0035602F /* PhotoBroswerLayout.m in Sources */,
@@ -2464,7 +2485,6 @@
 				30F7B8E61DC036FB004CD128 /* ConfirmOrderGiftsTableViewCell.m in Sources */,
 				30CDC6591D9907CD0035602F /* UIImage+ReMake.m in Sources */,
 				30CDC63C1D9907CD0035602F /* PBBlurImageView.m in Sources */,
-				30A3C2ED1D991E1000BBE0DA /* LoginViewController.m in Sources */,
 				30BB2DF61F467B6F002E51E7 /* Store_GetOutProductListService.m in Sources */,
 				30CDC6471D9907CD0035602F /* CALayer+Anim.m in Sources */,
 				3051DB6D1F1878570034629B /* AddPartyService.m in Sources */,
@@ -2476,6 +2496,7 @@
 				30A3C3121D9A102800BBE0DA /* MineViewController.m in Sources */,
 				30F93E131F31B3FF001904F1 /* LMPickerView.m in Sources */,
 				30CDC6381D9907CD0035602F /* PBConst.m in Sources */,
+				3090EE591F67C55D00FF4CE5 /* UnAuditedViewController.m in Sources */,
 				30F7B8DC1DBFAD36004CD128 /* SelectedGiftsViewController.m in Sources */,
 				30A3C2EF1D991E1000BBE0DA /* WelcomeViewController.m in Sources */,
 				30078D251DBB11B200429813 /* OrderConfirmService.m in Sources */,
@@ -2486,6 +2507,7 @@
 				30CDC6461D9907CD0035602F /* CoreArchive.m in Sources */,
 				30BB2E261F46DF02002E51E7 /* GetOupputInfoViewController.m in Sources */,
 				304A7ADD1DB8BCFE0039B0B2 /* ChartService.m in Sources */,
+				308BDAF31F67E50000D38650 /* OrderOneAuditViewController.m in Sources */,
 				304A7AD51DB8B73B0039B0B2 /* RouteAnnotation.m in Sources */,
 				302160931F15BEE40049374F /* RegisterService.m in Sources */,
 				30EF59AA1DACCA94003F5729 /* OrderTmsDetailsService.m in Sources */,
@@ -2572,6 +2594,7 @@
 				302A05831DB0C9E700972490 /* ProductPolicyModel.m in Sources */,
 				30EF59CE1DAF5C6D003F5729 /* CustomerAddressTableViewCell.m in Sources */,
 				3051DB7B1F1895740034629B /* NormalAdressListViewController.m in Sources */,
+				3090EE5C1F67C67200FF4CE5 /* AuditService.m in Sources */,
 				3088D3071F4BDC49006031D9 /* GetOupputModel.m in Sources */,
 				304A7AC51DB867A90039B0B2 /* CheckOrderPathViewController.m in Sources */,
 				30BB2DEC1F4593AD002E51E7 /* StockModel.m in Sources */,
@@ -2645,6 +2668,7 @@
 				301AFA771F4AD6BC00E4FDFF /* GetToAddressListViewController.m in Sources */,
 				30BB2DB01F459359002E51E7 /* CustomerListViewController.m in Sources */,
 				302A05801DB0C60100972490 /* ProductModel.m in Sources */,
+				301AD38C1F69331700CD13D0 /* LoginViewController.m in Sources */,
 				304A7ACC1DB86F670039B0B2 /* SignatureAndPictureModel.m in Sources */,
 				30BB2DE81F4593AD002E51E7 /* AddStockModel.m in Sources */,
 				30BB2E281F46DF02002E51E7 /* GetOupputListViewController.m in Sources */,
