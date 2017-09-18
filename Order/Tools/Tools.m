@@ -287,9 +287,9 @@ typedef void (^Animation)(void);
 
 + (NSString *)getPaymentType:(NSString *)s {
     if([s isEqualToString:@"FPAD"]) {
-        return @"预付";
+        return @"现付";
     } else if([s isEqualToString:@"FDAP"]) {
-        return @"到付";
+        return @"提付";
     } else if([s isEqualToString:@"MP"]) {
         return @"月结";
     } else if([s isEqualToString:@"DJ"]) {

@@ -18,6 +18,7 @@
 #import "UnAuditedViewController.h"
 #import "AuditService.h"
 #import "OrderOneAuditViewController.h"
+#import "OrderingViewController.h"
 
 @interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate>
 
@@ -533,12 +534,14 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSString *Ordering = [NSString stringWithFormat:@"k%@RequestNetwork", [UnAuditedViewController class]];
+        NSString *UnAudited = [NSString stringWithFormat:@"k%@RequestNetwork", [UnAuditedViewController class]];
         NSString *OrderOneAudit = [NSString stringWithFormat:@"k%@RequestNetwork", [OrderOneAuditViewController class]];
+        NSString *Ordering = [NSString stringWithFormat:@"k%@RequestNetwork", [OrderingViewController class]];
         
         // 审核成功后 刷新TableView
-        [[NSNotificationCenter defaultCenter] postNotificationName:Ordering object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UnAudited object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:OrderOneAudit object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:Ordering object:nil];
         
         usleep(1700000);
         

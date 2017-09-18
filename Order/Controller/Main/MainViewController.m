@@ -202,7 +202,7 @@
         
         ChartViewController *vc = [[ChartViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if(indexPath.row == [title isEqualToString:@"查看订单"]) {
+    } else if([title isEqualToString:@"查看订单"]) {
         
         self.tabBarController.selectedIndex = 2;
     } else if(indexPath.row == 5) {

@@ -1736,6 +1736,10 @@ typedef enum : NSInteger {
     if(payTypes.count > 0) {
         
         _currentPayType = payTypes[0];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            _payTypeLabel.text = _currentPayType.Text;
+        });
     }
 }
 

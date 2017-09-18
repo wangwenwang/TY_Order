@@ -33,6 +33,9 @@
 // 网络层
 @property (strong, nonatomic) OrderDetailService *odrDetailService;
 
+// 不采用宏定义，保持三个类的代码一致
+@property (copy, nonatomic) NSString *requestNetworkNotificationName;
+
 @end
 
 
@@ -54,6 +57,7 @@
         _service.delegate = self;
         _odrDetailService = [[OrderDetailService alloc] init];
         _odrDetailService.delegate = self;
+        _requestNetworkNotificationName = [NSString stringWithFormat:@"k%@RequestNetwork", NSStringFromClass([self class])];
     }
     return self;
 }
@@ -115,12 +119,22 @@
 - (void)addNotification {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMsg:) name:kOrderingViewController_receiveMsg object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNetworkData) name:_requestNetworkNotificationName object:nil];
 }
 
 
 - (void)removeNotification {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOrderingViewController_receiveMsg object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:_requestNetworkNotificationName object:nil];
+}
+
+
+#pragma mark - 网络请求
+
+- (void)requestNetworkData {
+    
+    [_service getOrderData:REQUSTSTATUS andPage:1];
 }
 
 
