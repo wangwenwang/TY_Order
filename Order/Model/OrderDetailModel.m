@@ -31,6 +31,7 @@
         _PRODUCT_URL = @"";
         
         _PRODUCT_TYPE = @"";
+        _PRODUCT_DESC = @"";
     }
     return self;
 }
@@ -57,6 +58,7 @@
         _PRODUCT_URL = dict[@"PRODUCT_URL"] ? dict[@"PRODUCT_URL"] : @"";
         
         _PRODUCT_TYPE = dict[@"PRODUCT_TYPE"] ? dict[@"PRODUCT_TYPE"] : @"";
+        _PRODUCT_DESC = dict[@"PRODUCT_DESC"] ? dict[@"PRODUCT_DESC"] : @"";
         
     } @catch (NSException *exception) {
         

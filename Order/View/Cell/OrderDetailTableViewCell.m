@@ -30,6 +30,9 @@
 // 体积
 @property (weak, nonatomic) IBOutlet UILabel *volumeLabel;
 
+// 规格
+@property (weak, nonatomic) IBOutlet UILabel *PRODUCT_DESC;
+
 // 原价
 @property (weak, nonatomic) IBOutlet UILabel *originalPriceLabel;
 
@@ -74,6 +77,7 @@
     _quantityLabel.text = m.ISSUE_QTY ? [NSString stringWithFormat:@"%@箱", [Tools formatFloat:m.ISSUE_QTY]] : @"";
     _weightLabel.text = [NSString stringWithFormat:@"%@吨", m.ORDER_WEIGHT];
     _volumeLabel.text = [NSString stringWithFormat:@"%@m³", m.ORDER_VOLUME];
+    _PRODUCT_DESC.text = m.PRODUCT_DESC;
     _originalPriceLabel.text = m.ORG_PRICE ? [NSString stringWithFormat:@"￥%.1f", m.ORG_PRICE] : @"￥0.0";
     _payPriceLabel.text = m.ACT_PRICE ? [NSString stringWithFormat:@"￥%.1f", m.ACT_PRICE] : @"￥0.0";
     _totalPriceLabel.text = totalPrice ? [NSString stringWithFormat:@"￥%.1f", totalPrice] : @"￥0.0";

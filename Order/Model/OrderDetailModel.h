@@ -38,4 +38,7 @@
 /// Cell 高度
 @property (assign, nonatomic) CGFloat cellHeight;
 
+// 规格
+@property (copy, nonatomic) NSString *PRODUCT_DESC;
+
 @end
