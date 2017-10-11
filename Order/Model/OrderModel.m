@@ -60,6 +60,8 @@
         
         _OrderDetails = [[NSMutableArray alloc] init];
         _StateTacks = [[NSMutableArray alloc] init];
+        
+        _Shipment = nil;
     }
     return self;
 }
@@ -111,6 +113,7 @@
         _ORD_REMARK_CONSIGNEE = dict[@"ORD_REMARK_CONSIGNEE"] ? dict[@"ORD_REMARK_CONSIGNEE"] : @"";
         _MJ_REMARK = dict[@"MJ_REMARK"] ? dict[@"MJ_REMARK"] : @"";
         _DRIVER_PAY = dict[@"DRIVER_PAY"] ? dict[@"DRIVER_PAY"] : @"";
+        _Shipment = dict[@"Shipment"] ? dict[@"Shipment"] : @"";
         
         NSArray *orderDetails = dict[@"OrderDetails"] ? dict[@"OrderDetails"] : [[NSArray alloc] init];
         [_OrderDetails removeAllObjects];

@@ -128,9 +128,10 @@
                     
                     [MBProgressHUD hideHUDForView:_button1 animated:YES];
                     
-                    [_button1 setImage:image forState:UIControlStateNormal];
-                    
-                    [_images replaceObjectAtIndex:0 withObject:image];
+                    UIImage *image_m = image;
+                    image_m = image_m ? image_m : [UIImage imageNamed:@"noImage"];
+                    [_button1 setImage:image_m forState:UIControlStateNormal];
+                    [_images replaceObjectAtIndex:0 withObject:image_m];
                 });
             });
             
@@ -145,11 +146,13 @@
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 UIImage *image = [self setImageFieldImage:url];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    
                     [MBProgressHUD hideHUDForView:_button2 animated:YES];
                     
-                    [_button2 setImage:image forState:UIControlStateNormal];
-                    
-                    [_images replaceObjectAtIndex:1 withObject:image];
+                    UIImage *image_m = image;
+                    image_m = image_m ? image_m : [UIImage imageNamed:@"noImage"];
+                    [_button2 setImage:image_m forState:UIControlStateNormal];
+                    [_images replaceObjectAtIndex:1 withObject:image_m];
                 });
             });
             
@@ -164,11 +167,13 @@
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 UIImage *image = [self setImageFieldImage:url];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    
                     [MBProgressHUD hideHUDForView:_button3 animated:YES];
-                    [_button3 setImage:image forState:UIControlStateNormal];
                     
-                    
-                    [_images replaceObjectAtIndex:2 withObject:image];
+                    UIImage *image_m = image;
+                    image_m = image_m ? image_m : [UIImage imageNamed:@"noImage"];
+                    [_button3 setImage:image_m forState:UIControlStateNormal];
+                    [_images replaceObjectAtIndex:2 withObject:image_m];
                 });
             });
             
@@ -222,7 +227,7 @@
 /*
  *  本地图片展示
  */
--(void)localImageShow:(NSUInteger)index{
+-(void)localImageShow:(NSUInteger)index {
     
     __weak typeof(self) weakSelf=self;
     
@@ -234,12 +239,22 @@
         for (NSUInteger i = 0; i< localImages.count; i++) {
             
             PhotoModel *pbModel=[[PhotoModel alloc] init];
-            pbModel.mid = i + 1;
+            pbModel.mid = [[NSDate date] timeIntervalSince1970];
             pbModel.image = localImages[i];
             
             //源frame
-            UIImageView *imageV =(UIImageView *) weakSelf.view.subviews[i];
-            pbModel.sourceImageView = imageV;
+            UIImageView *imageView = nil;
+            switch (index) {
+                case 0:
+                    imageView = _button1.imageView; break;
+                case 1:
+                    imageView = _button2.imageView; break;
+                case 2:
+                    imageView = _button3.imageView; break;
+                default:
+                    break;
+            }
+            pbModel.sourceImageView = imageView;
             
             [modelsM addObject:pbModel];
         }
@@ -249,6 +264,7 @@
 }
 
 - (IBAction)buttonOnclick:(UIButton *)sender {
+    
     [self localImageShow:sender.tag - 1001];
 }
 

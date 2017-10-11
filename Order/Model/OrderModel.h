@@ -86,4 +86,7 @@
 // 9
 @property (assign, nonatomic) NSUInteger cellHeight;
 
+// 10 通宇特异化. 中转单号 REFERENCE01，中转电话 REFERENCE04
+@property(strong, nonatomic)NSDictionary *Shipment;
+
 @end

@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,9 +27,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7w-0U-SAk">
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="f7w-0U-SAk" secondAttribute="height" multiplier="2:1" id="E8H-Uw-9N5"/>
-                            </constraints>
                             <state key="normal" image="ic_imageview_default_bg"/>
                             <connections>
                                 <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="LDN-sv-EEb"/>
@@ -54,9 +50,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecC-uh-ZJJ">
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="ecC-uh-ZJJ" secondAttribute="height" multiplier="2:1" id="Gkh-n8-trf"/>
-                            </constraints>
                             <state key="normal" image="ic_imageview_default_bg"/>
                             <connections>
                                 <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="yaz-Ow-Gnl"/>
@@ -79,9 +72,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dV8-S0-6Px">
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="dV8-S0-6Px" secondAttribute="height" multiplier="2:1" id="ZRF-3I-6jz"/>
-                            </constraints>
                             <state key="normal" image="ic_imageview_default_bg"/>
                             <connections>
                                 <action selector="buttonOnclick:" destination="-1" eventType="touchUpInside" id="f5m-ID-LPB"/>

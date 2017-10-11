@@ -63,6 +63,13 @@
 //付款方式
 @property (weak, nonatomic) IBOutlet UILabel *payTypeLabel;
 
+//中转单号
+@property (weak, nonatomic) IBOutlet UILabel *REFERENCE01;
+
+//中转电话
+@property (weak, nonatomic) IBOutlet UILabel *REFERENCE04;
+
+
 @end
 
 #define kCellHeight 80
@@ -105,6 +112,8 @@
     _orderStatusLabel.text = [Tools getOrderStatus:_order.ORD_STATE];
     _orderVolLabel.text = [NSString stringWithFormat:@"%@m³", _order.ORD_ISSUE_VOLUME];
     _payTypeLabel.text = [Tools getOrderStatus:_order.DRIVER_PAY];
+    _REFERENCE01.text = _order.Shipment[@"REFERENCE01"];
+    _REFERENCE04.text = _order.Shipment[@"REFERENCE04"];
 }
 
 
