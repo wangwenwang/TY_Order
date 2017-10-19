@@ -598,6 +598,7 @@
 #pragma mark - OrderDetailServiceDelegate
 
 - (void)successOfOrderDetail:(OrderModel *)order {
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     OrderDetailViewController *vc = [[OrderDetailViewController alloc] init];
@@ -608,6 +609,7 @@
 
 
 - (void)failureOfOrderDetail:(NSString *)msg {
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [Tools showAlert:self.view andTitle:msg ? msg : @"获取失败"];
 }

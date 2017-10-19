@@ -41,8 +41,11 @@
 /// 产品规格
 @property (weak, nonatomic) IBOutlet UILabel *productFormatLabel;
 
-/// 产品价格
+/// 产品原价
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
+
+/// 产品库存
+@property (weak, nonatomic) IBOutlet UILabel *QTYAVAILABLE;
 
 /// 减少产品数量
 - (IBAction)delNumberOnclick:(UIButton *)sender;

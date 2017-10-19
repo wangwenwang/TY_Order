@@ -93,6 +93,8 @@
                                 @"", @"strLicense",
                                 nil];
     
+    NSLog(@"%@", parameters);
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:API_GET_PRODUCT_TYPE parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {

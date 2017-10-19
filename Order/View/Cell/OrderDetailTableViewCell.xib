@@ -41,6 +41,18 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHI-BM-TTC" userLabel="ContentView">
                                 <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9I1-nG-TFX">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="79" id="drZ-6J-lHY"/>
+                                            <constraint firstAttribute="height" constant="22" id="gGM-EG-bIg"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="-1" id="HkG-3z-vSq"/>
+                                        </connections>
+                                    </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单编号:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0U-Fc-pcT">
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -185,8 +197,10 @@
                                     <constraint firstItem="T56-Dg-yAf" firstAttribute="centerY" secondItem="EXQ-mU-GkU" secondAttribute="centerY" id="mQz-QF-uve"/>
                                     <constraint firstItem="Dcj-9x-GEm" firstAttribute="centerY" secondItem="qjW-hz-d0p" secondAttribute="centerY" id="nyg-ed-D4L"/>
                                     <constraint firstItem="tA7-GD-nfv" firstAttribute="centerX" secondItem="UHI-BM-TTC" secondAttribute="centerX" id="o5f-T4-NAC"/>
+                                    <constraint firstItem="9I1-nG-TFX" firstAttribute="centerY" secondItem="V8Y-iS-57V" secondAttribute="centerY" id="oHE-sC-nmi"/>
                                     <constraint firstItem="fdt-qG-dru" firstAttribute="centerY" secondItem="V8Y-iS-57V" secondAttribute="centerY" id="rHn-lB-Vn2"/>
                                     <constraint firstItem="nAO-3t-C22" firstAttribute="leading" secondItem="V8Y-iS-57V" secondAttribute="leading" id="v3P-bk-zqI"/>
+                                    <constraint firstItem="9I1-nG-TFX" firstAttribute="leading" secondItem="V8Y-iS-57V" secondAttribute="trailing" constant="-4" id="vHG-ce-xrf"/>
                                     <constraint firstItem="Dcj-9x-GEm" firstAttribute="leading" secondItem="qjW-hz-d0p" secondAttribute="trailing" constant="-3" id="xTz-eb-mdn"/>
                                     <constraint firstItem="Q0U-Fc-pcT" firstAttribute="top" secondItem="UHI-BM-TTC" secondAttribute="top" constant="3" id="xta-Ob-PVp"/>
                                 </constraints>
@@ -230,6 +244,7 @@
                 <outlet property="orderNoLabel" destination="BKa-5V-iKJ" id="vOW-2u-Ger"/>
                 <outlet property="originalPriceLabel" destination="9RY-sH-SOC" id="rmd-S6-E8U"/>
                 <outlet property="payPriceLabel" destination="Dcj-9x-GEm" id="21U-ff-olH"/>
+                <outlet property="quantityF" destination="9I1-nG-TFX" id="1fa-at-tRJ"/>
                 <outlet property="quantityLabel" destination="fdt-qG-dru" id="1Tc-1D-SRN"/>
                 <outlet property="totalPriceLabel" destination="DIC-4e-ryQ" id="umf-RE-ChM"/>
                 <outlet property="volumeLabel" destination="6zh-q9-GOG" id="LvA-3A-Hla"/>

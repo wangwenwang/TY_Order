@@ -19,8 +19,21 @@
 #import "AuditService.h"
 #import "OrderOneAuditViewController.h"
 #import "OrderingViewController.h"
+#import "LMBlurredView.h"
+#import <Masonry.h>
+#import "SetProductQtyService.h"
+#import "OrderDetailService.h"
 
-@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate>
+
+@interface NumberButton : UIButton
+@property (assign, nonatomic) NSString *OD_IDX;
+@end
+
+@implementation NumberButton
+@end
+
+
+@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate, OrderDetailTableViewCellDelegate, LMBlurredViewDelegate, SetProductQtyServiceDelegate, OrderDetailServiceDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
@@ -145,6 +158,23 @@
 // 打回原因 提示
 @property (weak, nonatomic) IBOutlet UILabel *refuseReasonPromptLabel;
 
+// 虚化背景
+@property (strong, nonatomic) LMBlurredView *blurredView;
+
+// 输入产品数量
+@property (strong, nonatomic) UIView *enterNumView;
+
+// 输入产品数量视图 距下
+@property (nonatomic, strong) MASConstraint *enterNumView_bottom;
+
+// 键盘高度
+@property (assign, nonatomic) CGFloat keyboardHeight;
+
+// 修改产品数量
+@property (strong, nonatomic) UITextField *customsizeProductNumberF;
+
+@property (strong, nonatomic) OrderDetailService *odrDetailService;
+
 @end
 
 
@@ -165,6 +195,8 @@
         _app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         _service_audit = [[AuditService alloc] init];
         _service_audit.delegate = self;
+        _odrDetailService = [[OrderDetailService alloc] init];
+        _odrDetailService.delegate = self;
     }
     return self;
 }
@@ -259,6 +291,7 @@
 // 处理数据
 - (void)dealWithData {
     
+    [_arrGoods removeAllObjects];
     for(int i = 0; i < _order.OrderDetails.count; i++) {
         
         OrderDetailModel *m = _order.OrderDetails[i];
@@ -388,6 +421,7 @@
     // 处理界面
     static NSString *cellID = @"OrderDetailTableViewCell";
     OrderDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
+    cell.delegate = self;
     
     // 处理数据
     OrderDetailModel *m = nil;
@@ -398,6 +432,18 @@
         
         m = _arrGitfs[indexPath.row];
     }
+    
+    
+    // 修改数量 经理或管理员
+    if((_popClass == [UnAuditedViewController class] && ([_app.user.USER_TYPE isEqualToString:kMANAGER] || [_app.user.USER_TYPE isEqualToString:kADMIN]))) {
+        
+        // 显示修改数量
+    } else {
+        
+        // 不显示修改数量
+        [cell.quantityF setHidden:YES];
+    }
+    
     
     // 填充数据
     cell.orderDetailM = m;
@@ -550,6 +596,219 @@
             [self.navigationController popViewControllerAnimated:YES];
         });
     });
+}
+
+
+#pragma mark - OrderDetailTableViewCellDelegate
+
+- (void)textFieldShouldBeginEditing:(NSString *)OD_IDX {
+    
+    [self addEnterNumView:OD_IDX];
+}
+
+- (void)addEnterNumView:(NSString *)OD_IDX {
+    
+    _blurredView = [[LMBlurredView alloc] init];
+    _blurredView.delegate = self;
+    [_blurredView blurry:5.1];
+    
+    // 输入数量
+    _enterNumView = [[UIView alloc] init];
+    _enterNumView.layer.cornerRadius = 2.0f;
+    _enterNumView.backgroundColor = [UIColor whiteColor];
+    UIView *window = self.view.window;
+    [window addSubview:_enterNumView];
+    [_enterNumView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(250);
+        make.height.mas_equalTo(160);
+        _enterNumView_bottom = make.bottom.mas_equalTo(-((ScreenHeight / 2) - (160 / 2)));
+        make.centerX.offset(0);
+    }];
+    
+    // label
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"请输入产品数量";
+    [_enterNumView addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(8);
+        make.centerX.offset(0);
+    }];
+    
+    // 输入框
+    UITextField *textF = [[UITextField alloc] init];
+    textF.borderStyle = UITextBorderStyleRoundedRect;
+    textF.keyboardType = UIKeyboardTypeDecimalPad;
+    textF.textAlignment = NSTextAlignmentCenter;
+    [_enterNumView addSubview:textF];
+    [textF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(label.mas_bottom).offset(15);
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.height.mas_equalTo(33);
+    }];
+    _customsizeProductNumberF = textF;
+    
+    // 声明取消按钮
+    UIButton *btnCancel = [[UIButton alloc] init];
+    [_enterNumView addSubview:btnCancel];
+    
+    // 确定
+    NumberButton *btnComplete = [[NumberButton alloc] init];
+    btnComplete.backgroundColor = TYColor;
+    btnComplete.OD_IDX = OD_IDX;
+    [btnComplete addTarget:self action:@selector(CompleteCustomsizeProductNumOnclick:) forControlEvents:UIControlEventTouchUpInside];
+    btnComplete.layer.cornerRadius = 2.0f;
+    [btnComplete setTitle:@"确定" forState:UIControlStateNormal];
+    [_enterNumView addSubview:btnComplete];
+    [btnComplete mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(textF.mas_bottom).offset(25);
+        make.left.mas_equalTo(btnCancel.mas_right).offset(30);
+        make.right.mas_equalTo(-30);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(btnCancel.mas_width);
+    }];
+    
+    // 取消
+    btnCancel.backgroundColor = TYColor;
+    [btnCancel addTarget:self action:@selector(CancelCustomsizeProductNumOnclick) forControlEvents:UIControlEventTouchUpInside];
+    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    btnCancel.layer.cornerRadius = btnComplete.layer.cornerRadius;
+    [btnCancel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(btnComplete.mas_top);
+        make.left.mas_equalTo(30);
+        make.right.mas_equalTo(btnComplete.mas_left).offset(-30);
+        make.height.mas_equalTo(btnComplete.mas_height);
+        make.width.mas_equalTo(btnComplete.mas_width);
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _enterNumView.alpha = 1.0;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        usleep(100000);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [textF becomeFirstResponder];
+        });
+    });
+}
+
+
+- (void)CompleteCustomsizeProductNumOnclick:(NumberButton *)sender {
+    
+    [LM_alert showLMAlertViewWithTitle:@"" message:@"是否更改产品数量" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        SetProductQtyService *service = [[SetProductQtyService alloc] init];
+        service.delegate = self;
+        [service SetProductQty:sender.OD_IDX andstrQty:_customsizeProductNumberF.text];
+    } cancelClickHandle:^{
+        
+        nil;
+    }];
+    
+    [self CancelCustomsizeProductNumOnclick];
+}
+
+
+- (void)CancelCustomsizeProductNumOnclick {
+    
+    [self LMBlurredViewClear];
+    
+    [_blurredView clear];
+}
+
+
+#pragma mark - LMBlurredViewDelegate
+
+- (void)LMBlurredViewClear {
+    
+    [_app.window endEditing:YES];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _enterNumView.alpha = 0;
+    }];
+}
+
+
+#pragma mark - 通知回调
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    _keyboardHeight = keyboardRect.size.height;
+    
+    if(_keyboardHeight == 0) return;
+    
+    [self.enterNumView_bottom uninstall];
+    
+    [_enterNumView mas_updateConstraints:^(MASConstraintMaker *make) {
+        
+        make.bottom.mas_equalTo(-(_keyboardHeight + 20));
+    }];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        [_enterNumView layoutIfNeeded];
+    }];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    _keyboardHeight = 0;
+}
+
+
+#pragma mark - SetProductQtyServiceDelegate
+
+- (void)successOfSetProductQty:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [Tools showAlert:self.view andTitle:msg];
+
+    [_odrDetailService getOrderDetailsData:_order.IDX];
+}
+
+
+- (void)failureOfSetProductQty:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [Tools showAlert:self.view andTitle:msg];
+}
+
+
+#pragma mark - OrderDetailServiceDelegate
+
+- (void)successOfOrderDetail:(OrderModel *)order {
+    
+    _order = order;
+    
+    [self fullData];
+    
+    [self dealWithData];
+    
+    [_orderTableView reloadData];
+}
+
+
+- (void)failureOfOrderDetail:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [Tools showAlert:self.view andTitle:msg ? msg : @"获取失败"];
 }
 
 @end

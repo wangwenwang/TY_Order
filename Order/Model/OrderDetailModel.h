@@ -29,6 +29,7 @@
 @property(copy, nonatomic)NSString *MJ_REMARK;
 @property(assign, nonatomic)double ORG_PRICE;
 @property(copy, nonatomic)NSString *PRODUCT_URL;
+@property(copy, nonatomic)NSString *OD_IDX;
 
 
 @property(copy, nonatomic)NSString *PRODUCT_TYPE;

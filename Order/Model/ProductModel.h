@@ -37,6 +37,9 @@
 
 @property(assign, nonatomic)double PRODUCT_WEIGHT;
 
+// 产品库存
+@property(assign, nonatomic)CGFloat QTYAVAILABLE;
+
 @property(strong, nonatomic)NSMutableArray *PRODUCT_POLICY;
 
 /// 是否考虑库存情况

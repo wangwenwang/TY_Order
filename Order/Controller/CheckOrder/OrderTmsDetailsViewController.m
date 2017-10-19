@@ -112,8 +112,16 @@
     _orderStatusLabel.text = [Tools getOrderStatus:_order.ORD_STATE];
     _orderVolLabel.text = [NSString stringWithFormat:@"%@m³", _order.ORD_ISSUE_VOLUME];
     _payTypeLabel.text = [Tools getOrderStatus:_order.DRIVER_PAY];
-    _REFERENCE01.text = _order.Shipment[@"REFERENCE01"];
-    _REFERENCE04.text = _order.Shipment[@"REFERENCE04"];
+    
+    // 说不定 Shipment = @""
+    @try {
+        
+        _REFERENCE01.text = _order.Shipment[@"REFERENCE01"];
+        _REFERENCE04.text = _order.Shipment[@"REFERENCE04"];
+    } @catch (NSException *exception) {
+        
+        nil;
+    }
 }
 
 

@@ -46,22 +46,30 @@
         int _type = [responseObject[@"type"] intValue];
         NSString *msg = responseObject[@"msg"];
         if(_type == 1) {
-            NSArray *arrResult = responseObject[@"result"];
-            if([arrResult isKindOfClass:[NSArray class]]) {
-                if(arrResult.count > 0) {
-                    NSDictionary *orders = arrResult[0];
-                    
-                    OrderModel *tms = [[OrderModel alloc] init];
-                    [tms setDict:orders[@"order"]];
-                    
-                    if([_delegate respondsToSelector:@selector(successOfTmsDetails:andPushVc:)]) {
-                        [_delegate successOfTmsDetails:tms andPushVc:self.pushDirection];
+            
+            @try {
+                
+                NSArray *arrResult = responseObject[@"result"];
+                if([arrResult isKindOfClass:[NSArray class]]) {
+                    if(arrResult.count > 0) {
+                        NSDictionary *orders = arrResult[0];
+                        
+                        OrderModel *tms = [[OrderModel alloc] init];
+                        [tms setDict:orders[@"order"]];
+                        
+                        if([_delegate respondsToSelector:@selector(successOfTmsDetails:andPushVc:)]) {
+                            [_delegate successOfTmsDetails:tms andPushVc:self.pushDirection];
+                        }
                     }
+                } else {
+                    [self failureOfTmsDetails:msg];
                 }
-            }else {
-                [self failureOfTmsDetails:msg];
+            } @catch (NSException *exception) {
+                
+                [self failureOfTmsDetails:@"服务器数据异常"];
             }
-        }else {
+        } else {
+            
             [self failureOfTmsDetails:msg];
         }
         

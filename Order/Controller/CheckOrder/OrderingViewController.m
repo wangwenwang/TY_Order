@@ -82,12 +82,6 @@
 }
 
 
-- (void)dealloc {
-    
-    [self removeNotification];
-}
-
-
 /*--------------   我们是一个组合   --------------*/
 // 框架有bug，viewDidAppear 在 viewWillAppear时执行了
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,19 +108,25 @@
 /*--------------   我们是一个组合   --------------*/
 
 
+- (void)dealloc {
+    
+    [self removeNotification];
+}
+
+
 #pragma mark - 通知
 
 - (void)addNotification {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMsg:) name:kOrderingViewController_receiveMsg object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNetworkData) name:_requestNetworkNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollViewDidEndDeceleratingMethod) name:kWMPageController_ScrollViewDidEndDecelerating object:nil];
 }
 
 
 - (void)removeNotification {
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOrderingViewController_receiveMsg object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:_requestNetworkNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kWMPageController_ScrollViewDidEndDecelerating object:nil];
 }
 
 

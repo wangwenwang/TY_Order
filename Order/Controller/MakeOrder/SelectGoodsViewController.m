@@ -45,7 +45,7 @@
 #define PayTypeCellHeight 27
 
 /// 产品Cell的高度
-#define kProductCellHeight 69
+#define kProductCellHeight 89
 
 CGFloat const gestureMinimumTranslation = 5.0 ;
 
@@ -906,6 +906,7 @@ typedef enum : NSInteger {
         cell.productNameLabel.text = [self getProductName:m.PRODUCT_NAME];
         cell.productFormatLabel.text = m.PRODUCT_DESC;
         cell.productPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", m.PRODUCT_PRICE];
+        cell.QTYAVAILABLE.text = [Tools formatFloat:m.QTYAVAILABLE];
         [cell.productNumberButton setTitle:[self formatFloat:m.CHOICED_SIZE] forState:UIControlStateNormal];
         
         // 促销信息的处理

@@ -40,6 +40,9 @@
 /// 产品数量
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 
+/// 产品库存
+@property (weak, nonatomic) IBOutlet UILabel *QTYAVAILABLE;
+
 /// 增加价格
 @property (weak, nonatomic) IBOutlet UIButton *delButton;
 

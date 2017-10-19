@@ -30,6 +30,7 @@
         _PRODUCT_INVENTORY = 0;
         _PRODUCT_CURRENT_PRICE = 0;
         _CHOICED_SIZE = 0;
+        _QTYAVAILABLE = 0;
         
         _isClickCell = NO;
 //        _selectedProductCount = 0;
@@ -53,6 +54,7 @@
         _PRODUCT_URL = dict[@"PRODUCT_URL"] ? dict[@"PRODUCT_URL"] : _PRODUCT_URL;
         _PRODUCT_VOLUME = dict[@"PRODUCT_VOLUME"] ? [dict[@"PRODUCT_VOLUME"] doubleValue] : _PRODUCT_VOLUME;
         _PRODUCT_WEIGHT = dict[@"PRODUCT_WEIGHT"] ? [dict[@"PRODUCT_WEIGHT"] doubleValue] : _PRODUCT_WEIGHT;
+        _QTYAVAILABLE = dict[@"QTYAVAILABLE"] ? [dict[@"QTYAVAILABLE"] doubleValue] : _QTYAVAILABLE;
         
         
         

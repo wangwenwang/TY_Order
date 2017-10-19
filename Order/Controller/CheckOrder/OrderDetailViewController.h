@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "OrderModel.h"
+#import "SCBaseViewController.h"
 
-@interface OrderDetailViewController : UIViewController
+@interface OrderDetailViewController : SCBaseViewController
 
 @property (strong, nonatomic) OrderModel *order;
 

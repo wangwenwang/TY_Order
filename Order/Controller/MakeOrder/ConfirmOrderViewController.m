@@ -25,7 +25,7 @@
 
 @interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate, LMBlurredViewDelegate>
 
-#define ProductTableViewCellHeight 69
+#define ProductTableViewCellHeight 89
 #define GiftTableViewCellHeight 69
 
 //  虚化值 0 - 10
@@ -586,6 +586,10 @@ typedef enum _CloseDatePicker {
         for(int i = 0; i < ps.count; i++) {
             PromotionDetailModel *p = ps[i];
             NSDictionary *dict = nil;
+            
+            // 本地数据
+            ProductModel *product = _productsOfLocal[i];
+            
             if([p.PRODUCT_TYPE isEqualToString:@"NR"]) {
                 dict = [NSDictionary dictionaryWithObjectsAndKeys:
                         @(p.ACT_PRICE), @"ACT_PRICE",
@@ -622,6 +626,7 @@ typedef enum _CloseDatePicker {
                         p.PRODUCT_TYPE, @"PRODUCT_TYPE",
                         p.PRODUCT_URL, @"PRODUCT_URL",
                         p.SALE_REMARK, @"SALE_REMARK",
+                        @(product.QTYAVAILABLE), @"stock_qty",
                         nil];
             } else if([p.PRODUCT_TYPE isEqualToString:@"GF"]) {
                 dict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -647,6 +652,7 @@ typedef enum _CloseDatePicker {
                         p.PRODUCT_NO, @"PRODUCT_NO",
                         p.PRODUCT_TYPE, @"PRODUCT_TYPE",
                         p.SALE_REMARK, @"SALE_REMARK",
+                        @(product.QTYAVAILABLE), @"stock_qty",
                         nil];
             } else {
                 
@@ -737,6 +743,9 @@ typedef enum _CloseDatePicker {
         cell.tag = indexPath.row;
         cell.delegate = self;
         
+        // 本地数据
+        ProductModel *product = _productsOfLocal[indexPath.row];
+        
         // 获取数据
         PromotionDetailModel *m = _promotionDetailsOfServer[indexPath.row];
         
@@ -746,6 +755,7 @@ typedef enum _CloseDatePicker {
         cell.originalPriceLabel.text = [NSString stringWithFormat:@"%.1f", m.ORG_PRICE];
         [cell.nowPriceButton setTitle:[NSString stringWithFormat:@"%.1f", m.ACT_PRICE] forState:UIControlStateNormal];
         cell.numberLabel.text = [Tools formatFloat:m.PO_QTY];
+        cell.QTYAVAILABLE.text = [Tools formatFloat:product.QTYAVAILABLE];
         
         cell.addButtonWidth.constant = 30;
         cell.delButtonWidth.constant = 30;
@@ -773,7 +783,7 @@ typedef enum _CloseDatePicker {
         }
         cell.orgPriceLabel.text = [NSString stringWithFormat:@"%.1f", m.ORG_PRICE];
         cell.actPriceLabel.text = [NSString stringWithFormat:@"%.1f", m.ACT_PRICE];
-        cell.numberLabel.text = [NSString stringWithFormat:@"%lld", m.PO_QTY];
+        cell.numberLabel.text = [Tools formatFloat:m.PO_QTY];
         
         // 返回Cell
         return cell;

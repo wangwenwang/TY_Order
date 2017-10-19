@@ -76,6 +76,16 @@
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="899" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="M8r-jG-18v">
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="库存：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJx-eO-Gvx">
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -83,6 +93,7 @@
                                             <constraint firstItem="fgm-sS-MdT" firstAttribute="leading" secondItem="iwx-C8-7GS" secondAttribute="leading" id="6HA-PR-neH"/>
                                             <constraint firstItem="kKY-lf-BPu" firstAttribute="top" secondItem="fgm-sS-MdT" secondAttribute="bottom" constant="3" id="6oJ-vu-Ek0"/>
                                             <constraint firstItem="Tke-Vt-gto" firstAttribute="top" secondItem="iwx-C8-7GS" secondAttribute="top" id="Bxt-8E-kgs"/>
+                                            <constraint firstItem="M8r-jG-18v" firstAttribute="centerY" secondItem="hJx-eO-Gvx" secondAttribute="centerY" id="D3L-0d-YEG"/>
                                             <constraint firstItem="iwx-C8-7GS" firstAttribute="leading" secondItem="FZG-3b-JFT" secondAttribute="leading" id="Fiy-bV-d9r"/>
                                             <constraint firstItem="wS7-Lz-NfD" firstAttribute="centerY" secondItem="fgm-sS-MdT" secondAttribute="centerY" id="Jd9-LM-YIU"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tke-Vt-gto" secondAttribute="trailing" id="OfK-Ec-ZKi"/>
@@ -91,7 +102,10 @@
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wS7-Lz-NfD" secondAttribute="trailing" constant="5" id="ZLb-h9-C1H"/>
                                             <constraint firstItem="iwx-C8-7GS" firstAttribute="top" secondItem="FZG-3b-JFT" secondAttribute="top" constant="7.5" id="dOu-b1-l0F"/>
                                             <constraint firstItem="Tke-Vt-gto" firstAttribute="leading" secondItem="iwx-C8-7GS" secondAttribute="trailing" constant="-3" id="guL-3i-vOJ"/>
+                                            <constraint firstItem="M8r-jG-18v" firstAttribute="leading" secondItem="Tke-Vt-gto" secondAttribute="leading" id="h1c-Us-Vbc"/>
+                                            <constraint firstItem="hJx-eO-Gvx" firstAttribute="leading" secondItem="iwx-C8-7GS" secondAttribute="leading" id="nqR-DV-zPK"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D36-Yg-zLL" secondAttribute="trailing" constant="5" id="pjO-ih-343"/>
+                                            <constraint firstItem="hJx-eO-Gvx" firstAttribute="top" secondItem="kKY-lf-BPu" secondAttribute="bottom" constant="3" id="rRT-6v-U9S"/>
                                             <constraint firstItem="D36-Yg-zLL" firstAttribute="leading" secondItem="wS7-Lz-NfD" secondAttribute="leading" id="vdR-Vn-06F"/>
                                             <constraint firstItem="D36-Yg-zLL" firstAttribute="centerY" secondItem="kKY-lf-BPu" secondAttribute="centerY" id="ztu-3O-cNX"/>
                                         </constraints>
@@ -138,7 +152,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="69" id="1na-tF-S3W"/>
+                                    <constraint firstAttribute="height" constant="89" id="1na-tF-S3W"/>
                                     <constraint firstAttribute="bottom" secondItem="FZG-3b-JFT" secondAttribute="bottom" id="4a6-lZ-X7T"/>
                                     <constraint firstItem="FZG-3b-JFT" firstAttribute="top" secondItem="i1b-10-Ctl" secondAttribute="top" id="Gig-eC-A1s"/>
                                     <constraint firstAttribute="trailing" secondItem="COC-ih-C0b" secondAttribute="trailing" id="KYJ-A2-JO8"/>
@@ -249,6 +263,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="PolicyPromptImageView" destination="Bxf-x7-pGZ" id="hKg-m1-n0d"/>
+                <outlet property="QTYAVAILABLE" destination="M8r-jG-18v" id="aQo-fN-iq7"/>
                 <outlet property="inventoryLabel" destination="dlq-iG-d54" id="ES9-TA-cob"/>
                 <outlet property="myTableView" destination="0AH-lO-dh0" id="IaA-z9-MX2"/>
                 <outlet property="policyPromptView" destination="fSV-gJ-NZk" id="vhy-WR-gho"/>
@@ -268,6 +283,6 @@
         <image name="button_drop_up" width="16" height="16"/>
         <image name="ic_add" width="25" height="25"/>
         <image name="ic_del" width="25" height="25"/>
-        <image name="ic_information_picture" width="43" height="43"/>
+        <image name="ic_information_picture" width="41" height="41"/>
     </resources>
 </document>

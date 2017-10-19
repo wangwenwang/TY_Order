@@ -94,7 +94,7 @@
     NSLog(@"%@", parameters);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     [manager POST:API_CONFIRM_ORDER parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         nil;

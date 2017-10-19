@@ -32,6 +32,7 @@
         
         _PRODUCT_TYPE = @"";
         _PRODUCT_DESC = @"";
+        _OD_IDX = @"";
     }
     return self;
 }
@@ -59,6 +60,7 @@
         
         _PRODUCT_TYPE = dict[@"PRODUCT_TYPE"] ? dict[@"PRODUCT_TYPE"] : @"";
         _PRODUCT_DESC = dict[@"PRODUCT_DESC"] ? dict[@"PRODUCT_DESC"] : @"";
+        _OD_IDX = dict[@"OD_IDX"] ? dict[@"OD_IDX"] : @"";
         
     } @catch (NSException *exception) {
         

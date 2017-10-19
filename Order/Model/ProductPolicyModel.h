@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-/// 产品策略实体类
+/// 产品策略实体w类
 @interface ProductPolicyModel : NSObject
 
 @property(copy, nonatomic)NSString *POLICY_NAME;

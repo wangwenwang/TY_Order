@@ -22,6 +22,7 @@
 		300AF6FD1EE8DEC60037C660 /* TimeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 300AF6FC1EE8DEC60037C660 /* TimeLabel.m */; };
 		300AF7091EE8FD630037C660 /* HooDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 300AF7061EE8FD630037C660 /* HooDatePicker.m */; };
 		300AF70A1EE8FD630037C660 /* NSDate+HooDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 300AF7081EE8FD630037C660 /* NSDate+HooDatePicker.m */; };
+		30111AC71F98469900B05012 /* SetProductQtyService.m in Sources */ = {isa = PBXBuildFile; fileRef = 30111AC61F98469900B05012 /* SetProductQtyService.m */; };
 		30126A731DB0715E00BABACF /* SelectGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30126A711DB0715E00BABACF /* SelectGoodsViewController.m */; };
 		30126A741DB0715E00BABACF /* SelectGoodsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30126A721DB0715E00BABACF /* SelectGoodsViewController.xib */; };
 		30126A781DB0725500BABACF /* SelectGoodsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30126A761DB0725500BABACF /* SelectGoodsTableViewCell.m */; };
@@ -365,6 +366,8 @@
 		300AF7061EE8FD630037C660 /* HooDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HooDatePicker.m; sourceTree = "<group>"; };
 		300AF7071EE8FD630037C660 /* NSDate+HooDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HooDatePicker.h"; sourceTree = "<group>"; };
 		300AF7081EE8FD630037C660 /* NSDate+HooDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HooDatePicker.m"; sourceTree = "<group>"; };
+		30111AC51F98469900B05012 /* SetProductQtyService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetProductQtyService.h; sourceTree = "<group>"; };
+		30111AC61F98469900B05012 /* SetProductQtyService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetProductQtyService.m; sourceTree = "<group>"; };
 		30126A701DB0715E00BABACF /* SelectGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGoodsViewController.h; sourceTree = "<group>"; };
 		30126A711DB0715E00BABACF /* SelectGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGoodsViewController.m; sourceTree = "<group>"; };
 		30126A721DB0715E00BABACF /* SelectGoodsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGoodsViewController.xib; sourceTree = "<group>"; };
@@ -1360,6 +1363,8 @@
 				30F7B8D71DBF37FC004CD128 /* AddGiftsService.m */,
 				302160911F15BEE40049374F /* RegisterService.h */,
 				302160921F15BEE40049374F /* RegisterService.m */,
+				30111AC51F98469900B05012 /* SetProductQtyService.h */,
+				30111AC61F98469900B05012 /* SetProductQtyService.m */,
 				30BB2DF31F467B33002E51E7 /* 库存管理 */,
 				30BB2DD01F459391002E51E7 /* 库存登记 */,
 				30201F1D1F1083970055BA6A /* 客户费用 */,
@@ -2536,6 +2541,7 @@
 				30BB2DCC1F459375002E51E7 /* GetAppStockListTableViewCell.m in Sources */,
 				30CDC6611D9907CD0035602F /* SVProgressHUD.m in Sources */,
 				30201F0A1F1082220055BA6A /* GetAppBillFeeListModel.m in Sources */,
+				30111AC71F98469900B05012 /* SetProductQtyService.m in Sources */,
 				30E5A0751D9DFB6300D94F77 /* SearchOrderPathViewController.m in Sources */,
 				304A7AF31DBA62710039B0B2 /* ConfirmOrderTableViewCell.m in Sources */,
 				30B948EA1EEA4B5500E4C3EC /* IB_UIView.m in Sources */,
