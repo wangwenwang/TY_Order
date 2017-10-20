@@ -116,6 +116,9 @@
 // 付款价
 @property (weak, nonatomic) IBOutlet UILabel *payPriceLabel;
 
+// 部门
+@property (weak, nonatomic) IBOutlet UILabel *OL_REFERENCE01;
+
 // 备注
 @property (weak, nonatomic) IBOutlet UILabel *reMarkLabel;
 
@@ -361,7 +364,9 @@
         _payPriceLabel.text = [NSString stringWithFormat:@"￥%.f", _order.ACT_PRICE - _order.MJ_PRICE];
     }
     
-    _reMarkLabel.text = [_order.ORD_REMARK_CONSIGNEE isEqualToString:@""] ? @"无" : _order.ORD_REMARK_CONSIGNEE;
+    _reMarkLabel.text = _order.ORD_REMARK_CONSIGNEE;
+    _OL_REFERENCE01.text = _order.OL_REFERENCE01;
+    
 }
 
 

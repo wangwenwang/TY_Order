@@ -76,6 +76,7 @@
 @property(copy, nonatomic)NSString *ORD_REMARK_CONSIGNEE;
 @property(copy, nonatomic)NSString *MJ_REMARK;
 @property(copy, nonatomic)NSString *DRIVER_PAY;
+@property(copy, nonatomic)NSString *OL_REFERENCE01;
 ///
 @property(strong, nonatomic)NSMutableArray *OrderDetails;
 ///

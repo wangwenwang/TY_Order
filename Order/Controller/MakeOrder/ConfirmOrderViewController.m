@@ -143,6 +143,9 @@
 // 键盘高度
 @property (assign, nonatomic) CGFloat keyboardHeight;
 
+// 部门字段
+@property (weak, nonatomic) IBOutlet UITextField *REFERENCE01;
+
 @end
 
 
@@ -244,7 +247,7 @@ typedef enum _CloseDatePicker {
     //设置赠品TableView高度
     _giftsTableViewHeight.constant = GiftTableViewCellHeight * _selectedGifts.count;
     
-    _scrollContentViewHeight.constant = 450 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
+    _scrollContentViewHeight.constant = 470 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
 }
 
 
@@ -549,6 +552,7 @@ typedef enum _CloseDatePicker {
                               p.TO_PROVINCE, @"TO_PROVINCE",
                               p.TO_REGION, @"TO_REGION",
                               p.TO_ZIP, @"TO_ZIP",
+                              _REFERENCE01.text, @"REFERENCE01",
                               nil];
         
         NSString *s = [Tools JsonStringWithDictonary:dict];
