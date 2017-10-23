@@ -82,7 +82,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5P-Lx-eTG">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="rtx-0w-r92"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="rtx-0w-r92"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="23.9">
@@ -127,7 +127,6 @@
                             <constraint firstItem="1aH-zt-BEA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Rp-t0-tWl" secondAttribute="trailing" id="Y2k-Q8-4Sy"/>
                             <constraint firstItem="cJS-9r-RZY" firstAttribute="centerY" secondItem="YOH-Iw-NjI" secondAttribute="centerY" id="f0m-KK-seL"/>
                             <constraint firstAttribute="trailing" secondItem="cJS-9r-RZY" secondAttribute="trailing" id="hul-AL-USh"/>
-                            <constraint firstAttribute="trailing" secondItem="F0Y-74-2fl" secondAttribute="trailing" constant="103" id="jjM-gc-R2H"/>
                             <constraint firstItem="upS-oK-qef" firstAttribute="leading" secondItem="w5P-Lx-eTG" secondAttribute="trailing" id="kpw-It-TG4"/>
                             <constraint firstItem="6Rp-t0-tWl" firstAttribute="top" secondItem="YOH-Iw-NjI" secondAttribute="top" constant="17" id="pnN-UP-XZc"/>
                             <constraint firstItem="w5P-Lx-eTG" firstAttribute="centerY" secondItem="6Rp-t0-tWl" secondAttribute="centerY" id="qo1-zo-rwY"/>

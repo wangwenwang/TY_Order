@@ -40,6 +40,9 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollContentViewHeight;
 
+// 业务类型Cell高度
+@property (assign, nonatomic) CGFloat businessCellHeight;
+
 @end
 
 
@@ -63,11 +66,16 @@
     
     [super viewDidLoad];
     
-    //获取Plist数据
+    // 获取Plist数据
     [self getPlistData];
     
-    //注册Cell
+    // 注册Cell
     [self registerCell];
+    
+    // 业务类型Cell高度
+    CGFloat oneLine = [Tools getHeightOfString:@"fds" fontSize:15 andWidth:MAXFLOAT];
+    CGFloat mulLine = [Tools getHeightOfString:_app.business.BUSINESS_NAME fontSize:15 andWidth:ScreenWidth - (15 + 25 + 5 + 77 - 3)];
+    _businessCellHeight = 44 + (mulLine - oneLine);
 }
 
 
@@ -87,6 +95,7 @@
 
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
 }
 
@@ -124,6 +133,18 @@
 
 
 #pragma mark - UITableViewDelegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(indexPath.row == 2) {
+        
+        return _businessCellHeight;
+    } else {
+        
+        return 44;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _myTableViewArrM.count;

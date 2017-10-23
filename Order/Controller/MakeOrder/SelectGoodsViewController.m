@@ -1078,15 +1078,13 @@ typedef enum : NSInteger {
     }  else if(tableView.tag == 1004) {
         _brandRow = indexPath.row;
         
-        // 选择品类
-        [self selectProductType:0 andRefreshTableView:NO];
-        [_productTypeTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:0];
-        
         // 选择品牌
         ProductTbModel *m = _brands[indexPath.row];
         _selectedBrand = [m.PRODUCT_CLASS isEqualToString:@"全部"] ? @"" : m.PRODUCT_CLASS;
         
-        [_selectGoodsService getProductsData:_party.IDX andOrderAddressIdx:_address.IDX andProductTypeIndex:0 andProductType:_selectedProductType andOrderBrand:_selectedBrand];
+        // 选择分类
+        [self selectProductType:0 andRefreshTableView:YES];
+        [_productTypeTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:0];
         
         //操作UI
         _brandLabel.text = [NSString stringWithFormat:@"分类:%@", [_selectedBrand isEqualToString:@""] ? @"全部" : _selectedBrand];
@@ -1283,9 +1281,17 @@ typedef enum : NSInteger {
     [UIView animateWithDuration:0.5 animations:^{
         
         _shoppingCarHeight.constant = _isShowSoppingCar ? 0 : _lastShoppingCarHeiht;
-        [_bottomView layoutIfNeeded];
-        [_shoppingCarView layoutIfNeeded];
-        _isShowSoppingCar ? nil : [_myTableView layoutIfNeeded];
+        
+        if(SystemVersion >= 10.0) {
+            
+            [self.view layoutIfNeeded];
+        } else {
+            
+            [_bottomView layoutIfNeeded];
+            [_shoppingCarView layoutIfNeeded];
+            _isShowSoppingCar ? nil : [_myTableView layoutIfNeeded];
+        }
+        
     } completion:^(BOOL finished) {
         
         _isShowSoppingCar = _isShowSoppingCar ? NO : YES;

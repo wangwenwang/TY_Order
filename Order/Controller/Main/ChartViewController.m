@@ -117,7 +117,7 @@
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     
-    _scrollContentViewHeight.constant = ScreenWidth + 10 + _arrM.count * 15;
+    _scrollContentViewHeight.constant = ScreenWidth + 10 + _arrM.count * 14.3;
     
     
     _barChartScrollContentViewWidth.constant = 60 + _arrM.count * 120;
@@ -145,39 +145,32 @@
 
 - (void)addColor {
     
-    [_colors addObject:[UIColor blueColor]];
-    [_colors addObject:[UIColor cyanColor]];
-    [_colors addObject:[UIColor greenColor]];
-    [_colors addObject:[UIColor brownColor]];
-    [_colors addObject:[UIColor redColor]];
-    [_colors addObject:[UIColor yellowColor]];
-    [_colors addObject:[UIColor purpleColor]];
-    [_colors addObject:[UIColor orangeColor]];
-    [_colors addObject:[UIColor magentaColor]];
-    [_colors addObject:[UIColor colorWithRed:135 / 255.0 green:206 / 255.0 blue:235 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:235 / 2550. blue:205 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:220 / 255.0 green:220 / 255.0 blue:220 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:221 / 255.0 green:160 / 255.0 blue:221 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:99 / 255.0 blue:71 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:210 / 255.0 green:180 / 255.0 blue:140 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:61 / 255.0 green:89 / 255.0 blue:171 / 255.0 alpha:1.0]];
-    
-    //以下备用重复
-    [_colors addObject:[UIColor colorWithRed:127 / 255.0 green:255 / 255.0 blue:0 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:192 / 255.0 green:192 / 255.0 blue:192 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:192 / 255.0 blue:203 / 255.0 alpha:1.0]];
-    [_colors addObject:[UIColor blueColor]];
-    [_colors addObject:[UIColor cyanColor]];
-    [_colors addObject:[UIColor greenColor]];
-    [_colors addObject:[UIColor brownColor]];
-    [_colors addObject:[UIColor redColor]];
-    [_colors addObject:[UIColor yellowColor]];
-    [_colors addObject:[UIColor purpleColor]];
-    [_colors addObject:[UIColor orangeColor]];
-    [_colors addObject:[UIColor magentaColor]];
+    for (int i = 0; i < 7; i++) {
+        
+        [_colors addObject:[UIColor blueColor]];
+        [_colors addObject:[UIColor cyanColor]];
+        [_colors addObject:[UIColor greenColor]];
+        [_colors addObject:[UIColor brownColor]];
+        [_colors addObject:[UIColor redColor]];
+        [_colors addObject:[UIColor yellowColor]];
+        [_colors addObject:[UIColor purpleColor]];
+        [_colors addObject:[UIColor orangeColor]];
+        [_colors addObject:[UIColor magentaColor]];
+        [_colors addObject:[UIColor colorWithRed:135 / 255.0 green:206 / 255.0 blue:235 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:235 / 2550. blue:205 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:220 / 255.0 green:220 / 255.0 blue:220 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:221 / 255.0 green:160 / 255.0 blue:221 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:99 / 255.0 blue:71 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:210 / 255.0 green:180 / 255.0 blue:140 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:61 / 255.0 green:89 / 255.0 blue:171 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:127 / 255.0 green:255 / 255.0 blue:0 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:192 / 255.0 green:192 / 255.0 blue:192 / 255.0 alpha:1.0]];
+        [_colors addObject:[UIColor colorWithRed:255 / 255.0 green:192 / 255.0 blue:203 / 255.0 alpha:1.0]];
+    }
 }
 
-/// 处理数据
+
+// 处理数据
 - (void)dealWithData:(NSString *)type  {
     
     [_arrXLabels removeAllObjects];
