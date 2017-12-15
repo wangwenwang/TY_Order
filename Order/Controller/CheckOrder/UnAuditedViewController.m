@@ -21,7 +21,6 @@
 #import "AuditService.h"
 
 
-
 @interface UnAuditedViewController ()<UITableViewDelegate, UITableViewDataSource, CheckOrderServiceDelegate, OrderDetailServiceDelegate, AuditServiceDelegate>
 
 @property (strong, nonatomic)UITableView *myTableView;
@@ -509,7 +508,7 @@
     [_myTableView.mj_header endRefreshing];
     [_myTableView.mj_footer endRefreshing];
     
-    //页数处理
+    // 页数处理
     if(_page == 1) {
         
         _orders = orders;
@@ -522,16 +521,16 @@
         }
     }
     
-    //是否隐藏上拉
+    // 是否隐藏上拉
     if(_orders.count > 19) {
         
         _myTableView.mj_footer.hidden = NO;
-    }else {
+    } else {
         
         _myTableView.mj_footer.hidden = YES;
     }
     
-    //添加没订单提示
+    // 添加没订单提示
     if(_orders.count == 0) {
         
         [_myTableView noOrder:kPrompt];
@@ -541,18 +540,16 @@
     }
     
     // Label 容器宽度
-    CGFloat contentWidth = ScreenWidth - 15 - 72;
+    CGFloat contentWidth = ScreenWidth - 15 - 71.5;
     // Label 单行高度
-    CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:999.9];
+    CGFloat oneLine = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:MAXFLOAT];
     for(int i = 0; i < _orders.count; i++) {
         
         OrderModel *m = _orders[i];
-        CGFloat overflowHeight = [Tools getHeightOfString:m.ORD_TO_NAME fontSize:14 andWidth:contentWidth] - oneLineHeight;
-        m.cellHeight = overflowHeight ? (overflowHeight + kCellHeight + 8) : kCellHeight;
+        CGFloat mulLine = [Tools getHeightOfString:m.ORD_TO_NAME fontSize:14 andWidth:contentWidth];
+        m.cellHeight = kCellHeight + (mulLine - oneLine);
     }
-    
     [_myTableView reloadData];
-    
     
     [_deleteArr removeAllObjects];
     
@@ -575,7 +572,6 @@
         [_myTableView.mj_footer endRefreshingWithNoMoreData];
         [_myTableView.mj_footer setCount_NoMoreData:_orders.count];
     }
-    
     [_deleteArr removeAllObjects];
     [_deleteBtn setTitle:[NSString stringWithFormat:@"审核(%lu)", _deleteArr.count] forState:UIControlStateNormal];
     [_myTableView reloadData];

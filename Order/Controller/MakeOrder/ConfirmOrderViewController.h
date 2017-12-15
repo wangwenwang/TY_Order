@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PromotionOrderModel.h"
+#import "DeliveryWayListModel.h"
 
 @interface ConfirmOrderViewController : UIViewController
 
@@ -30,5 +31,7 @@
 
 /// 用户id
 @property (copy, nonatomic) NSString *partyId;
+
+@property (strong, nonatomic) DeliveryWayListModel *deliveryWayListM;
 
 @end

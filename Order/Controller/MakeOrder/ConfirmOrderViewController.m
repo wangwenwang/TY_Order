@@ -23,7 +23,7 @@
 #import "LMPickerView.h"
 #import "LMBlurredView.h"
 
-@interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate, LMBlurredViewDelegate>
+@interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate, LMBlurredViewDelegate, UIAlertViewDelegate>
 
 #define ProductTableViewCellHeight 89
 #define GiftTableViewCellHeight 69
@@ -143,6 +143,9 @@
 // 键盘高度
 @property (assign, nonatomic) CGFloat keyboardHeight;
 
+// 配送方式
+@property (weak, nonatomic) IBOutlet UILabel *deliveryWayLabel;
+
 // 部门字段
 @property (weak, nonatomic) IBOutlet UITextField *REFERENCE01;
 
@@ -192,6 +195,8 @@ typedef enum _CloseDatePicker {
     [self registerCell];
     
     [self dealWithData];
+    
+    [self alertDelieryWay];
 }
 
 
@@ -334,6 +339,27 @@ typedef enum _CloseDatePicker {
 }
 
 
+- (void)alertDelieryWay {
+    
+    DeliveryWayItemModel *m = nil;
+    if(_deliveryWayListM.deliveryWayItemModel.count == 1) {
+        m = _deliveryWayListM.deliveryWayItemModel[0];
+        _deliveryWayLabel.text = m.itemName;
+    } else if(_deliveryWayListM.deliveryWayItemModel.count > 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择配送方式" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil];
+        alert.delegate = self;
+        
+        for(int i = 0; i < _deliveryWayListM.deliveryWayItemModel.count; i++) {
+            m = _deliveryWayListM.deliveryWayItemModel[i];
+            [alert addButtonWithTitle:m.itemName];
+        }
+        [alert show];
+    } else {
+        [Tools showAlert:self.view andTitle:@"没有配送方式哦"];
+    }
+}
+
+
 // 结算，汇总信息
 - (void)refreshCollectDada {
     CGFloat totalCount = 0;
@@ -473,6 +499,13 @@ typedef enum _CloseDatePicker {
     [_LM showDatePicker];
 }
 
+
+- (IBAction)deliveryWayOnclick:(UITapGestureRecognizer *)sender {
+    
+    [self alertDelieryWay];
+}
+
+
 // 确认订单，最后一步提交到服务器
 - (IBAction)confirmOnclick:(UIButton *)sender {
     [self.view endEditing:YES];
@@ -553,6 +586,7 @@ typedef enum _CloseDatePicker {
                               p.TO_REGION, @"TO_REGION",
                               p.TO_ZIP, @"TO_ZIP",
                               _REFERENCE01.text, @"REFERENCE01",
+                              _deliveryWayLabel.text, @"REFERENCE02",
                               nil];
         
         NSString *s = [Tools JsonStringWithDictonary:dict];
@@ -1036,6 +1070,19 @@ typedef enum _CloseDatePicker {
 - (void)keyboardWillHide:(NSNotification *)notification {
     
     _keyboardHeight = 0;
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if(buttonIndex == 0) {
+        nil;  //点击取消， 不操作
+    } else {
+        DeliveryWayItemModel *m = _deliveryWayListM.deliveryWayItemModel[buttonIndex - 1];
+        _deliveryWayLabel.text = m.itemName;
+    }
 }
 
 @end

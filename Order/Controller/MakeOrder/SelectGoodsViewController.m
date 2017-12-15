@@ -27,6 +27,7 @@
 #import "PromotionDetailModel.h"
 #import <Masonry.h>
 #import "LMBlurredView.h"
+#import "GetDeliveryWayService.h"
 
 /*
  *
@@ -64,7 +65,7 @@ typedef enum : NSInteger {
 } CameraMoveDirection;
 
 
-@interface SelectGoodsViewController () <UITableViewDelegate, UITableViewDataSource, SelectGoodsTableViewCellDelegate, ShoppingCartTableViewCellDelegate, SelectGoodsServiceDelegate, OrderConfirmServiceDelegate, LMBlurredViewDelegate, UISearchBarDelegate> {
+@interface SelectGoodsViewController () <UITableViewDelegate, UITableViewDataSource, SelectGoodsTableViewCellDelegate, ShoppingCartTableViewCellDelegate, SelectGoodsServiceDelegate, OrderConfirmServiceDelegate, LMBlurredViewDelegate, UISearchBarDelegate, GetDeliveryWayServiceDelegate> {
     
     CameraMoveDirection direction;
     BOOL aniFlg;
@@ -303,6 +304,10 @@ typedef enum : NSInteger {
 // 顶部筛选View 高度
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeight;
 
+@property (strong, nonatomic) GetDeliveryWayService *service_deliveryWay;
+
+@property (strong, nonatomic) DeliveryWayListModel *deliveryWayListM;
+
 @end
 
 @implementation SelectGoodsViewController
@@ -337,6 +342,9 @@ typedef enum : NSInteger {
         _isFirstViewWillAppear = YES;
         _currentSection = 0;
         _brandRow = 0;
+        
+        _service_deliveryWay = [[GetDeliveryWayService alloc] init];
+        _service_deliveryWay.delegate = self;
     }
     return self;
 }
@@ -348,7 +356,7 @@ typedef enum : NSInteger {
     
     self.title = @"选择商品";
     
-    //注册Cell
+    // 注册Cell
     [self registerCell];
     
     [self.view layoutIfNeeded];
@@ -357,13 +365,13 @@ typedef enum : NSInteger {
     
     [self addCoverView];
     
-    //初始化UI参数
+    // 初始化UI参数
     [self initUI];
     
-    //获取品牌数据
+    // 获取品牌数据
     [self getBrandData];
     
-    //填充数据
+    // 填充数据
     [self fullData];
     
     [self.view layoutIfNeeded];
@@ -371,6 +379,8 @@ typedef enum : NSInteger {
     _otherMsg_top.constant = ScreenHeight / 2 - CGRectGetHeight(_otherMsgView.frame) / 2 - 64 - 20;
     
     [self addTableViewSearch];
+    
+    [_service_deliveryWay GetDeliveryWay];
 }
 
 
@@ -906,7 +916,7 @@ typedef enum : NSInteger {
         cell.productNameLabel.text = [self getProductName:m.PRODUCT_NAME];
         cell.productFormatLabel.text = m.PRODUCT_DESC;
         cell.productPriceLabel.text = [NSString stringWithFormat:@"￥%.1f", m.PRODUCT_PRICE];
-        cell.QTYAVAILABLE.text = [Tools formatFloat:m.QTYAVAILABLE];
+        cell.QTYAVAILABLE.text = [NSString stringWithFormat:@"%@%@", [Tools formatFloat:m.QTYAVAILABLE], m.PRODUCT_UOM];
         [cell.productNumberButton setTitle:[self formatFloat:m.CHOICED_SIZE] forState:UIControlStateNormal];
         
         // 促销信息的处理
@@ -923,7 +933,7 @@ typedef enum : NSInteger {
         // 库存是否显示
         if([[m.ISINVENTORY trim] isEqualToString:@"Y"]) {
             cell.inventoryLabel.hidden = NO;
-            cell.inventoryLabel.text = [NSString stringWithFormat:@"库存: %lld", m.PRODUCT_INVENTORY];
+            cell.inventoryLabel.text = [NSString stringWithFormat:@"库存: %lld%@", m.PRODUCT_INVENTORY, m.PRODUCT_UOM];
         } else {
             cell.inventoryLabel.hidden = YES;
         }
@@ -1724,6 +1734,7 @@ typedef enum : NSInteger {
     vc.orderPayType = _currentPayType.Key;
     vc.orderAddressIdx = _address.IDX;
     vc.partyId = _party.IDX;
+    vc.deliveryWayListM = _deliveryWayListM;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -1975,6 +1986,20 @@ typedef enum : NSInteger {
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
     [self searchCoverViewOnclick];
+}
+
+
+#pragma mark - GetDeliveryWayServiceDelegate
+
+- (void)successOfGetDeliveryWay:(DeliveryWayListModel *)deliveryWayListM {
+    
+    _deliveryWayListM = deliveryWayListM;
+}
+
+
+- (void)failureOfGetDeliveryWay:(NSString *)msg {
+    
+    [Tools showAlert:self.view andTitle:[NSString stringWithFormat:@"配送方式：%@", msg]];
 }
 
 @end

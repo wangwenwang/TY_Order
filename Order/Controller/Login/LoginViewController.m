@@ -271,7 +271,7 @@
     _business = business;
     if(business.count == 1) {
         [self saveBusiness:business[0]];
-    }else if(business.count > 1) {
+    } else if(business.count > 1) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择业务类型" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil];
         alert.delegate = self;
         

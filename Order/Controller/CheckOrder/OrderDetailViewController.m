@@ -23,17 +23,18 @@
 #import <Masonry.h>
 #import "SetProductQtyService.h"
 #import "OrderDetailService.h"
+#import "UpdateRemarkService.h"
 
 
 @interface NumberButton : UIButton
-@property (assign, nonatomic) NSString *OD_IDX;
+@property (copy, nonatomic) NSString *OD_IDX;
 @end
 
 @implementation NumberButton
 @end
 
 
-@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate, OrderDetailTableViewCellDelegate, LMBlurredViewDelegate, SetProductQtyServiceDelegate, OrderDetailServiceDelegate>
+@interface OrderDetailViewController ()<UITableViewDelegate, UITableViewDataSource, TransportInformationServiceDelegate, OrderCancelServiceDelegate, AuditServiceDelegate, OrderDetailTableViewCellDelegate, LMBlurredViewDelegate, SetProductQtyServiceDelegate, OrderDetailServiceDelegate, UpdateRemarkServiceDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
@@ -46,9 +47,6 @@
 
 // 订单客户名称
 @property (weak, nonatomic) IBOutlet UILabel *customerNameLabel;
-
-// 订单客户名称 距下
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *customerNameLabel_bottom;
 
 //订单客户地址
 @property (weak, nonatomic) IBOutlet UILabel *customerAddressLabel;
@@ -176,7 +174,17 @@
 // 修改产品数量
 @property (strong, nonatomic) UITextField *customsizeProductNumberF;
 
+// 修改备注信息
+@property (strong, nonatomic) UITextView *CONSIGNEE_REMARK;
+
+@property (weak, nonatomic) IBOutlet UIButton *updateMarkBtn;
+
 @property (strong, nonatomic) OrderDetailService *odrDetailService;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *remarkLabel_trailing;
+
+// 发运方式
+@property (weak, nonatomic) IBOutlet UILabel *REFERENCE02;
 
 @end
 
@@ -219,7 +227,6 @@
     [self registerCell];
     
     [self addAnimationForLabel];
-    
 }
 
 
@@ -269,6 +276,8 @@
         [_auditView setHidden:YES];
         _promptLabel6ViewHeight.constant = 0;
         _auditViewHeight.constant = 0;
+        [_updateMarkBtn setHidden:YES];
+        _remarkLabel_trailing.constant = - 57;
     }
     
     // 总高度
@@ -366,7 +375,7 @@
     
     _reMarkLabel.text = _order.ORD_REMARK_CONSIGNEE;
     _OL_REFERENCE01.text = _order.OL_REFERENCE01;
-    
+    _REFERENCE02.text = _order.REFERENCE02;
 }
 
 
@@ -386,21 +395,19 @@
     
     // 客户名称换行
     [_customerNameLabel sizeToFit];
-    CGFloat overflowWidth = _customerNameLabel.frame.size.width - (ScreenWidth - (15 + 70));
-    if(overflowWidth > 0) {
-        
-        _customerNameLabel_bottom.constant = 20;
-        _headViewHeight.constant = _headViewHeight.constant + _customerNameLabel_bottom.constant - 5;
-    }
+    CGFloat oneLine = [Tools getHeightOfString:@"fds" fontSize:_customerNameLabel.font.pointSize andWidth:MAXFLOAT];
+    CGFloat mulLine = [Tools getHeightOfString:_customerNameLabel.text fontSize:_customerNameLabel.font.pointSize andWidth:(ScreenWidth - 15 - 66.5 - 3)];
+    _headViewHeight.constant += (mulLine - oneLine);
     
     // 客户地址换行
-    [_customerAddressLabel sizeToFit];
-    overflowWidth = _customerAddressLabel.frame.size.width - (ScreenWidth - (15 + 70));
-    if(overflowWidth > 0) {
-        
-        _customerAddressLabel_bottom.constant = 20;
-        _headViewHeight.constant = _headViewHeight.constant + _customerAddressLabel_bottom.constant - 5;
-    }
+    mulLine = [Tools getHeightOfString:_customerAddressLabel.text fontSize:_customerAddressLabel.font.pointSize andWidth:(ScreenWidth - 15 - 66.5 - 3)];
+    _headViewHeight.constant += (mulLine - oneLine);
+    
+    // 备注信息换行
+    mulLine = [Tools getHeightOfString:_reMarkLabel.text fontSize:_reMarkLabel.font.pointSize andWidth:(ScreenWidth - 15 - 71.5 - 3)];
+    _tailViewHeight.constant += (mulLine - oneLine);
+    
+    [self updateViewConstraints];
 }
 
 
@@ -509,6 +516,13 @@
 }
 
 
+// 修改备注信息
+- (IBAction)updateMarkOnclick {
+    
+    [self addTextView];
+}
+
+
 #pragma mark - TransportInformationServiceDelegate
 
 - (void)successOfTransportInformation:(OrderTmsModel *)product {
@@ -610,6 +624,7 @@
     
     [self addEnterNumView:OD_IDX];
 }
+
 
 - (void)addEnterNumView:(NSString *)OD_IDX {
     
@@ -728,6 +743,133 @@
 }
 
 
+#pragma mark - 修改备注UI
+
+- (void)addTextView {
+    
+    _blurredView = [[LMBlurredView alloc] init];
+    _blurredView.delegate = self;
+    [_blurredView blurry:5.1];
+    
+    // 输入数量
+    _enterNumView = [[UIView alloc] init];
+    _enterNumView.layer.cornerRadius = 2.0f;
+    _enterNumView.backgroundColor = [UIColor whiteColor];
+    UIView *window = self.view.window;
+    [window addSubview:_enterNumView];
+    [_enterNumView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(250);
+        make.height.mas_equalTo(160);
+        _enterNumView_bottom = make.bottom.mas_equalTo(-((ScreenHeight / 2) - (160 / 2)));
+        make.centerX.offset(0);
+    }];
+    
+    // label
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"修改备注信息";
+    [_enterNumView addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(8);
+        make.centerX.offset(0);
+    }];
+    
+    // 输入框边框
+    UIView *border = [[UIView alloc] init];
+    border.backgroundColor = [UIColor grayColor];
+    border.layer.cornerRadius = 2.0;
+    [_enterNumView addSubview:border];
+    [border mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(label.mas_bottom).offset(15);
+        make.left.mas_equalTo(20);
+        make.right.mas_equalTo(-20);
+        make.height.mas_equalTo(50);
+    }];
+    
+    // 输入框
+    UITextView *textF = [[UITextView alloc] init];
+    textF.layer.cornerRadius = 2.0;
+    textF.font = [UIFont systemFontOfSize:14];
+    textF.text = _order.ORD_REMARK_CONSIGNEE;
+    [border addSubview:textF];
+    [textF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(1);
+        make.left.mas_equalTo(1);
+        make.right.mas_equalTo(-1);
+        make.bottom.mas_equalTo(-1);
+    }];
+    _CONSIGNEE_REMARK = textF;
+    
+    // 声明取消按钮
+    UIButton *btnCancel = [[UIButton alloc] init];
+    [_enterNumView addSubview:btnCancel];
+    
+    // 确定
+    NumberButton *btnComplete = [[NumberButton alloc] init];
+    btnComplete.backgroundColor = TYColor;
+    [btnComplete addTarget:self action:@selector(CompleteCONSIGNEE_REMARKOnclick) forControlEvents:UIControlEventTouchUpInside];
+    btnComplete.layer.cornerRadius = 2.0f;
+    [btnComplete setTitle:@"确定" forState:UIControlStateNormal];
+    [_enterNumView addSubview:btnComplete];
+    [btnComplete mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(border.mas_bottom).offset(25);
+        make.left.mas_equalTo(btnCancel.mas_right).offset(30);
+        make.right.mas_equalTo(-30);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(btnCancel.mas_width);
+    }];
+    
+    // 取消
+    btnCancel.backgroundColor = TYColor;
+    [btnCancel addTarget:self action:@selector(CancelCONSIGNEE_REMARKOnclick) forControlEvents:UIControlEventTouchUpInside];
+    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    btnCancel.layer.cornerRadius = btnComplete.layer.cornerRadius;
+    [btnCancel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(btnComplete.mas_top);
+        make.left.mas_equalTo(30);
+        make.right.mas_equalTo(btnComplete.mas_left).offset(-30);
+        make.height.mas_equalTo(btnComplete.mas_height);
+        make.width.mas_equalTo(btnComplete.mas_width);
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        _enterNumView.alpha = 1.0;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        usleep(100000);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [textF becomeFirstResponder];
+        });
+    });
+}
+
+
+- (void)CompleteCONSIGNEE_REMARKOnclick {
+    
+    [LM_alert showLMAlertViewWithTitle:@"" message:@"是否更修改备注" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        UpdateRemarkService *service_remark = [[UpdateRemarkService alloc] init];
+        service_remark.delegate = self;
+        [service_remark UpdateRemark:_order.IDX andstrRemark:_CONSIGNEE_REMARK.text];
+    } cancelClickHandle:^{
+        
+        nil;
+    }];
+    [self CancelCustomsizeProductNumOnclick];
+}
+
+
+- (void)CancelCONSIGNEE_REMARKOnclick {
+    
+    [self LMBlurredViewClear];
+    [_blurredView clear];
+}
+
+
 #pragma mark - LMBlurredViewDelegate
 
 - (void)LMBlurredViewClear {
@@ -782,7 +924,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     [Tools showAlert:self.view andTitle:msg];
-
+    
     [_odrDetailService getOrderDetailsData:_order.IDX];
 }
 
@@ -814,6 +956,26 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     [Tools showAlert:self.view andTitle:msg ? msg : @"获取失败"];
+}
+
+
+#pragma mark - UpdateRemarkServiceDelegate
+
+- (void)successOfUpdateRemark:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [Tools showAlert:self.view andTitle:msg];
+    
+    [_odrDetailService getOrderDetailsData:_order.IDX];
+}
+
+
+- (void)failureOfUpdateRemark:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [Tools showAlert:self.view andTitle:msg];
 }
 
 @end

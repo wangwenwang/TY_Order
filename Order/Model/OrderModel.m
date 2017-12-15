@@ -58,6 +58,7 @@
         _MJ_REMARK = @"";
         _DRIVER_PAY = @"";
         _OL_REFERENCE01 = @"";
+        _REFERENCE02 = @"";
         
         _OrderDetails = [[NSMutableArray alloc] init];
         _StateTacks = [[NSMutableArray alloc] init];
@@ -115,6 +116,7 @@
         _MJ_REMARK = dict[@"MJ_REMARK"] ? dict[@"MJ_REMARK"] : @"";
         _DRIVER_PAY = dict[@"DRIVER_PAY"] ? dict[@"DRIVER_PAY"] : @"";
         _OL_REFERENCE01 = dict[@"OL_REFERENCE01"] ? dict[@"OL_REFERENCE01"] : @"";
+        _REFERENCE02 = dict[@"REFERENCE02"] ? dict[@"REFERENCE02"] : @"";
         
         _Shipment = dict[@"Shipment"] ? dict[@"Shipment"] : @"";
         

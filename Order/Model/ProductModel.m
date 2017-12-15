@@ -35,6 +35,7 @@
         _isClickCell = NO;
 //        _selectedProductCount = 0;
         _PRODUCTION_DATE = @"";
+        _PRODUCT_UOM = @"";
     }
     return self;
 }
@@ -56,6 +57,7 @@
         _PRODUCT_WEIGHT = dict[@"PRODUCT_WEIGHT"] ? [dict[@"PRODUCT_WEIGHT"] doubleValue] : _PRODUCT_WEIGHT;
         _QTYAVAILABLE = dict[@"QTYAVAILABLE"] ? [dict[@"QTYAVAILABLE"] doubleValue] : _QTYAVAILABLE;
         
+        _PRODUCT_UOM = dict[@"PRODUCT_UOM"] ? dict[@"PRODUCT_UOM"] : _PRODUCT_UOM;
         
         
         NSArray *PRODUCT_POLICYs = dict[@"PRODUCT_POLICY"] ? dict[@"PRODUCT_POLICY"] : [[NSArray alloc] init];

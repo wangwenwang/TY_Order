@@ -172,6 +172,7 @@
 		30A7506B1F18C46A00B46B93 /* LM_A_B_C_D.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7506A1F18C46A00B46B93 /* LM_A_B_C_D.m */; };
 		30B439D11F1D91F60092A015 /* DeleteAddressService.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B439D01F1D91F60092A015 /* DeleteAddressService.m */; };
 		30B439D41F1DF48E0092A015 /* AddPartyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B439D31F1DF48E0092A015 /* AddPartyModel.m */; };
+		30B7F4331FE3D31900C938D9 /* UpdateRemarkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B7F4321FE3D31900C938D9 /* UpdateRemarkService.m */; };
 		30B948EA1EEA4B5500E4C3EC /* IB_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B948E91EEA4B5500E4C3EC /* IB_UIView.m */; };
 		30BB2DAA1F459359002E51E7 /* AddStockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BB2D991F459359002E51E7 /* AddStockViewController.m */; };
 		30BB2DAB1F459359002E51E7 /* AddStockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30BB2D9A1F459359002E51E7 /* AddStockViewController.xib */; };
@@ -279,6 +280,9 @@
 		30CDC67B1D990B430035602F /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDC6751D990B420035602F /* Tools.m */; };
 		30D9961F1DAB718800974553 /* TransportInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D9961D1DAB718800974553 /* TransportInformationViewController.m */; };
 		30D996201DAB718800974553 /* TransportInformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30D9961E1DAB718800974553 /* TransportInformationViewController.xib */; };
+		30D9EF3D1FDE224800C832AA /* GetDeliveryWayService.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D9EF3C1FDE224800C832AA /* GetDeliveryWayService.m */; };
+		30D9EF401FDE51C000C832AA /* DeliveryWayListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D9EF3F1FDE51C000C832AA /* DeliveryWayListModel.m */; };
+		30D9EF431FDE51D400C832AA /* DeliveryWayItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D9EF421FDE51D400C832AA /* DeliveryWayItemModel.m */; };
 		30E5A03E1D9B64BF00D94F77 /* OrderingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E5A03D1D9B64BF00D94F77 /* OrderingViewController.m */; };
 		30E5A0441D9B651C00D94F77 /* OrderCancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E5A0431D9B651C00D94F77 /* OrderCancelViewController.m */; };
 		30E5A0471D9B654F00D94F77 /* OrderFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E5A0461D9B654F00D94F77 /* OrderFinishViewController.m */; };
@@ -627,6 +631,8 @@
 		30B439D01F1D91F60092A015 /* DeleteAddressService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteAddressService.m; sourceTree = "<group>"; };
 		30B439D21F1DF48E0092A015 /* AddPartyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPartyModel.h; sourceTree = "<group>"; };
 		30B439D31F1DF48E0092A015 /* AddPartyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPartyModel.m; sourceTree = "<group>"; };
+		30B7F4311FE3D31900C938D9 /* UpdateRemarkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateRemarkService.h; sourceTree = "<group>"; };
+		30B7F4321FE3D31900C938D9 /* UpdateRemarkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateRemarkService.m; sourceTree = "<group>"; };
 		30B948E81EEA4B5500E4C3EC /* IB_UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IB_UIView.h; sourceTree = "<group>"; };
 		30B948E91EEA4B5500E4C3EC /* IB_UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IB_UIView.m; sourceTree = "<group>"; };
 		30BB2D981F459359002E51E7 /* AddStockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStockViewController.h; sourceTree = "<group>"; };
@@ -817,6 +823,12 @@
 		30D9961C1DAB718800974553 /* TransportInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportInformationViewController.h; sourceTree = "<group>"; };
 		30D9961D1DAB718800974553 /* TransportInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransportInformationViewController.m; sourceTree = "<group>"; };
 		30D9961E1DAB718800974553 /* TransportInformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransportInformationViewController.xib; sourceTree = "<group>"; };
+		30D9EF3B1FDE224800C832AA /* GetDeliveryWayService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetDeliveryWayService.h; sourceTree = "<group>"; };
+		30D9EF3C1FDE224800C832AA /* GetDeliveryWayService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetDeliveryWayService.m; sourceTree = "<group>"; };
+		30D9EF3E1FDE51C000C832AA /* DeliveryWayListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeliveryWayListModel.h; sourceTree = "<group>"; };
+		30D9EF3F1FDE51C000C832AA /* DeliveryWayListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeliveryWayListModel.m; sourceTree = "<group>"; };
+		30D9EF411FDE51D400C832AA /* DeliveryWayItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeliveryWayItemModel.h; sourceTree = "<group>"; };
+		30D9EF421FDE51D400C832AA /* DeliveryWayItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeliveryWayItemModel.m; sourceTree = "<group>"; };
 		30E5A03C1D9B64BF00D94F77 /* OrderingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderingViewController.h; sourceTree = "<group>"; };
 		30E5A03D1D9B64BF00D94F77 /* OrderingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderingViewController.m; sourceTree = "<group>"; };
 		30E5A0421D9B651C00D94F77 /* OrderCancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCancelViewController.h; sourceTree = "<group>"; };
@@ -1292,9 +1304,9 @@
 			children = (
 				3021608C1F15BD500049374F /* RegisterViewController.h */,
 				3021608D1F15BD500049374F /* RegisterViewController.m */,
-				301AD38B1F69331700CD13D0 /* LoginViewController.m */,
 				3021608E1F15BD500049374F /* RegisterViewController.xib */,
 				30A3C2E61D991E1000BBE0DA /* LoginViewController.h */,
+				301AD38B1F69331700CD13D0 /* LoginViewController.m */,
 				30A3C2E81D991E1000BBE0DA /* LoginViewController.xib */,
 				30A3C2E91D991E1000BBE0DA /* WelcomeViewController.h */,
 				30A3C2EA1D991E1000BBE0DA /* WelcomeViewController.m */,
@@ -1365,6 +1377,10 @@
 				302160921F15BEE40049374F /* RegisterService.m */,
 				30111AC51F98469900B05012 /* SetProductQtyService.h */,
 				30111AC61F98469900B05012 /* SetProductQtyService.m */,
+				30D9EF3B1FDE224800C832AA /* GetDeliveryWayService.h */,
+				30D9EF3C1FDE224800C832AA /* GetDeliveryWayService.m */,
+				30B7F4311FE3D31900C938D9 /* UpdateRemarkService.h */,
+				30B7F4321FE3D31900C938D9 /* UpdateRemarkService.m */,
 				30BB2DF31F467B33002E51E7 /* 库存管理 */,
 				30BB2DD01F459391002E51E7 /* 库存登记 */,
 				30201F1D1F1083970055BA6A /* 客户费用 */,
@@ -1421,6 +1437,10 @@
 				30078D2A1DBB1AE400429813 /* PromotionOrderModel.m */,
 				30078D2C1DBB2AA200429813 /* OrderGiftModel.h */,
 				30078D2D1DBB2AA200429813 /* OrderGiftModel.m */,
+				30D9EF3E1FDE51C000C832AA /* DeliveryWayListModel.h */,
+				30D9EF3F1FDE51C000C832AA /* DeliveryWayListModel.m */,
+				30D9EF411FDE51D400C832AA /* DeliveryWayItemModel.h */,
+				30D9EF421FDE51D400C832AA /* DeliveryWayItemModel.m */,
 				30BB2DF71F46820A002E51E7 /* 库存管理 */,
 				30BB2DDD1F4593AD002E51E7 /* 库存登记 */,
 				30201F211F1083AB0055BA6A /* 客户费用 */,
@@ -2485,6 +2505,7 @@
 				3051DB611F1868840034629B /* AddPartyViewController.m in Sources */,
 				304A7AEA1DB925990039B0B2 /* MyPNPieChart.m in Sources */,
 				30BB2DE91F4593AD002E51E7 /* AppStockListModel.m in Sources */,
+				30D9EF401FDE51C000C832AA /* DeliveryWayListModel.m in Sources */,
 				302600921EE69F8B001F6C38 /* UIView+Uitls.m in Sources */,
 				301AFA801F4ADC4500E4FDFF /* GetToAddressListModel.m in Sources */,
 				30F7B8E61DC036FB004CD128 /* ConfirmOrderGiftsTableViewCell.m in Sources */,
@@ -2517,6 +2538,7 @@
 				302160931F15BEE40049374F /* RegisterService.m in Sources */,
 				30EF59AA1DACCA94003F5729 /* OrderTmsDetailsService.m in Sources */,
 				30CDC64D1D9907CD0035602F /* NSString+Password.m in Sources */,
+				30D9EF3D1FDE224800C832AA /* GetDeliveryWayService.m in Sources */,
 				30CDC6501D9907CD0035602F /* UIFont+Extend.m in Sources */,
 				3051DB921F1898EF0034629B /* NormalAdressListModel.m in Sources */,
 				30CDC6581D9907CD0035602F /* UIWindow+Launch.m in Sources */,
@@ -2547,6 +2569,7 @@
 				30B948EA1EEA4B5500E4C3EC /* IB_UIView.m in Sources */,
 				30E5A07A1D9E075800D94F77 /* OrderDetailViewController.m in Sources */,
 				3000C9FE1DB1BF0800D8E731 /* ProductTbModel.m in Sources */,
+				30D9EF431FDE51D400C832AA /* DeliveryWayItemModel.m in Sources */,
 				30CDC6481D9907CD0035602F /* CALayer+Transition.m in Sources */,
 				300AF6EB1EE8620F0037C660 /* IB_UIButton.m in Sources */,
 				30CDC63F1D9907CD0035602F /* PBScrollView.m in Sources */,
@@ -2633,6 +2656,7 @@
 				30EF59CA1DAF3457003F5729 /* AddressModel.m in Sources */,
 				30CDC6451D9907CD0035602F /* NSString+File.m in Sources */,
 				30201ECE1F1081370055BA6A /* GetAppBusinessFeeListService.m in Sources */,
+				30B7F4331FE3D31900C938D9 /* UpdateRemarkService.m in Sources */,
 				30BB2DAC1F459359002E51E7 /* ConfirmAddStockViewController.m in Sources */,
 				30D9961F1DAB718800974553 /* TransportInformationViewController.m in Sources */,
 				30BB2DAA1F459359002E51E7 /* AddStockViewController.m in Sources */,

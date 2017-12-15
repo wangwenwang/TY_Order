@@ -271,6 +271,12 @@
 /// 修改产品数量
 #define API_SetProductQty @"http://119.29.148.189:8888/api/SetProductQty"
 
+/// 配送方式
+#define API_GetDeliveryWay @"http://119.29.148.189:8888/api/GetDeliveryWay"
+
+/// 修改备注
+#define API_UpdateRemark @"http://119.29.148.189:8888/api/UpdateRemark"
+
 
 
 

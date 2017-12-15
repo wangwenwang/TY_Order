@@ -90,4 +90,8 @@
 // 10 通宇特异化. 中转单号 REFERENCE01，中转电话 REFERENCE04
 @property(strong, nonatomic)NSDictionary *Shipment;
 
+// 发运方式
+@property(copy, nonatomic)NSString *REFERENCE02;
+
+
 @end

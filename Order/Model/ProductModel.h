@@ -72,6 +72,9 @@
 /// 数量
 @property (assign, nonatomic) long long STOCK_QTY;
 
+// 单位
+@property (copy, nonatomic) NSString *PRODUCT_UOM;
+
 /// Cell 高度
 @property (assign, nonatomic) NSUInteger cellHeight;
 
