@@ -137,26 +137,14 @@
 
 @property (strong, nonatomic) AppDelegate *app;
 
-// 提示6
-@property (weak, nonatomic) IBOutlet UIView *promptLabel6View;
+// 审核通过按钮
+@property (strong, nonatomic) UIButton *auditPassBtn;
 
-// 审核View
-@property (weak, nonatomic) IBOutlet UIView *auditView;
-
-// 提示6，没审核权限不显示
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptLabel6ViewHeight;
-
-// 审核View高度
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *auditViewHeight;
+// 取消订单按钮
+@property (strong, nonatomic) UIButton *cancelOrderBtn;
 
 // 审核网络层
 @property (strong, nonatomic) AuditService *service_audit;
-
-// 打回原因
-@property (weak, nonatomic) IBOutlet UITextView *refuseReasonTextV;
-
-// 打回原因 提示
-@property (weak, nonatomic) IBOutlet UILabel *refuseReasonPromptLabel;
 
 // 虚化背景
 @property (strong, nonatomic) LMBlurredView *blurredView;
@@ -189,6 +177,22 @@
 
 
 #define kCellHeight 100.0
+
+/**
+ 
+ * 枚举类型命名规则：命名时使用驼峰命名法，勿使用下划线命名法
+ */
+typedef NS_ENUM(NSUInteger, ConfirmformType){
+    /**
+     * 备注
+     */
+    KDYConfirmformTypeRemark = 1,
+    /**
+     * 审核不通过
+     */
+    KDYConfirmformTypeAudit = 2,
+};
+
 
 @implementation OrderDetailViewController
 
@@ -272,7 +276,7 @@
     }
     
     // 总高度
-    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant + _promptLabel6ViewHeight.constant;
+    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant;
 }
 
 
@@ -288,40 +292,118 @@
         // 未审核列表进来
         if(_popClass == [UnAuditedViewController class]) {
             
-            UIButton *cancel = [[UIButton alloc] init];
             UIButton *pass = [[UIButton alloc] init];
-            pass.layer.cornerRadius = 2.0f;
-            pass.backgroundColor = [UIColor greenColor];
-            cancel.layer.cornerRadius = 2.0f;
-            cancel.backgroundColor = [UIColor redColor];
+            UIButton *cancel = [[UIButton alloc] init];
             [_bottomView addSubview:pass];
             [_bottomView addSubview:cancel];
+            _auditPassBtn = pass;
+            _cancelOrderBtn = cancel;
+            
+            pass.layer.cornerRadius = 2.0f;
+            pass.backgroundColor = RGB(62, 105, 33);
+            [pass setTitle:@"审核通过" forState:UIControlStateNormal];
+            [pass.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [pass addTarget:self action:@selector(auditPassOnclick) forControlEvents:UIControlEventTouchUpInside];
             [pass mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(cancel).offset(-12);
-                make.width.mas_equalTo(cancel.mas_width);
                 make.left.mas_equalTo(25);
+                make.right.mas_equalTo(cancel.mas_left).offset(-25);
+                make.width.mas_equalTo(cancel.mas_width);
                 make.centerY.offset(0);
                 make.height.mas_equalTo(30);
             }];
+            
+            cancel.layer.cornerRadius = 2.0f;
+            cancel.backgroundColor = [UIColor redColor];
+            [cancel setTitle:@"取消订单" forState:UIControlStateNormal];
+            [cancel.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [cancel addTarget:self action:@selector(cancelOrderOnclick) forControlEvents:UIControlEventTouchUpInside];
             [cancel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(pass).offset(12);
-                make.width.mas_equalTo(pass.mas_width);
                 make.right.mas_equalTo(-25);
                 make.centerY.offset(0);
                 make.height.mas_equalTo(pass.mas_height);
             }];
+        } else if(_popClass == [OrderOneAuditViewController class]) {
+            
+            UIButton *pass = [[UIButton alloc] init];
+            UIButton *refuse = [[UIButton alloc] init];
+            [_bottomView addSubview:pass];
+            [_bottomView addSubview:refuse];
+            _auditPassBtn = pass;
+            _cancelOrderBtn = refuse;
+            
+            pass.layer.cornerRadius = 2.0f;
+            pass.backgroundColor = RGB(62, 105, 33);
+            [pass setTitle:@"审核通过" forState:UIControlStateNormal];
+            [pass.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [pass addTarget:self action:@selector(auditPassOnclick) forControlEvents:UIControlEventTouchUpInside];
+            [pass mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(25);
+                make.right.mas_equalTo(refuse.mas_left).offset(-25);
+                make.width.mas_equalTo(refuse.mas_width);
+                make.centerY.offset(0);
+                make.height.mas_equalTo(30);
+            }];
+            
+            refuse.layer.cornerRadius = 2.0f;
+            refuse.backgroundColor = [UIColor redColor];
+            [refuse setTitle:@"审核不通过" forState:UIControlStateNormal];
+            [refuse.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [refuse addTarget:self action:@selector(auditRefuseOnclick) forControlEvents:UIControlEventTouchUpInside];
+            [refuse mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(-25);
+                make.centerY.offset(0);
+                make.height.mas_equalTo(pass.mas_height);
+            }];
+        } else {
+            
+            [self showWL];
+        }
+    } else {
+        
+        if(_popClass == [UnAuditedViewController class]) {
+            
+            UIButton *showWL = [[UIButton alloc] init];
+            [_bottomView addSubview:showWL];
+            
+            showWL.layer.cornerRadius = 2.0f;
+            showWL.backgroundColor = [UIColor redColor];
+            [showWL setTitle:@"取消订单" forState:UIControlStateNormal];
+            [showWL.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [showWL addTarget:self action:@selector(cancelOrderOnclick) forControlEvents:UIControlEventTouchUpInside];
+            [showWL mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(150);
+                make.height.mas_equalTo(30);
+                make.centerX.offset(0);
+                make.centerY.offset(0);
+            }];
+        } else if(_popClass == [OrderOneAuditViewController class]) {
+            
+            nil;
+        } else {
+            
+            [self showWL];
         }
     }
+}
+
+
+// 只显示物流按钮
+- (void)showWL {
     
-//    // 未审核订单可取消
-//    if(_popClass == [UnAuditedViewController class]) {
-//
-//        [_tailBtn setBackgroundColor:[UIColor redColor]];
-//        [_tailBtn setTitle:@"取消订单" forState:UIControlStateNormal];
-//    } else {
-//
-//        [_tailBtn setTitle:@"查看物流信息" forState:UIControlStateNormal];
-//    }
+    UIButton *showWL = [[UIButton alloc] init];
+    [_bottomView addSubview:showWL];
+    
+    showWL.layer.cornerRadius = 2.0f;
+    showWL.backgroundColor = RGB(94, 169, 238);
+    [showWL setTitle:@"查看物流信息" forState:UIControlStateNormal];
+    [showWL.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [showWL addTarget:self action:@selector(checkTransportinfoOnclick) forControlEvents:UIControlEventTouchUpInside];
+    [showWL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(30);
+        make.centerX.offset(0);
+        make.centerY.offset(0);
+    }];
 }
 
 
@@ -508,26 +590,15 @@
 
 #pragma mark - 事件
 
-- (IBAction)checkTransportinfoOnclick:(UIButton *)sender {
+- (void)checkTransportinfoOnclick {
     
-    if([_order.ORD_STATE isEqualToString:@"PENDING"] == YES) {
-        
-        [LM_alert showLMAlertViewWithTitle:@"" message:@"确认取消此订单？" cancleButtonTitle:@"我再想想" okButtonTitle:@"确认" okClickHandle:^{
-            
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [_service OrderCancel:_order.IDX andstrUserIdx:_app.user.IDX];
-        } cancelClickHandle:nil];
-        
-    } else {
-    
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [_transortService getTransInformationData:_order.IDX];
-    }
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_transortService getTransInformationData:_order.IDX];
 }
 
 
 // 审核通过
-- (IBAction)auditPassOnclick:(UIButton *)sender {
+- (void)auditPassOnclick {
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [_service_audit UpdateAudit:_order.IDX andstrUserName:_app.user.USER_NAME];
@@ -535,20 +606,29 @@
 
 
 // 审核打回
-- (IBAction)auditRefuseOnclick:(UIButton *)sender {
+- (void)auditRefuseOnclick {
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [_service_audit RuturnAudit:_order.IDX andstrUserName:_app.user.USER_NAME andstrReason:_refuseReasonTextV.text];
+    [self addTextView:@"不通过理由" andType:KDYConfirmformTypeAudit];
+}
+
+
+// 取消订单
+- (void)cancelOrderOnclick {
+    
+    [LM_alert showLMAlertViewWithTitle:@"" message:@"确认取消此订单？" cancleButtonTitle:@"我再想想" okButtonTitle:@"确认" okClickHandle:^{
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [_service OrderCancel:_order.IDX andstrUserIdx:_app.user.IDX];
+    } cancelClickHandle:nil];
 }
 
 
 // 修改备注信息
 - (IBAction)updateMarkOnclick {
     
-    [self addTextView:@"修改备注信息"];
+    [self addTextView:@"修改备注信息" andType:KDYConfirmformTypeRemark];
     _CONSIGNEE_REMARK.text = _order.ORD_REMARK_CONSIGNEE;
 }
-
 
 #pragma mark - TransportInformationServiceDelegate
 
@@ -596,33 +676,11 @@
 }
 
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text {
-    
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        return NO;
-    }
-    
-    if (![text isEqualToString:@""]) {
-        
-        _refuseReasonPromptLabel.hidden = YES;
-    }
-    
-    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1) {
-        
-        _refuseReasonPromptLabel.hidden = NO;
-    }
-    
-    return YES;
-}
-
-
 - (void)successOfAudit:(NSString *)msg {
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [Tools showAlert:self.view andTitle:msg];
+    _auditPassBtn.enabled = NO;
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -772,7 +830,7 @@
 
 #pragma mark - 修改备注UI
 
-- (void)addTextView:(NSString *)title {
+- (void)addTextView:(NSString *)title andType:(ConfirmformType)type {
     
     _blurredView = [[LMBlurredView alloc] init];
     _blurredView.delegate = self;
@@ -833,7 +891,8 @@
     // 确定
     NumberButton *btnComplete = [[NumberButton alloc] init];
     btnComplete.backgroundColor = TYColor;
-    [btnComplete addTarget:self action:@selector(CompleteCONSIGNEE_REMARKOnclick) forControlEvents:UIControlEventTouchUpInside];
+    btnComplete.tag = type;
+    [btnComplete addTarget:self action:@selector(CompleteCONSIGNEE_REMARKOnclick:) forControlEvents:UIControlEventTouchUpInside];
     btnComplete.layer.cornerRadius = 2.0f;
     [btnComplete setTitle:@"确定" forState:UIControlStateNormal];
     [_enterNumView addSubview:btnComplete];
@@ -874,19 +933,34 @@
 }
 
 
-- (void)CompleteCONSIGNEE_REMARKOnclick {
+- (void)CompleteCONSIGNEE_REMARKOnclick:(UIButton *)sender {
     
-    [LM_alert showLMAlertViewWithTitle:@"" message:@"确认修改备注？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+    if(sender.tag == KDYConfirmformTypeRemark) {
+        [LM_alert showLMAlertViewWithTitle:@"" message:@"确认修改备注？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+            
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            UpdateRemarkService *service_remark = [[UpdateRemarkService alloc] init];
+            service_remark.delegate = self;
+            [service_remark UpdateRemark:_order.IDX andstrRemark:_CONSIGNEE_REMARK.text];
+        } cancelClickHandle:^{
+            
+            nil;
+        }];
+    } else if(sender.tag == KDYConfirmformTypeAudit) {
         
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        UpdateRemarkService *service_remark = [[UpdateRemarkService alloc] init];
-        service_remark.delegate = self;
-        [service_remark UpdateRemark:_order.IDX andstrRemark:_CONSIGNEE_REMARK.text];
-    } cancelClickHandle:^{
-        
-        nil;
-    }];
-    [self CancelCustomsizeProductNumOnclick];
+        if([_CONSIGNEE_REMARK.text isEqualToString:@""]) {
+            
+            [LM_alert showLMAlertViewWithTitle:@"" message:@"请填写退回理由" cancleButtonTitle:@"" okButtonTitle:@"确认" okClickHandle:nil cancelClickHandle:nil];
+        } else {
+            
+            [LM_alert showLMAlertViewWithTitle:@"" message:@"确认退回订单？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+                
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                [_service_audit RuturnAudit:_order.IDX andstrUserName:_app.user.USER_NAME andstrReason:_CONSIGNEE_REMARK.text];
+            } cancelClickHandle:nil];
+        }
+    }
+    [self CancelCONSIGNEE_REMARKOnclick];
 }
 
 
@@ -1012,6 +1086,7 @@
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [Tools showAlert:self.view andTitle:msg];
+    _cancelOrderBtn.enabled = NO;
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
