@@ -33,6 +33,9 @@
 // 网络层 已取消订单列表
 @property (strong, nonatomic) CheckOrderService *service;
 
+// 不采用宏定义，保持三个类的代码一致
+@property (copy, nonatomic) NSString *requestNetworkNotificationName;
+
 @end
 
 
@@ -53,6 +56,7 @@
         _service.delegate = self;
         _odrDetailService = [[OrderDetailService alloc] init];
         _odrDetailService.delegate = self;
+        _requestNetworkNotificationName = [NSString stringWithFormat:@"k%@RequestNetwork", NSStringFromClass([self class])];
     }
     return self;
 }
@@ -64,6 +68,8 @@
     self.view.backgroundColor = [UIColor redColor];
     
     [self.view addSubview:self.myTableView];
+    
+    [self addNotification];
     
     //延迟0.2秒，防止下拉刷新时出现 右下飘
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -105,6 +111,12 @@
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 /*--------------   我们是一个组合   --------------*/
+
+
+- (void)dealloc {
+    
+    [self removeNotification];
+}
 
 
 #pragma mark - 控件GET方法
@@ -166,6 +178,26 @@
         
         [Tools showAlert:self.view andTitle:@"网络连接不可用"];
     }
+}
+
+
+- (void)addNotification {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestNetworkData) name:_requestNetworkNotificationName object:nil];
+}
+
+
+- (void)removeNotification {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:_requestNetworkNotificationName object:nil];
+}
+
+
+#pragma mark - 网络请求
+
+- (void)requestNetworkData {
+    
+    [_service getOrderData:REQUSTSTATUS andPage:1];
 }
 
 

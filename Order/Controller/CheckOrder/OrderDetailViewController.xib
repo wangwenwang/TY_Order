@@ -45,7 +45,6 @@
                 <outlet property="refuseReasonTextV" destination="LjF-CV-jbl" id="roC-Rr-LSh"/>
                 <outlet property="remarkLabel_trailing" destination="D1t-cp-ABi" id="qnT-HP-ole"/>
                 <outlet property="scrollViewHeight" destination="zgn-87-Xir" id="EDT-2P-641"/>
-                <outlet property="tailBtn" destination="qnG-l6-sT5" id="qQ9-xx-E51"/>
                 <outlet property="tailViewHeight" destination="LvN-V7-FCk" id="iKs-9f-atl"/>
                 <outlet property="tailViewHeight_orderMsg" destination="sfI-kl-Xrn" id="uLu-DG-qaZ"/>
                 <outlet property="updateMarkBtn" destination="jk6-J2-RxP" id="xui-Wp-jRH"/>
@@ -651,34 +650,49 @@
                                 <action selector="checkTransportinfoOnclick:" destination="-1" eventType="touchUpInside" id="4Hc-Fw-maK"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFQ-hH-uyi">
+                            <rect key="frame" x="25" y="8" width="188.5" height="30"/>
+                            <color key="backgroundColor" red="0.23621600700000001" green="0.56092087769999999" blue="0.090754117659999994" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="ll1-T9-DXC"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JFx-RJ-wl9">
+                            <rect key="frame" x="225.5" y="8" width="188.5" height="30"/>
+                            <color key="backgroundColor" red="0.23621600700000001" green="0.56092087769999999" blue="0.090754117659999994" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="qnG-l6-sT5" firstAttribute="centerY" secondItem="1Md-bH-lOM" secondAttribute="centerY" id="16B-ge-u4K"/>
+                        <constraint firstItem="JFx-RJ-wl9" firstAttribute="leading" secondItem="uFQ-hH-uyi" secondAttribute="trailing" constant="12" id="Awj-LO-rbx"/>
+                        <constraint firstItem="JFx-RJ-wl9" firstAttribute="leading" secondItem="uFQ-hH-uyi" secondAttribute="trailing" constant="12" id="BKu-SJ-LmJ"/>
                         <constraint firstItem="qnG-l6-sT5" firstAttribute="centerX" secondItem="1Md-bH-lOM" secondAttribute="centerX" id="bgW-B8-N6D"/>
+                        <constraint firstAttribute="trailing" secondItem="JFx-RJ-wl9" secondAttribute="trailing" constant="25" id="jAu-wU-cOq"/>
+                        <constraint firstItem="JFx-RJ-wl9" firstAttribute="centerY" secondItem="uFQ-hH-uyi" secondAttribute="centerY" id="ktS-BZ-vFv"/>
+                        <constraint firstItem="uFQ-hH-uyi" firstAttribute="leading" secondItem="1Md-bH-lOM" secondAttribute="leading" constant="25" id="nLv-U4-8XK"/>
+                        <constraint firstItem="uFQ-hH-uyi" firstAttribute="centerY" secondItem="1Md-bH-lOM" secondAttribute="centerY" id="oIg-Va-6Uk"/>
+                        <constraint firstItem="JFx-RJ-wl9" firstAttribute="width" secondItem="uFQ-hH-uyi" secondAttribute="width" id="oyN-oD-4LY"/>
                         <constraint firstAttribute="height" constant="45" id="sfI-kl-Xrn"/>
                     </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOq-ql-ioW" userLabel="右边边">
-                    <rect key="frame" x="434" y="0.0" width="5" height="1128"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="5" id="woH-xn-YlV"/>
-                    </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="qnG-l6-sT5"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
                 <constraint firstItem="1Md-bH-lOM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9KF-VJ-oSM"/>
-                <constraint firstAttribute="bottom" secondItem="KOq-ql-ioW" secondAttribute="bottom" id="BJU-gm-IrN"/>
                 <constraint firstItem="9mr-Z4-3ff" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Cpu-wf-qxR"/>
                 <constraint firstItem="1Md-bH-lOM" firstAttribute="top" secondItem="9mr-Z4-3ff" secondAttribute="bottom" id="EAt-jU-nxV"/>
                 <constraint firstAttribute="trailing" secondItem="9mr-Z4-3ff" secondAttribute="trailing" id="EM6-7b-yDu"/>
-                <constraint firstItem="KOq-ql-ioW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="I4D-DJ-p0N"/>
                 <constraint firstAttribute="bottom" secondItem="1Md-bH-lOM" secondAttribute="bottom" id="hHJ-pg-pYr"/>
                 <constraint firstItem="9mr-Z4-3ff" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iLm-KO-oWc"/>
                 <constraint firstAttribute="trailing" secondItem="1Md-bH-lOM" secondAttribute="trailing" id="mLO-KB-idF"/>
-                <constraint firstAttribute="trailing" secondItem="KOq-ql-ioW" secondAttribute="trailing" id="oDr-IK-Vdi"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="280.5" y="508"/>

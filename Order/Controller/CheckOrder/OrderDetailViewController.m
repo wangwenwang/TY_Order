@@ -24,6 +24,7 @@
 #import "SetProductQtyService.h"
 #import "OrderDetailService.h"
 #import "UpdateRemarkService.h"
+#import "OrderCancelViewController.h"
 
 
 @interface NumberButton : UIButton
@@ -131,8 +132,6 @@
 
 //
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tailViewHeight_orderMsg;
-
-@property (weak, nonatomic) IBOutlet UIButton *tailBtn;
 
 @property (strong, nonatomic) OrderCancelService *service;
 
@@ -263,25 +262,17 @@
     }
     _orderTableViewHeight.constant = allHeight;
     
-    //
-    
-    // 审核权限 经理或管理员
-    if(((_popClass == [UnAuditedViewController class] || _popClass == [OrderOneAuditViewController class]) && ([_app.user.USER_TYPE isEqualToString:kMANAGER] || [_app.user.USER_TYPE isEqualToString:kADMIN]))) {
+    // 未审核订单可以修改备注
+    if(_popClass == [UnAuditedViewController class]) {
         
-        // 显示审核界面
     } else {
         
-        // 不显示审核界面
-        [_promptLabel6View setHidden:YES];
-        [_auditView setHidden:YES];
-        _promptLabel6ViewHeight.constant = 0;
-        _auditViewHeight.constant = 0;
         [_updateMarkBtn setHidden:YES];
         _remarkLabel_trailing.constant = - 57;
     }
     
     // 总高度
-    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant + _promptLabel6ViewHeight.constant + _auditViewHeight.constant;
+    _scrollViewHeight.constant = _headViewHeight.constant + 40 + _orderTableViewHeight.constant + 50 + _giftsTableViewHeight.constant + _tailViewHeight.constant + _promptLabel6ViewHeight.constant;
 }
 
 
@@ -290,12 +281,46 @@
 // 初始化UI
 - (void)initUI {
     
-//    if([_order.ORD_STATE isEqualToString:@"PENDING"] == YES) {
-//        
+    // 底部按钮视图
+    // 审核权限 经理或管理员
+    if([_app.user.USER_TYPE isEqualToString:kMANAGER] || [_app.user.USER_TYPE isEqualToString:kADMIN]) {
+        
+        // 未审核列表进来
+        if(_popClass == [UnAuditedViewController class]) {
+            
+            UIButton *cancel = [[UIButton alloc] init];
+            UIButton *pass = [[UIButton alloc] init];
+            pass.layer.cornerRadius = 2.0f;
+            pass.backgroundColor = [UIColor greenColor];
+            cancel.layer.cornerRadius = 2.0f;
+            cancel.backgroundColor = [UIColor redColor];
+            [_bottomView addSubview:pass];
+            [_bottomView addSubview:cancel];
+            [pass mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(cancel).offset(-12);
+                make.width.mas_equalTo(cancel.mas_width);
+                make.left.mas_equalTo(25);
+                make.centerY.offset(0);
+                make.height.mas_equalTo(30);
+            }];
+            [cancel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(pass).offset(12);
+                make.width.mas_equalTo(pass.mas_width);
+                make.right.mas_equalTo(-25);
+                make.centerY.offset(0);
+                make.height.mas_equalTo(pass.mas_height);
+            }];
+        }
+    }
+    
+//    // 未审核订单可取消
+//    if(_popClass == [UnAuditedViewController class]) {
+//
+//        [_tailBtn setBackgroundColor:[UIColor redColor]];
 //        [_tailBtn setTitle:@"取消订单" forState:UIControlStateNormal];
 //    } else {
-    
-        [_tailBtn setTitle:@"查看物流信息" forState:UIControlStateNormal];
+//
+//        [_tailBtn setTitle:@"查看物流信息" forState:UIControlStateNormal];
 //    }
 }
 
@@ -405,6 +430,7 @@
     
     // 备注信息换行
     mulLine = [Tools getHeightOfString:_reMarkLabel.text fontSize:_reMarkLabel.font.pointSize andWidth:(ScreenWidth - 15 - 71.5 - 3)];
+    mulLine = mulLine ? mulLine : oneLine;  // 备注可能为空
     _tailViewHeight.constant += (mulLine - oneLine);
     
     [self updateViewConstraints];
@@ -484,19 +510,19 @@
 
 - (IBAction)checkTransportinfoOnclick:(UIButton *)sender {
     
-//    if([_order.ORD_STATE isEqualToString:@"PENDING"] == YES) {
-//        
-//        [LM_alert showLMAlertViewWithTitle:@"" message:@"是否要取消此订单" cancleButtonTitle:@"否" okButtonTitle:@"是" okClickHandle:^{
-//            
-//            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//            [_service OrderCancel:_order.IDX andstrUserIdx:_app.user.IDX];
-//        } cancelCXlickHandle:nil];
-//        
-//    } else {
+    if([_order.ORD_STATE isEqualToString:@"PENDING"] == YES) {
+        
+        [LM_alert showLMAlertViewWithTitle:@"" message:@"确认取消此订单？" cancleButtonTitle:@"我再想想" okButtonTitle:@"确认" okClickHandle:^{
+            
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [_service OrderCancel:_order.IDX andstrUserIdx:_app.user.IDX];
+        } cancelClickHandle:nil];
+        
+    } else {
     
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [_transortService getTransInformationData:_order.IDX];
-//    }
+    }
 }
 
 
@@ -519,7 +545,8 @@
 // 修改备注信息
 - (IBAction)updateMarkOnclick {
     
-    [self addTextView];
+    [self addTextView:@"修改备注信息"];
+    _CONSIGNEE_REMARK.text = _order.ORD_REMARK_CONSIGNEE;
 }
 
 
@@ -719,7 +746,7 @@
 
 - (void)CompleteCustomsizeProductNumOnclick:(NumberButton *)sender {
     
-    [LM_alert showLMAlertViewWithTitle:@"" message:@"是否更改产品数量" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+    [LM_alert showLMAlertViewWithTitle:@"" message:@"确认修改产品数量？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
@@ -745,7 +772,7 @@
 
 #pragma mark - 修改备注UI
 
-- (void)addTextView {
+- (void)addTextView:(NSString *)title {
     
     _blurredView = [[LMBlurredView alloc] init];
     _blurredView.delegate = self;
@@ -766,7 +793,7 @@
     
     // label
     UILabel *label = [[UILabel alloc] init];
-    label.text = @"修改备注信息";
+    label.text = title;
     [_enterNumView addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(8);
@@ -789,7 +816,7 @@
     UITextView *textF = [[UITextView alloc] init];
     textF.layer.cornerRadius = 2.0;
     textF.font = [UIFont systemFontOfSize:14];
-    textF.text = _order.ORD_REMARK_CONSIGNEE;
+//    textF.text = _order.ORD_REMARK_CONSIGNEE;
     [border addSubview:textF];
     [textF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(1);
@@ -849,7 +876,7 @@
 
 - (void)CompleteCONSIGNEE_REMARKOnclick {
     
-    [LM_alert showLMAlertViewWithTitle:@"" message:@"是否更修改备注" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
+    [LM_alert showLMAlertViewWithTitle:@"" message:@"确认修改备注？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         UpdateRemarkService *service_remark = [[UpdateRemarkService alloc] init];
@@ -975,6 +1002,39 @@
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
+    [Tools showAlert:self.view andTitle:msg];
+}
+
+
+#pragma mark - OrderCancelServiceDelegate
+
+- (void)successOfOrderCancel:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [Tools showAlert:self.view andTitle:msg];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        NSString *UnAudited = [NSString stringWithFormat:@"k%@RequestNetwork", [UnAuditedViewController class]];
+        NSString *cancelOrder = [NSString stringWithFormat:@"k%@RequestNetwork", [OrderCancelViewController class]];
+        
+        // 取消订单后 刷新TableView
+        [[NSNotificationCenter defaultCenter] postNotificationName:UnAudited object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:cancelOrder object:nil];
+        
+        usleep(1700000);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    });
+}
+
+
+- (void)failureOfOrderCancel:(NSString *)msg {
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [Tools showAlert:self.view andTitle:msg];
 }
 
