@@ -44,6 +44,12 @@
 
 #define kPrompt @"您还没有已取消的订单"
 
+// Cell Name
+#define kCellName @"CheckOrderTableViewCell"
+
+// Cell 原始高度
+#define kCellHeight 75
+
 
 @implementation OrderCancelViewController
 
@@ -151,7 +157,7 @@
 
 - (void)registCell {
     
-    [_myTableView registerNib:[UINib nibWithNibName:@"CheckOrderTableViewCell" bundle:nil] forCellReuseIdentifier:@"CheckOrderTableViewCell"];
+    [_myTableView registerNib:[UINib nibWithNibName:kCellName bundle:nil] forCellReuseIdentifier:kCellName];
 }
 
 
@@ -211,13 +217,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 75;
+    OrderModel *m = _orders[indexPath.row];
+    return m.cellHeight;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *cellID = @"CheckOrderTableViewCell";
+    static NSString *cellID = kCellName;
     CheckOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     OrderModel *order = _orders[indexPath.row];
     cell.tableClass = [self class];
@@ -251,7 +258,7 @@
         // 添加没订单提示
         if(_orders.count == 0) {
             
-            [_myTableView noData:@"您还没有正在进行的订单" andImageName:LM_NoResult_noOrder];
+            [_myTableView noData:kPrompt andImageName:LM_NoResult_noOrder];
         } else {
             
             [_myTableView removeNoOrderPrompt];
@@ -272,6 +279,17 @@
     } else {
         
         _myTableView.mj_footer.hidden = YES;
+    }
+    
+    // Label 容器宽度
+    CGFloat contentWidth = ScreenWidth - 15 - 71.5 + 2;
+    // Label 单行高度
+    CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:MAXFLOAT];
+    for(int i = 0; i < _orders.count; i++) {
+        
+        OrderModel *m = _orders[i];
+        CGFloat overflowHeight = [Tools getHeightOfString:m.ORD_TO_NAME fontSize:14 andWidth:contentWidth] - oneLineHeight;
+        m.cellHeight = (overflowHeight > 0) ? (overflowHeight + kCellHeight) : kCellHeight;
     }
     
     [_myTableView reloadData];
@@ -319,6 +337,7 @@
     
     OrderDetailViewController *vc = [[OrderDetailViewController alloc] init];
     vc.order = order;
+    vc.popClass = [self class];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

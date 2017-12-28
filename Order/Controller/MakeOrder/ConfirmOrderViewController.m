@@ -252,7 +252,7 @@ typedef enum _CloseDatePicker {
     //设置赠品TableView高度
     _giftsTableViewHeight.constant = GiftTableViewCellHeight * _selectedGifts.count;
     
-    _scrollContentViewHeight.constant = 470 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
+    _scrollContentViewHeight.constant = 480 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
 }
 
 
@@ -346,7 +346,7 @@ typedef enum _CloseDatePicker {
         m = _deliveryWayListM.deliveryWayItemModel[0];
         _deliveryWayLabel.text = m.itemName;
     } else if(_deliveryWayListM.deliveryWayItemModel.count > 1) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择配送方式" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择配送方式" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
         alert.delegate = self;
         
         for(int i = 0; i < _deliveryWayListM.deliveryWayItemModel.count; i++) {
@@ -1077,12 +1077,8 @@ typedef enum _CloseDatePicker {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    if(buttonIndex == 0) {
-        nil;  //点击取消， 不操作
-    } else {
-        DeliveryWayItemModel *m = _deliveryWayListM.deliveryWayItemModel[buttonIndex - 1];
-        _deliveryWayLabel.text = m.itemName;
-    }
+    DeliveryWayItemModel *m = _deliveryWayListM.deliveryWayItemModel[buttonIndex];
+    _deliveryWayLabel.text = m.itemName;
 }
 
 @end

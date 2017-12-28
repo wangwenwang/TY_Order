@@ -60,7 +60,7 @@
 #define REQUSTSTATUS @"Audited"
 
 // 无数据提示
-#define kPrompt @"您还没有正在已审核的订单"
+#define kPrompt @"您还没有已审核的订单"
 
 // Cell Name
 #define kCellName @"CheckOrderTableViewCell"
@@ -529,14 +529,14 @@
     }
     
     // Label 容器宽度
-    CGFloat contentWidth = ScreenWidth - 15 - 72;
+    CGFloat contentWidth = ScreenWidth - 15 - 71.5 + 2;
     // Label 单行高度
-    CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:999.9];
+    CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:MAXFLOAT];
     for(int i = 0; i < _orders.count; i++) {
         
         OrderModel *m = _orders[i];
         CGFloat overflowHeight = [Tools getHeightOfString:m.ORD_TO_NAME fontSize:14 andWidth:contentWidth] - oneLineHeight;
-        m.cellHeight = overflowHeight ? (overflowHeight + kCellHeight + 8) : kCellHeight;
+        m.cellHeight = (overflowHeight > 0) ? (overflowHeight + kCellHeight) : kCellHeight;
     }
     
     [_myTableView reloadData];

@@ -16,6 +16,7 @@
         _PRODUCT_NAME = @"";
         _PRODUCT_TYPE = @"";
         _ACT_PRICE = @"";
+        _PO_QTY = @"";
     }
     return self;
 }
@@ -26,6 +27,7 @@
         _PRODUCT_NAME = dict[@"PRODUCT_NAME"] ? dict[@"PRODUCT_NAME"] : _PRODUCT_NAME;
         _PRODUCT_TYPE = dict[@"PRODUCT_TYPE"] ? dict[@"PRODUCT_TYPE"] : _PRODUCT_TYPE;
         _ACT_PRICE = dict[@"ACT_PRICE"] ? dict[@"ACT_PRICE"] : _ACT_PRICE;
+        _PO_QTY = dict[@"PO_QTY"] ? dict[@"PO_QTY"] : _PO_QTY;
     } @catch (NSException *exception) {
         
     }

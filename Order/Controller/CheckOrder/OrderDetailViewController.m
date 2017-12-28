@@ -121,17 +121,14 @@
 // 备注
 @property (weak, nonatomic) IBOutlet UILabel *reMarkLabel;
 
-// 查看物流信息
-- (IBAction)checkTransportinfoOnclick:(UIButton *)sender;
-
 // 获取物流信息
 @property (strong, nonatomic) TransportInformationService *transortService;
 
-// Bottom，查看物流信息按钮
+// 底部按钮视图
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
-//
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tailViewHeight_orderMsg;
+// 底部按钮视图高度
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
 
 @property (strong, nonatomic) OrderCancelService *service;
 
@@ -178,6 +175,12 @@
 
 #define kCellHeight 100.0
 
+#define kBlue RGB(0, 129, 238)
+
+#define kPassGree RGB(0, 163, 0)
+
+#define kPassHeight 32
+
 /**
  
  * 枚举类型命名规则：命名时使用驼峰命名法，勿使用下划线命名法
@@ -188,7 +191,7 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
      */
     KDYConfirmformTypeRemark = 1,
     /**
-     * 审核不通过
+     * 审核退回
      */
     KDYConfirmformTypeAudit = 2,
 };
@@ -300,7 +303,7 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
             _cancelOrderBtn = cancel;
             
             pass.layer.cornerRadius = 2.0f;
-            pass.backgroundColor = RGB(62, 105, 33);
+            pass.backgroundColor = kPassGree;
             [pass setTitle:@"审核通过" forState:UIControlStateNormal];
             [pass.titleLabel setFont:[UIFont systemFontOfSize:13]];
             [pass addTarget:self action:@selector(auditPassOnclick) forControlEvents:UIControlEventTouchUpInside];
@@ -309,7 +312,7 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
                 make.right.mas_equalTo(cancel.mas_left).offset(-25);
                 make.width.mas_equalTo(cancel.mas_width);
                 make.centerY.offset(0);
-                make.height.mas_equalTo(30);
+                make.height.mas_equalTo(kPassHeight);
             }];
             
             cancel.layer.cornerRadius = 2.0f;
@@ -332,7 +335,7 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
             _cancelOrderBtn = refuse;
             
             pass.layer.cornerRadius = 2.0f;
-            pass.backgroundColor = RGB(62, 105, 33);
+            pass.backgroundColor = kPassGree;
             [pass setTitle:@"审核通过" forState:UIControlStateNormal];
             [pass.titleLabel setFont:[UIFont systemFontOfSize:13]];
             [pass addTarget:self action:@selector(auditPassOnclick) forControlEvents:UIControlEventTouchUpInside];
@@ -341,12 +344,12 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
                 make.right.mas_equalTo(refuse.mas_left).offset(-25);
                 make.width.mas_equalTo(refuse.mas_width);
                 make.centerY.offset(0);
-                make.height.mas_equalTo(30);
+                make.height.mas_equalTo(kPassHeight);
             }];
             
             refuse.layer.cornerRadius = 2.0f;
             refuse.backgroundColor = [UIColor redColor];
-            [refuse setTitle:@"审核不通过" forState:UIControlStateNormal];
+            [refuse setTitle:@"审核退回" forState:UIControlStateNormal];
             [refuse.titleLabel setFont:[UIFont systemFontOfSize:13]];
             [refuse addTarget:self action:@selector(auditRefuseOnclick) forControlEvents:UIControlEventTouchUpInside];
             [refuse mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -354,6 +357,9 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
                 make.centerY.offset(0);
                 make.height.mas_equalTo(pass.mas_height);
             }];
+        } else if(_popClass == [OrderCancelViewController class]) {
+            
+            _bottomViewHeight.constant = YES;
         } else {
             
             [self showWL];
@@ -371,14 +377,14 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
             [showWL.titleLabel setFont:[UIFont systemFontOfSize:13]];
             [showWL addTarget:self action:@selector(cancelOrderOnclick) forControlEvents:UIControlEventTouchUpInside];
             [showWL mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(150);
-                make.height.mas_equalTo(30);
+                make.width.mas_equalTo(129);
+                make.height.mas_equalTo(kPassHeight);
                 make.centerX.offset(0);
                 make.centerY.offset(0);
             }];
-        } else if(_popClass == [OrderOneAuditViewController class]) {
+        } else if(_popClass == [OrderOneAuditViewController class] || _popClass == [OrderCancelViewController class]) {
             
-            nil;
+            _bottomViewHeight.constant = YES;
         } else {
             
             [self showWL];
@@ -394,13 +400,13 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
     [_bottomView addSubview:showWL];
     
     showWL.layer.cornerRadius = 2.0f;
-    showWL.backgroundColor = RGB(94, 169, 238);
+    showWL.backgroundColor = kBlue;
     [showWL setTitle:@"查看物流信息" forState:UIControlStateNormal];
     [showWL.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [showWL addTarget:self action:@selector(checkTransportinfoOnclick) forControlEvents:UIControlEventTouchUpInside];
     [showWL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(150);
-        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(129);
+        make.height.mas_equalTo(kPassHeight);
         make.centerX.offset(0);
         make.centerY.offset(0);
     }];
@@ -950,7 +956,10 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
         
         if([_CONSIGNEE_REMARK.text isEqualToString:@""]) {
             
-            [LM_alert showLMAlertViewWithTitle:@"" message:@"请填写退回理由" cancleButtonTitle:@"" okButtonTitle:@"确认" okClickHandle:nil cancelClickHandle:nil];
+            [LM_alert showLMAlertViewWithTitle:@"" message:@"请填写退回理由" cancleButtonTitle:nil okButtonTitle:@"确认" okClickHandle:nil cancelClickHandle:^{
+                
+                [self CancelCONSIGNEE_REMARKOnclick];
+            }];
         } else {
             
             [LM_alert showLMAlertViewWithTitle:@"" message:@"确认退回订单？" cancleButtonTitle:@"取消" okButtonTitle:@"确认" okClickHandle:^{
@@ -958,9 +967,9 @@ typedef NS_ENUM(NSUInteger, ConfirmformType){
                 [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 [_service_audit RuturnAudit:_order.IDX andstrUserName:_app.user.USER_NAME andstrReason:_CONSIGNEE_REMARK.text];
             } cancelClickHandle:nil];
+            [self CancelCONSIGNEE_REMARKOnclick];
         }
     }
-    [self CancelCONSIGNEE_REMARKOnclick];
 }
 
 

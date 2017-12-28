@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,6 +16,7 @@
                 <outlet property="REFERENCE02" destination="P3D-2A-Tup" id="43T-fD-NUH"/>
                 <outlet property="beginAddressLabel" destination="7hX-MD-giW" id="7Lp-GF-1t8"/>
                 <outlet property="bottomView" destination="1Md-bH-lOM" id="LZl-zG-pHB"/>
+                <outlet property="bottomViewHeight" destination="sfI-kl-Xrn" id="Ed7-Yl-OAK"/>
                 <outlet property="createTimeLabel" destination="alu-mn-SIj" id="LyF-dv-F7T"/>
                 <outlet property="customerAddressLabel" destination="735-qx-kOt" id="G7r-G7-vNa"/>
                 <outlet property="customerAddressLabel_bottom" destination="pVI-w7-p28" id="Y0e-eC-gfW"/>
@@ -40,7 +41,6 @@
                 <outlet property="remarkLabel_trailing" destination="D1t-cp-ABi" id="qnT-HP-ole"/>
                 <outlet property="scrollViewHeight" destination="zgn-87-Xir" id="EDT-2P-641"/>
                 <outlet property="tailViewHeight" destination="LvN-V7-FCk" id="iKs-9f-atl"/>
-                <outlet property="tailViewHeight_orderMsg" destination="sfI-kl-Xrn" id="uLu-DG-qaZ"/>
                 <outlet property="updateMarkBtn" destination="jk6-J2-RxP" id="xui-Wp-jRH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -502,38 +502,10 @@
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Md-bH-lOM" userLabel="Tail View">
                     <rect key="frame" x="0.0" y="1083" width="439" height="45"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qnG-l6-sT5">
-                            <rect key="frame" x="167" y="8" width="105" height="29"/>
-                            <color key="backgroundColor" red="0.27013062170000002" green="0.65527860449999997" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="105" id="i5h-KJ-xNd"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="查看物流信息">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="3"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="checkTransportinfoOnclick:" destination="-1" eventType="touchUpInside" id="4Hc-Fw-maK"/>
-                            </connections>
-                        </button>
-                    </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="qnG-l6-sT5" firstAttribute="centerY" secondItem="1Md-bH-lOM" secondAttribute="centerY" id="16B-ge-u4K"/>
-                        <constraint firstItem="qnG-l6-sT5" firstAttribute="centerX" secondItem="1Md-bH-lOM" secondAttribute="centerX" id="bgW-B8-N6D"/>
                         <constraint firstAttribute="height" constant="45" id="sfI-kl-Xrn"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="qnG-l6-sT5"/>
-                        </mask>
-                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

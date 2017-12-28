@@ -10,7 +10,6 @@
 #import "Tools.h"
 #import "UnAuditedViewController.h"
 #import "OrderOneAuditViewController.h"
-#import "OrderTwoAuditViewController.h"
 #import "OrderingViewController.h"
 #import "OrderFinishViewController.h"
 #import "OrderCancelViewController.h"
@@ -57,7 +56,7 @@
     _locationLabel.text = order.ORD_TO_NAME;
     
     // 读取工作流程
-    if(_tableClass == [UnAuditedViewController class] || _tableClass == [OrderOneAuditViewController class] || _tableClass == [OrderTwoAuditViewController class]) {
+    if(_tableClass == [UnAuditedViewController class] || _tableClass == [OrderOneAuditViewController class]) {
         
             _workFlowLabel.text = [Tools getOrderStatus:order.ORD_WORKFLOW];
     }

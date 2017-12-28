@@ -149,7 +149,6 @@
 		3088D31C1F4C1A2D006031D9 /* GetOupputListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3088D3181F4C1A2D006031D9 /* GetOupputListTableViewCell.m */; };
 		3088D31D1F4C1A2D006031D9 /* GetOupputListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3088D3191F4C1A2D006031D9 /* GetOupputListTableViewCell.xib */; };
 		308BDAF31F67E50000D38650 /* OrderOneAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */; };
-		308BDAF61F68C89E00D38650 /* OrderTwoAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */; };
 		3090EE591F67C55D00FF4CE5 /* UnAuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */; };
 		3090EE5C1F67C67200FF4CE5 /* AuditService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090EE5B1F67C67200FF4CE5 /* AuditService.m */; };
 		309877B91DDC3A9B0047135A /* NSDictionary+MyLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 309877B81DDC3A9B0047135A /* NSDictionary+MyLog.m */; };
@@ -591,8 +590,6 @@
 		3088D3191F4C1A2D006031D9 /* GetOupputListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GetOupputListTableViewCell.xib; sourceTree = "<group>"; };
 		308BDAF11F67E50000D38650 /* OrderOneAuditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderOneAuditViewController.h; sourceTree = "<group>"; };
 		308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderOneAuditViewController.m; sourceTree = "<group>"; };
-		308BDAF41F68C89E00D38650 /* OrderTwoAuditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTwoAuditViewController.h; sourceTree = "<group>"; };
-		308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTwoAuditViewController.m; sourceTree = "<group>"; };
 		3090EE571F67C55D00FF4CE5 /* UnAuditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnAuditedViewController.h; sourceTree = "<group>"; };
 		3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnAuditedViewController.m; sourceTree = "<group>"; };
 		3090EE5A1F67C67200FF4CE5 /* AuditService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditService.h; sourceTree = "<group>"; };
@@ -1457,8 +1454,6 @@
 				3090EE581F67C55D00FF4CE5 /* UnAuditedViewController.m */,
 				308BDAF11F67E50000D38650 /* OrderOneAuditViewController.h */,
 				308BDAF21F67E50000D38650 /* OrderOneAuditViewController.m */,
-				308BDAF41F68C89E00D38650 /* OrderTwoAuditViewController.h */,
-				308BDAF51F68C89E00D38650 /* OrderTwoAuditViewController.m */,
 				30E5A03C1D9B64BF00D94F77 /* OrderingViewController.h */,
 				30E5A03D1D9B64BF00D94F77 /* OrderingViewController.m */,
 				30E5A0451D9B654F00D94F77 /* OrderFinishViewController.h */,
@@ -2469,7 +2464,6 @@
 				3051DB591F176B900034629B /* GetPartyListTableViewCell.m in Sources */,
 				304A7AE01DB91C2B0039B0B2 /* CustomerChartModel.m in Sources */,
 				30201F201F1083970055BA6A /* GetFeeListService.m in Sources */,
-				308BDAF61F68C89E00D38650 /* OrderTwoAuditViewController.m in Sources */,
 				304A7ABB1DB716780039B0B2 /* payTypeTableViewCell.m in Sources */,
 				30CD6D871EE7AA13004F904C /* NSDictionary+Extension.m in Sources */,
 				30CDC6391D9907CD0035602F /* PhotoBroswerLayout.m in Sources */,

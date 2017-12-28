@@ -43,7 +43,10 @@
 #define REQUSTSTATUS @"OPEN"
 
 // 温馨提示
-#define kPrompt @"您还没有正在进行的订单"
+#define kPrompt @"您还没有在途的订单"
+
+// Cell 原始高度
+#define kCellHeight 75
 
 
 @implementation OrderingViewController
@@ -220,7 +223,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 75;
+    OrderModel *m = _orders[indexPath.row];
+    return m.cellHeight;
 }
 
 
@@ -236,9 +240,6 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    OrderDetailViewController *vc = [[OrderDetailViewController alloc] init];
-//    vc.order = _orders[indexPath.row];
-//    [self.navigationController pushViewController:vc animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -263,7 +264,7 @@
         // 添加没订单提示
         if(_orders.count == 0) {
             
-            [_myTableView noData:@"您还没有正在进行的订单" andImageName:LM_NoResult_noResult];
+            [_myTableView noData:kPrompt andImageName:LM_NoResult_noResult];
         } else {
             
             [_myTableView removeNoOrderPrompt];
@@ -284,6 +285,17 @@
     } else {
         
         _myTableView.mj_footer.hidden = YES;
+    }
+    
+    // Label 容器宽度
+    CGFloat contentWidth = ScreenWidth - 15 - 71.5 + 2;
+    // Label 单行高度
+    CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:14 andWidth:MAXFLOAT];
+    for(int i = 0; i < _orders.count; i++) {
+        
+        OrderModel *m = _orders[i];
+        CGFloat overflowHeight = [Tools getHeightOfString:m.ORD_TO_NAME fontSize:14 andWidth:contentWidth] - oneLineHeight;
+        m.cellHeight = (overflowHeight > 0) ? (overflowHeight + kCellHeight) : kCellHeight;
     }
     
     [_myTableView reloadData];
@@ -330,6 +342,7 @@
     
     OrderDetailViewController *vc = [[OrderDetailViewController alloc] init];
     vc.order = order;
+    vc.popClass = [self class];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

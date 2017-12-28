@@ -54,8 +54,6 @@
     
     [super awakeFromNib];
     
-    _quantityF.inputAccessoryView = [self addToolbar];
-    
     _quantityF.delegate = self;
 }
 
@@ -86,31 +84,6 @@
     _payPriceLabel.text = m.ACT_PRICE ? [NSString stringWithFormat:@"￥%.1f", m.ACT_PRICE] : @"￥0.0";
     _totalPriceLabel.text = totalPrice ? [NSString stringWithFormat:@"￥%.1f", totalPrice] : @"￥0.0";
     [_goodsImageView sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:[UIImage imageNamed:@"ic_information_picture"]];
-}
-
-
-- (UIToolbar *)addToolbar {
-    
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 35)];
-    UIColor *LM_bg = RGB(80, 80, 80);
-    toolbar.tintColor = RGB(40, 100, 241);
-    toolbar.backgroundColor = LM_bg;
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(textFieldDone)];
-    toolbar.items = @[space, bar];
-    return toolbar;
-}
-
-
-// 收回键盘
-- (void)textFieldDone {
-    
-    [self endEditing:YES];
-    
-    if([_delegate respondsToSelector:@selector(complete:andOD_IDX:)]) {
-        
-        [_delegate complete:[_quantityF.text floatValue] andOD_IDX:_orderDetailM.OD_IDX];
-    }
 }
 
 

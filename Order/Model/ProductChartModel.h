@@ -17,6 +17,8 @@
 
 @property (copy, nonatomic) NSString *ACT_PRICE;
 
+@property (copy, nonatomic) NSString *PO_QTY;
+
 - (void)setDict:(NSDictionary *)dict;
 
 @end

@@ -11,8 +11,6 @@
 
 @protocol OrderDetailTableViewCellDelegate <NSObject>
 
-- (void)complete:(CGFloat)quantity andOD_IDX:(NSString *)OD_IDX;
-
 - (void)textFieldShouldBeginEditing:(NSString *)OD_IDX;
 
 @end

@@ -53,13 +53,19 @@
 
 @property (strong, nonatomic) AuditService *service_audit;
 
+// 批量审核总次数
+@property (assign, nonatomic) NSUInteger sumAuditPassCount;
+
+// 批量审核成功次数
+@property (assign, nonatomic) NSUInteger successAuditPassCount;
+
 @end
 
 // 请求状态
 #define REQUSTSTATUS @"UnAudited"
 
 // 无数据提示
-#define kPrompt @"您还没有正在进行的订单"
+#define kPrompt @"您还没有未审核的订单"
 
 // Cell Name
 #define kCellName @"CheckOrderTableViewCell"
@@ -202,12 +208,14 @@
 }
 
 
-#pragma mark - 删除按钮
+#pragma mark - 审核按钮
 
 - (void)auditBtnClick {
     if (_myTableView.editing) {
         
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_app.window animated:YES];
+        _sumAuditPassCount = _deleteArr.count;
+        _successAuditPassCount = 0;
         for(int i = 0; i < _deleteArr.count; i++) {
             
             OrderModel *m = _deleteArr[i];
@@ -259,14 +267,13 @@
 
 - (void)addEditView {
     
-    //    编辑区域
+    // 编辑区域
     UIImageView *editView = [[UIImageView alloc]init];
     [self.view addSubview:editView];
     self.editView = editView;
     
     editView.userInteractionEnabled = YES;
     editView.hidden = YES;
-    
     
     [editView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
@@ -615,8 +622,12 @@
 
 - (void)successOfAuditPass:(NSString *)msg {
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [Tools showAlert:self.view andTitle:msg];
+    _successAuditPassCount ++;
+    if(_successAuditPassCount == _sumAuditPassCount) {
+        
+        [MBProgressHUD hideHUDForView:_app.window animated:YES];
+    }
+    [Tools showAlert:_app.window andTitle:msg];
     
     [_myTableView.mj_header beginRefreshing];
 }
@@ -624,8 +635,8 @@
 
 - (void)failureOfAuditPass:(NSString *)msg {
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [Tools showAlert:self.view andTitle:msg];
+    [MBProgressHUD hideHUDForView:_app.window animated:YES];
+    [Tools showAlert:_app.window andTitle:msg];
 }
 
 @end
