@@ -50,6 +50,12 @@
 //添加赠品
 @property (weak, nonatomic) IBOutlet UIButton *addGiftButton;
 
+//指定赠品
+@property (strong, nonatomic) NSArray *assignGifts;
+
+//手动赠品
+@property (strong, nonatomic) NSArray *manualGifts;
+
 //已选择的赠品
 @property (strong, nonatomic) NSMutableArray *selectedGifts;
 
@@ -249,8 +255,31 @@ typedef enum _CloseDatePicker {
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     
+    CGFloat giftTableViewHeight = 0;
+    for (int i = 0; i < _selectedGifts.count; i++) {
+        
+        PromotionDetailModel *m = _selectedGifts[i];
+        
+        // Label 容器宽度
+        CGFloat contentWidth = ScreenWidth - (3 + 35 + 3 + 30 + 10 + 10);
+        // Label 单行高度
+        CGFloat oneLineHeight = [Tools getHeightOfString:@"fds" fontSize:13 andWidth:999.9];
+        
+        CGFloat overflowHeight = [Tools getHeightOfString:m.PRODUCT_NAME fontSize:13 andWidth:contentWidth] - oneLineHeight;
+        
+        if(overflowHeight > 0) {
+            
+            m.cellHeight = GiftTableViewCellHeight + overflowHeight;
+        } else {
+            
+            m.cellHeight = GiftTableViewCellHeight;
+        }
+        
+        giftTableViewHeight += m.cellHeight;
+    }
     //设置赠品TableView高度
-    _giftsTableViewHeight.constant = GiftTableViewCellHeight * _selectedGifts.count;
+    _giftsTableViewHeight.constant = giftTableViewHeight;
+    
     
     _scrollContentViewHeight.constant = 480 + _orderTableViewHeight.constant + (_giftTableView.hidden ? 0 : _giftsTableViewHeight.constant);
 }
@@ -260,6 +289,15 @@ typedef enum _CloseDatePicker {
     
     NSLog(@"%s", __func__);
     [self removeNotification];
+}
+
+
+#pragma mark - SET方法
+
+- (void)setPromotionDetailGiftsOfServer:(NSMutableArray *)promotionDetailGiftsOfServer {
+    
+    _promotionDetailGiftsOfServer = promotionDetailGiftsOfServer;
+    _assignGifts = [_promotionDetailGiftsOfServer copy];
 }
 
 
@@ -310,32 +348,61 @@ typedef enum _CloseDatePicker {
 
 - (void)refreshGifts:(NSNotification *)aNotification {
     
-    _selectedGifts = aNotification.userInfo[@"gifts"];
+    _manualGifts = [aNotification.userInfo[@"gifts"] copy];
+    
+    // 清空赠品列表
+    [_selectedGifts removeAllObjects];
+    
+    // 添加指定赠品
+    for (int i = 0; i < _assignGifts.count; i++) {
+        
+        [_selectedGifts addObject:_assignGifts[i]];
+    }
+    
+    // 添加手选赠品
+    for (int i = 0; i < _manualGifts.count; i++) {
+        
+        [_selectedGifts addObject:_manualGifts[i]];
+    }
+    NSLog(@"");
 }
 
 
 - (void)initUI {
     
-    //没有赠品
-    _noGiftPromptLabel.hidden = _selectedGifts.count;
-    
-    _giftTableView.hidden = !_selectedGifts.count;
-    
-    //设置添加赠品按钮是否可见
     NSString *bussinessCode = _app.business.BUSINESS_CODE;
-    if([bussinessCode rangeOfString:@"QH"].length > 0 && [_promotionOrder.HAVE_GIFT isEqualToString:@"Y"]) {
-        //  if([bussinessName isEqualToString:@"凯东源前海项目"] && [_promotionOrder.HAVE_GIFT isEqualToString:@"Y"]) {
-        
+    
+    // 既有指定赠品，也有手选赠品
+    if(_promotionDetailGiftsOfServer.count > 0 && ([bussinessCode rangeOfString:@"YIB"].length == 0 && [_promotionOrder.HAVE_GIFT isEqualToString:@"Y"])) {
+        _selectedGifts = _promotionDetailGiftsOfServer;
+        _noGiftPromptLabel.hidden = YES;
+        _giftTableView.hidden = NO;
         _addGiftButton.hidden = NO;
     } else {
         
-        _addGiftButton.hidden = YES;
+        // 指定赠品
+        if(_promotionDetailGiftsOfServer.count > 0) {
+            _selectedGifts = _promotionDetailGiftsOfServer;
+            _noGiftPromptLabel.hidden = YES;
+            _giftTableView.hidden = NO;
+            _addGiftButton.hidden = YES;
+        }
+        // 手选赠品或没有
+        else {
+            //没有赠品
+            _noGiftPromptLabel.hidden = _selectedGifts.count;
+            _giftTableView.hidden = !_selectedGifts.count;
+            //设置添加赠品按钮是否可见
+            if([_promotionOrder.HAVE_GIFT isEqualToString:@"Y"]) {
+                _addGiftButton.hidden = NO;
+            } else {
+                _addGiftButton.hidden = YES;
+            }
+        }
+        [self refreshCollectDada];
+        [_orderTableView reloadData];
+        [_giftTableView reloadData];
     }
-    
-    [self refreshCollectDada];
-    
-    [_orderTableView reloadData];
-    [_giftTableView reloadData];
 }
 
 
@@ -763,7 +830,8 @@ typedef enum _CloseDatePicker {
         return m.cellHeight;
     } else if(tableView.tag == 1002) {
         
-        return GiftTableViewCellHeight;
+        PromotionDetailModel *m = _selectedGifts[indexPath.row];
+        return m.cellHeight;
     } else {
         
         return 0;

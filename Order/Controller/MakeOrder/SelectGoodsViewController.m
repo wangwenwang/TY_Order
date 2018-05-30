@@ -1728,7 +1728,7 @@ typedef enum : NSInteger {
     vc.productsOfLocal = _selectedProducts;
     vc.promotionOrder = promotionOrder;
     vc.promotionDetailsOfServer = promotionDetailOfNR;
-    //    vc.promotionDetailGiftsOfServer = promotionDetailOfGF;
+    vc.promotionDetailGiftsOfServer = promotionDetailOfGF;
     vc.orderAddressCode = _address.ADDRESS_CODE;
     vc.orderAddressIdx = _address.IDX;
     vc.orderPayType = _currentPayType.Key;
