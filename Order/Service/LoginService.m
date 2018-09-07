@@ -9,6 +9,7 @@
 #import "LoginService.h"
 #import <AFNetworking.h>
 #import "AppDelegate.h"
+#import "GetToBusinessTypeListModel.h"
 
 @interface LoginService ()
 
@@ -36,9 +37,7 @@
                                  @"strPassword" : psw,
                                  @"strLicense" : @""
                                  };
-    
     NSLog(@"登录参数：%@", parameters);
-    
     [manager POST:API_LOGIN parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         nil;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -145,6 +144,39 @@
         NSLog(@"请求失败---%@", error);
         if([_delegate respondsToSelector:@selector(failureOfLogin:)]) {
             [_delegate failureOfLogin:@"查询业务列表失败"];
+        }
+    }];
+}
+
+- (void)GetToBusiness_Type:(NSString *)BUSINESS_IDX {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSDictionary *parameters = @{@"BUSINESS_IDX" : BUSINESS_IDX,
+                   @"strLicense" : @""
+                   };
+    
+    NSLog(@"业务类型参数：%@", parameters);
+    [manager POST:API_GetToBusiness_Type parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        nil;
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"请求成功---%@", responseObject);
+        int _type = [responseObject[@"type"] intValue];
+        NSString *msg = responseObject[@"msg"];
+        if(_type == 1) {
+            
+            GetToBusinessTypeListModel *toBusM = [[GetToBusinessTypeListModel alloc] initWithDictionary:responseObject[@"result"]];
+            _app.getToBusinessTypeList = toBusM;
+        }else {
+            if([_delegate respondsToSelector:@selector(failureOfLogin:)]) {
+                [_delegate failureOfLogin:msg];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"请求失败---%@", error);
+        if([_delegate respondsToSelector:@selector(failureOfLogin:)]) {
+            [_delegate failureOfLogin:@"业务类型失败"];
         }
     }];
 }

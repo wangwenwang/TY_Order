@@ -325,6 +325,8 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self successOfLogin];
+    
+    [_service GetToBusiness_Type:_app.business.BUSINESS_IDX];
 }
 
 

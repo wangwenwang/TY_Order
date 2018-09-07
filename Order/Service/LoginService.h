@@ -32,4 +32,7 @@
  */
 - (void)login:(NSString *)userName andPsw:(NSString *)psw;
 
+
+- (void)GetToBusiness_Type:(NSString *)BUSINESS_IDX;
+
 @end

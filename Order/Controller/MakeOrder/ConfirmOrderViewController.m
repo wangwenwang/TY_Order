@@ -22,6 +22,7 @@
 #import <Masonry.h>
 #import "LMPickerView.h"
 #import "LMBlurredView.h"
+#import "GetToBusinessTypeLabel.h"
 
 @interface ConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource, ConfirmOrderTableViewCellDelegate, AddGiftsServiceDelegate, OrderConfirmServiceDelegate, LMPickerViewDelegate, LMBlurredViewDelegate, UIAlertViewDelegate>
 
@@ -155,6 +156,9 @@
 // 部门字段
 @property (weak, nonatomic) IBOutlet UITextField *REFERENCE01;
 
+// 订单类型
+@property (weak, nonatomic) IBOutlet GetToBusinessTypeLabel *getToBusinessTypeLabel;
+
 @end
 
 
@@ -203,6 +207,12 @@ typedef enum _CloseDatePicker {
     [self dealWithData];
     
     [self alertDelieryWay];
+    
+    if(_app.getToBusinessTypeList.getToBusinessTypeItemModel.count >= 1) {
+        GetToBusinessTypeItemModel *m = _app.getToBusinessTypeList.getToBusinessTypeItemModel[0];
+        _getToBusinessTypeLabel.text = m.bUSINESSIDX;
+        _getToBusinessTypeLabel.BUSINESS_TYPE = [m.iDX integerValue];
+    }
 }
 
 
@@ -414,6 +424,7 @@ typedef enum _CloseDatePicker {
         _deliveryWayLabel.text = m.itemName;
     } else if(_deliveryWayListM.deliveryWayItemModel.count > 1) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选择配送方式" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+        alert.tag = 10085;
         alert.delegate = self;
         
         for(int i = 0; i < _deliveryWayListM.deliveryWayItemModel.count; i++) {
@@ -423,6 +434,26 @@ typedef enum _CloseDatePicker {
         [alert show];
     } else {
         [Tools showAlert:self.view andTitle:@"没有配送方式哦"];
+    }
+}
+
+
+- (void)alertGetToBusinessType {
+    
+    GetToBusinessTypeItemModel *m = nil;
+    GetToBusinessTypeListModel *list = _app.getToBusinessTypeList;
+    if(list.getToBusinessTypeItemModel.count >= 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请选订单类型" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+        alert.tag = 10086;
+        alert.delegate = self;
+        
+        for(int i = 0; i < list.getToBusinessTypeItemModel.count; i++) {
+            m = list.getToBusinessTypeItemModel[i];
+            [alert addButtonWithTitle:m.bUSINESSIDX];
+        }
+        [alert show];
+    } else {
+        [Tools showAlert:self.view andTitle:@"没有订单类型哦"];
     }
 }
 
@@ -572,6 +603,11 @@ typedef enum _CloseDatePicker {
     [self alertDelieryWay];
 }
 
+- (IBAction)GetToBusinessTypeOnclick:(UITapGestureRecognizer *)sender {
+    
+    [self alertGetToBusinessType];
+}
+
 
 // 确认订单，最后一步提交到服务器
 - (IBAction)confirmOnclick:(UIButton *)sender {
@@ -601,7 +637,7 @@ typedef enum _CloseDatePicker {
                               @(p.ACT_PRICE), @"ACT_PRICE",
                               p.ADD_DATE, @"ADD_DATE",
                               p.BUSINESS_IDX, @"BUSINESS_IDX",
-                              @(p.BUSINESS_TYPE), @"BUSINESS_TYPE",
+                              @(_getToBusinessTypeLabel.BUSINESS_TYPE), @"BUSINESS_TYPE",
                               p.CONSIGNEE_REMARK, @"CONSIGNEE_REMARK",
                               p.EDIT_DATE, @"EDIT_DATE",
                               @(p.ENT_IDX), @"ENT_IDX",
@@ -1145,8 +1181,16 @@ typedef enum _CloseDatePicker {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    DeliveryWayItemModel *m = _deliveryWayListM.deliveryWayItemModel[buttonIndex];
-    _deliveryWayLabel.text = m.itemName;
+    if(alertView.tag == 10085) {
+        
+        DeliveryWayItemModel *m = _deliveryWayListM.deliveryWayItemModel[buttonIndex];
+        _deliveryWayLabel.text = m.itemName;
+    }else if(alertView.tag == 10086) {
+        
+        GetToBusinessTypeItemModel *m =  _app.getToBusinessTypeList.getToBusinessTypeItemModel[buttonIndex];
+        _getToBusinessTypeLabel.text = m.bUSINESSIDX;
+        _getToBusinessTypeLabel.BUSINESS_TYPE = [m.iDX integerValue];
+    }
 }
 
 @end

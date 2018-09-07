@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
 #import "BusinessModel.h"
+#import "GetToBusinessTypeListModel.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -17,6 +18,8 @@
 @property (strong, nonatomic) UserModel *user;
 
 @property (strong, nonatomic) BusinessModel *business;
+
+@property (strong, nonatomic) GetToBusinessTypeListModel *getToBusinessTypeList;
 
 
 @end

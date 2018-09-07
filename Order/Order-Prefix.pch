@@ -194,7 +194,7 @@
 #define API_GET_COMMODITY_DATA @"http://119.29.148.189:8888/api/GetProductListType"
 
 /// 最终提交订单
-#define API_CONFIRM_ORDER @"http://119.29.148.189:8888/api/ConfirmOrder"
+#define API_CONFIRM_ORDER @"http://119.29.148.189:8888/api/ConfirmOrderTest"
 
 /// 添加客户库存
 #define API_AddStock @"http://119.29.148.189:8888/api/AddStock"
@@ -276,6 +276,9 @@
 
 /// 修改备注
 #define API_UpdateRemark @"http://119.29.148.189:8888/api/UpdateRemark"
+
+/// 配送方式
+#define API_GetToBusiness_Type @"http://119.29.148.189:8888/api/GetToBusiness_Type"
 
 
 

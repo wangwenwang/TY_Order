@@ -339,6 +339,9 @@
 		30F7B8E91DC36CA7004CD128 /* Default-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30F7B8E81DC36CA7004CD128 /* Default-568@2x.png */; };
 		30F93E121F31B3FF001904F1 /* LMBlurredView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F93E0E1F31B3FF001904F1 /* LMBlurredView.m */; };
 		30F93E131F31B3FF001904F1 /* LMPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F93E111F31B3FF001904F1 /* LMPickerView.m */; };
+		3B586D982142204C0044E8E4 /* GetToBusinessTypeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B586D972142204C0044E8E4 /* GetToBusinessTypeListModel.m */; };
+		3B586D9B214220570044E8E4 /* GetToBusinessTypeItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B586D9A214220570044E8E4 /* GetToBusinessTypeItemModel.m */; };
+		3B586D9E21424D330044E8E4 /* GetToBusinessTypeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B586D9D21424D330044E8E4 /* GetToBusinessTypeLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -921,6 +924,12 @@
 		30F93E0E1F31B3FF001904F1 /* LMBlurredView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMBlurredView.m; sourceTree = "<group>"; };
 		30F93E101F31B3FF001904F1 /* LMPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMPickerView.h; sourceTree = "<group>"; };
 		30F93E111F31B3FF001904F1 /* LMPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMPickerView.m; sourceTree = "<group>"; };
+		3B586D962142204C0044E8E4 /* GetToBusinessTypeListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetToBusinessTypeListModel.h; sourceTree = "<group>"; };
+		3B586D972142204C0044E8E4 /* GetToBusinessTypeListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetToBusinessTypeListModel.m; sourceTree = "<group>"; };
+		3B586D99214220570044E8E4 /* GetToBusinessTypeItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetToBusinessTypeItemModel.h; sourceTree = "<group>"; };
+		3B586D9A214220570044E8E4 /* GetToBusinessTypeItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetToBusinessTypeItemModel.m; sourceTree = "<group>"; };
+		3B586D9C21424D330044E8E4 /* GetToBusinessTypeLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetToBusinessTypeLabel.h; sourceTree = "<group>"; };
+		3B586D9D21424D330044E8E4 /* GetToBusinessTypeLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetToBusinessTypeLabel.m; sourceTree = "<group>"; };
 		8632758C8A4785EDD0DF8722 /* Pods-Order.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Order.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Order/Pods-Order.debug.xcconfig"; sourceTree = "<group>"; };
 		E1C50C09B8AE2AB012816CA7 /* libPods-Order.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Order.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1135,6 +1144,8 @@
 				304A34151F0E071B0055D50C /* AreaCityViewController.xib */,
 				3021605C1F135B850049374F /* LM_alert.h */,
 				3021605D1F135B850049374F /* LM_alert.m */,
+				3B586D9C21424D330044E8E4 /* GetToBusinessTypeLabel.h */,
+				3B586D9D21424D330044E8E4 /* GetToBusinessTypeLabel.m */,
 			);
 			path = Custum;
 			sourceTree = "<group>";
@@ -1438,6 +1449,10 @@
 				30D9EF3F1FDE51C000C832AA /* DeliveryWayListModel.m */,
 				30D9EF411FDE51D400C832AA /* DeliveryWayItemModel.h */,
 				30D9EF421FDE51D400C832AA /* DeliveryWayItemModel.m */,
+				3B586D962142204C0044E8E4 /* GetToBusinessTypeListModel.h */,
+				3B586D972142204C0044E8E4 /* GetToBusinessTypeListModel.m */,
+				3B586D99214220570044E8E4 /* GetToBusinessTypeItemModel.h */,
+				3B586D9A214220570044E8E4 /* GetToBusinessTypeItemModel.m */,
 				30BB2DF71F46820A002E51E7 /* 库存管理 */,
 				30BB2DDD1F4593AD002E51E7 /* 库存登记 */,
 				30201F211F1083AB0055BA6A /* 客户费用 */,
@@ -2500,6 +2515,7 @@
 				304A7AEA1DB925990039B0B2 /* MyPNPieChart.m in Sources */,
 				30BB2DE91F4593AD002E51E7 /* AppStockListModel.m in Sources */,
 				30D9EF401FDE51C000C832AA /* DeliveryWayListModel.m in Sources */,
+				3B586D9E21424D330044E8E4 /* GetToBusinessTypeLabel.m in Sources */,
 				302600921EE69F8B001F6C38 /* UIView+Uitls.m in Sources */,
 				301AFA801F4ADC4500E4FDFF /* GetToAddressListModel.m in Sources */,
 				30F7B8E61DC036FB004CD128 /* ConfirmOrderGiftsTableViewCell.m in Sources */,
@@ -2648,6 +2664,7 @@
 				30CDC64E1D9907CD0035602F /* UIColor+Extend.m in Sources */,
 				3021605A1F134E7C0049374F /* AddressListTableViewCell.m in Sources */,
 				30EF59CA1DAF3457003F5729 /* AddressModel.m in Sources */,
+				3B586D9B214220570044E8E4 /* GetToBusinessTypeItemModel.m in Sources */,
 				30CDC6451D9907CD0035602F /* NSString+File.m in Sources */,
 				30201ECE1F1081370055BA6A /* GetAppBusinessFeeListService.m in Sources */,
 				30B7F4331FE3D31900C938D9 /* UpdateRemarkService.m in Sources */,
@@ -2658,6 +2675,7 @@
 				30CDC65F1D9907CD0035602F /* SVIndefiniteAnimatedView.m in Sources */,
 				30CD6D881EE7AA13004F904C /* NSArray+Extension.m in Sources */,
 				304A7AAE1DB5F72C0039B0B2 /* ProductTypeTableViewCell.m in Sources */,
+				3B586D982142204C0044E8E4 /* GetToBusinessTypeListModel.m in Sources */,
 				302A05861DB0CC7200972490 /* PolicyItemModel.m in Sources */,
 				30CDC65B1D9907CD0035602F /* UIButton+SD.m in Sources */,
 				30E5A0591D9BB88300D94F77 /* BusinessModel.m in Sources */,
